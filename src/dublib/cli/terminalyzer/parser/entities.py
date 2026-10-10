@@ -495,7 +495,7 @@ class CommandEntity:
 		"""
 
 		if self.__model.handler:
-			self.__model.handler(self)
+			self.__model.handler(self, *self.__model.handler_args, **self.__model.handler_kwargs)
 			self.__is_handled = True
 
 		return self.__is_handled

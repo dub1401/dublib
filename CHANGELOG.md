@@ -11,6 +11,7 @@ For visual categorization of changes emojis are used in accordance with [gitmoji
 
 ### ✨ Added
 #### cli.terminalyzer
+- Handlers now can accept positional and named additional arguments.
 - Method `run_handler()` in command entity.
 - Property `is_handled` to command entity.
 

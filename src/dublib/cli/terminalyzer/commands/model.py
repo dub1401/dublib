@@ -1,5 +1,5 @@
 from collections.abc import Callable
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Concatenate, ParamSpec
 
 from .identifier import CommandIdentifier
 from .positions import BasePosition, Position
@@ -9,6 +9,8 @@ if TYPE_CHECKING:
 	from .group import ModelsGroup
 
 __all__ = ["CommandModel"]
+
+_P = ParamSpec("_P")
 
 class CommandModel:
 	"""Модель команды."""
@@ -40,6 +42,18 @@ class CommandModel:
 		"""Automatically called command entity handler."""
 
 		return self.__handler
+
+	@property
+	def handler_args(self) -> tuple[Any, ...]:
+		"""Positional handler arguments."""
+
+		return self.__handler_args
+
+	@property
+	def handler_kwargs(self) -> dict[str, Any]:
+		"""Named handler arguments."""
+
+		return self.__handler_kwargs.copy()
 
 	@property
 	def indentificator(self) -> CommandIdentifier:
@@ -92,7 +106,10 @@ class CommandModel:
 		self.__description: str | None = description
 
 		self.__identifier: CommandIdentifier = CommandIdentifier(self)
+
 		self.__handler: Callable[[CommandEntity], None] | None = None
+		self.__handler_args: tuple[Any, ...] = () 
+		self.__handler_kwargs: dict[str, Any] = {}
 
 		self.__base_position = BasePosition()
 		self.__positions: dict[str, Position] = {}
@@ -129,12 +146,18 @@ class CommandModel:
 
 		return self.__positions[name]
 
-	def register_handler(self, handler: Callable[["CommandEntity"], None]):
+	def register_handler(self, handler: Callable[Concatenate["CommandEntity", _P], None], *args: _P.args, **kwargs: _P.kwargs):
 		"""
 		Register automatically called by `Terminalyzer` command entity handler.
 
 		:param handler: Command entity handler.
-		:type handler: Callable[[CommandEntity], None]
+		:type handler: Callable[Concatenate[CommandEntity, _P], None]
+		:param args: Positional handler arguments.
+		:type args: _P.args
+		:param kwargs: Named handler arguments.
+		:type kwargs: _P.kwargs
 		"""
 
 		self.__handler = handler
+		self.__handler_args = args
+		self.__handler_kwargs = kwargs
