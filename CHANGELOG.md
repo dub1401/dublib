@@ -21,6 +21,10 @@ For visual categorization of changes emojis are used in accordance with [gitmoji
 #### engine.patcher
 - Module fully rewritten.
 
+### 🐛 Fixed
+#### engine.configurator
+- Config instance initialization failure.
+
 ### 🔥 Removed
 - Module `cli.templates`.
 

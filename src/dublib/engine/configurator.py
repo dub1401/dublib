@@ -81,7 +81,7 @@ class Config[T: ConfigTemplate]:
 		PosixConfigPath = Path(args[0]).as_posix()
 
 		if PosixConfigPath not in cls.__INSTANCES:
-			Instance = super().__new__(cls, *args)
+			Instance = super().__new__(cls)
 			Instance._IS_INITIALIZED = False
 			cls.__INSTANCES[PosixConfigPath] = Instance
 
