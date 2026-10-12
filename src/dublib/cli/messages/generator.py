@@ -30,7 +30,13 @@ def generate_message(text: str, message_type: MessagesTypes | None = None, origi
 	type_part: str = message_type.name.lower() if message_type else ""
 	separator: str = ":" if origin_part and type_part else ""
 
-	message: str = f"{type_part}{separator}{origin_part} {text}".lstrip()
+	message: str = f"{type_part}{separator}{origin_part}"
+
+	if message:
+		if message_type: message = f"[{message}]"
+		text = f" {text}"
+
+	message += text
 
 	if not colorize:
 		return message

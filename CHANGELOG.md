@@ -23,6 +23,8 @@ For visual categorization of changes emojis are used in accordance with [gitmoji
 - Module fully rewritten.
 
 ### 🐛 Fixed
+#### cli.messages
+- URL validation for scheme `file://` failed (upstream for `validators>=0.36`).
 #### engine.configurator
 - Config instance initialization failure.
 
