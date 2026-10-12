@@ -42,7 +42,7 @@ class TeleMaster:
 	def __init__(self, bot: str | TeleBot):
 		"""
 		Набор дополнительного функционала для бота Telegram.
-		
+
 		:param bot: Бот Telegram. Вместо объекта бота можно передать токен, на основе которого будет инициализирован новый объект.
 		:type bot: str | TeleBot
 		"""
@@ -52,7 +52,7 @@ class TeleMaster:
 	def check_user_subscription(self, user: UserData, chat_id: int, max_tries: int = 3) -> bool | None:
 		"""
 		Проверяет, состоит ли пользователь в указанном чате. Бот должен иметь доступ ко всем проверяемым чатам.
-		
+
 		Также содержит в себе механизм повторов при превышении времени ожидания ответа от сервера.
 
 		:param user: Данные проверяемого пользователя.
@@ -69,14 +69,14 @@ class TeleMaster:
 		"""
 
 		Try = 1
-		
+
 		while Try <= max_tries:
 			Try += 1
 
 			try:
 				Response = self.__Bot.get_chat_member(chat_id, user.id)
 				if Response.status in ("administrator", "creator", "member", "restricted"): return True
-				
+
 			except (ReadTimeoutError, ReadTimeout) as ExceptionData:
 				if Try == max_tries:
 					raise ExceptionData
@@ -93,7 +93,7 @@ class TeleMaster:
 	def check_user_subscriptions(self, user: UserData, chats: int | Sequence[int], max_tries: int = 3) -> bool | None:
 		"""
 		Проверяет, состоит ли пользователь в указанных чатах. Бот должен иметь доступ ко всем проверяемым чатам.
-		
+
 		Также содержит в себе механизм повторов при превышении времени ожидания ответа от сервера.
 
 		:param user: Данные проверяемого пользователя.
@@ -110,18 +110,18 @@ class TeleMaster:
 		"""
 
 		ChatsTuple = to_sequence(chats)
-		
+
 		if max_tries < 1:
 			raise ValueError("Max tries can't be less than 1.")
 
 		Subscriptions = 0
-			
+
 		for ChatID in ChatsTuple:
 			if self.check_user_subscription(user, ChatID, max_tries): Subscriptions += 1
 
 		if Subscriptions == len(ChatsTuple): return True
 		else: return False
-	
+
 	def safely_delete_messages(self, chat_id: int, messages: int | Sequence[int], complex_request: bool = False) -> Exception | None:
 		"""
 		Безопасно удаляет сообщения без выброса исключений.

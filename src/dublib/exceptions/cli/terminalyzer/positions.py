@@ -11,7 +11,7 @@ class EmptyPositionError(Exception):
 		:type position: str
 		"""
 
-		super().__init__(f"Position \"{position}\" on command \"{command_name}\".") 
+		super().__init__(f"Position \"{position}\" on command \"{command_name}\".")
 
 class ImportantPositionEmptyError(Exception):
 	"""Исключение: для обязательной позиции не задан параметр."""
@@ -24,12 +24,12 @@ class ImportantPositionEmptyError(Exception):
 		:type position_name: str
 		"""
 
-		super().__init__(position_name) 
+		super().__init__(position_name)
 
 class MultipleParametersOnPositionError(Exception):
 	"""Исключение: попытка установить несколько параметров для одной позиции."""
 
-	def __init__(self, position_name: str): 
+	def __init__(self, position_name: str):
 		"""
 		Исключение: попытка установить несколько параметров для одной позиции.
 
@@ -37,7 +37,7 @@ class MultipleParametersOnPositionError(Exception):
 		:type position_name: str
 		"""
 
-		super().__init__(f"On position \"{position_name}\" set more than 1 parameter.") 
+		super().__init__(f"On position \"{position_name}\" set more than 1 parameter.")
 
 class PositionAlreadyExistsError(Exception):
 	"""Исключение: позиция уже существует."""
@@ -50,7 +50,7 @@ class PositionAlreadyExistsError(Exception):
 		:type position_name: str
 		"""
 
-		super().__init__(position_name) 
+		super().__init__(position_name)
 
 class PositionDescriptionOverridingError(Exception):
 	"""Исключение: переопределение описания позиции."""
@@ -65,7 +65,7 @@ class PositionDescriptionOverridingError(Exception):
 		:type position_name: str
 		"""
 
-		super().__init__(f"Parameter overrides description for position \"{command_name}\" in model \"{position_name}\".") 
+		super().__init__(f"Parameter overrides description for position \"{command_name}\" in model \"{position_name}\".")
 
 class PositionNotFoundError(Exception):
 	"""Исключение: позиция не найдена."""
@@ -91,4 +91,4 @@ class PositionOptionalError(Exception):
 		:type position_name: str
 		"""
 
-		super().__init__(position_name) 
+		super().__init__(position_name)

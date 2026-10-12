@@ -17,7 +17,7 @@ class BasePosition:
 		"""Список аргументов."""
 
 		return self.__Arguments.copy()
-	
+
 	@property
 	def flags(self) -> list[Flag]:
 		"""Список флагов."""
@@ -37,7 +37,7 @@ class BasePosition:
 		Count = len(self.__Flags)
 		Count += len(self.__Arguments)
 		Count += len(self.__Keys) * 2
-	
+
 		return Count
 
 	@property
@@ -68,11 +68,11 @@ class BasePosition:
 
 	def __init__(self):
 		"""Базовая позиция команды."""
-		
+
 		self.__Arguments: list[Argument] = []
 		self.__Flags: list[Flag] = []
 		self.__Keys: list[Key] = []
-		
+
 	def add_argument(self, value_type: ValidableTypes = ValidableTypes.All, description: str | None = None):
 		"""
 		Добавляет аргумент на позицию.
@@ -133,7 +133,7 @@ class Position:
 		"""Описание позиции."""
 
 		return self.__Description
-	
+
 	@property
 	def flags(self) -> list[Flag]:
 		"""Список флагов."""
@@ -207,7 +207,7 @@ class Position:
 		self.__Name = name
 		self.__Description = description
 		self.__IsImportant = important
-		
+
 		self.__Argument: Argument | None = None
 		self.__Flags: list[Flag] = []
 		self.__Keys: list[Key] = []

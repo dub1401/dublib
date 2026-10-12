@@ -47,7 +47,7 @@ class ImportantHeaders:
 		self.__Authorizator: Authorizator = Authorizator()
 		self.__UserAgent: UserAgent | None = None
 		self.__AutoAcceptCH: bool = True
-	
+
 	def automatically_accept_client_hints(self, status: bool):
 		"""
 		Переключает автоматическое разрешение **Client Hints** при выполнении запросов.
@@ -88,7 +88,7 @@ class ImportantHeaders:
 
 		if name in self.__Headers:
 			raise Exceptions.HeaderRedefiningError(name)
-		
+
 		self.set(name, value)
 
 	def set(self, name: str, value: str | int):
@@ -110,7 +110,7 @@ class ImportantHeaders:
 
 		if name == constants.AUTHORIZATION_HEADER:
 			raise Exceptions.AuthorizationRedefiningError()
-		
+
 		self.__Headers[name] = value if type(value) is str else str(value)
 
 	def generate_user_agent(self, device: Sequence[str] | str | None = None, platform: Sequence[str] | str | None = None, browsers: Sequence[str] | str | None = None):

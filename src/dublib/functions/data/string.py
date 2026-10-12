@@ -14,7 +14,7 @@ def is_contains_cyrillic(text: str) -> bool:
 
 	for Char in text.lower():
 		if Char in _CYRYLLIC_CHARACTERS: return True
-	
+
 	return False
 
 def is_contains_alpha(text: str) -> bool:
@@ -45,7 +45,7 @@ def multiple_replace(string: str, values: Sequence[str], new_value: str) -> str:
 	:return: Обработанная строка.
 	:rtype: str
 	"""
-	
+
 	for Value in values: string = string.replace(Value, new_value)
 
 	return string
@@ -79,5 +79,5 @@ def strip_non_alpha(text: str) -> str:
 	Start, End = 0, len(text)
 	while Start < End and not text[Start].isalpha(): Start += 1
 	while End > Start and not text[End - 1].isalpha(): End -= 1
-  
+
 	return text[Start:End]

@@ -23,7 +23,7 @@ class All(BaseValidator[str]):
 		"""
 
 		return value
-	
+
 	@override
 	@staticmethod
 	def validate(value: str) -> bool:
@@ -37,7 +37,7 @@ class All(BaseValidator[str]):
 		"""
 
 		return True
-	
+
 class Alpha(BaseValidator[str]):
 
 	@override
@@ -53,7 +53,7 @@ class Alpha(BaseValidator[str]):
 		"""
 
 		return value
-	
+
 	@override
 	@staticmethod
 	def validate(value: str) -> bool:
@@ -67,7 +67,7 @@ class Alpha(BaseValidator[str]):
 		"""
 
 		return value.isalpha()
-	
+
 class Base64(BaseValidator[str]):
 
 	@override
@@ -83,7 +83,7 @@ class Base64(BaseValidator[str]):
 		"""
 
 		return value
-	
+
 	@override
 	@staticmethod
 	def validate(value: str) -> bool:
@@ -96,7 +96,7 @@ class Base64(BaseValidator[str]):
 		:rtype: bool
 		"""
 
-		try: 
+		try:
 			Result = validators.base64(value)
 			if type(Result) is bool: return Result
 		except validators.ValidationError: pass
@@ -121,7 +121,7 @@ class Bool(BaseValidator[bool]):
 		if value in ("true",): return True
 
 		return False
-	
+
 	@override
 	@staticmethod
 	def validate(value: str) -> bool:
@@ -153,7 +153,7 @@ class Datetime(BaseValidator[datetime]):
 		"""
 
 		return cast("datetime", dateparser.parse(value))
-	
+
 	@override
 	@staticmethod
 	def validate(value: str) -> bool:
@@ -166,7 +166,7 @@ class Datetime(BaseValidator[datetime]):
 		:rtype: bool
 		"""
 
-		try: 
+		try:
 			dateparser.parse(value)
 			return True
 		except (ValueError, TypeError): pass
@@ -188,7 +188,7 @@ class Domain(BaseValidator[str]):
 		"""
 
 		return value
-	
+
 	@override
 	@staticmethod
 	def validate(value: str) -> bool:
@@ -201,7 +201,7 @@ class Domain(BaseValidator[str]):
 		:rtype: bool
 		"""
 
-		try: 
+		try:
 			Result = validators.domain(value)
 			if type(Result) is bool: return Result
 		except validators.ValidationError: pass
@@ -223,7 +223,7 @@ class Email(BaseValidator[str]):
 		"""
 
 		return value
-	
+
 	@override
 	@staticmethod
 	def validate(value: str) -> bool:
@@ -236,7 +236,7 @@ class Email(BaseValidator[str]):
 		:rtype: bool
 		"""
 
-		try: 
+		try:
 			Result = validators.email(value)
 			if type(Result) is bool: return Result
 		except validators.ValidationError: pass
@@ -258,7 +258,7 @@ class Float(BaseValidator[float]):
 		"""
 
 		return float(value)
-	
+
 	@override
 	@staticmethod
 	def validate(value: str) -> bool:
@@ -288,7 +288,7 @@ class Integer(BaseValidator[int]):
 		"""
 
 		return int(value)
-	
+
 	@override
 	@staticmethod
 	def validate(value: str) -> bool:
@@ -318,7 +318,7 @@ class IPv4(BaseValidator[str]):
 		"""
 
 		return value
-	
+
 	@override
 	@staticmethod
 	def validate(value: str) -> bool:
@@ -331,7 +331,7 @@ class IPv4(BaseValidator[str]):
 		:rtype: bool
 		"""
 
-		try: 
+		try:
 			Result = validators.ipv4(value)
 			if type(Result) is bool: return Result
 		except validators.ValidationError: pass
@@ -353,7 +353,7 @@ class IPv6(BaseValidator[str]):
 		"""
 
 		return value
-	
+
 	@override
 	@staticmethod
 	def validate(value: str) -> bool:
@@ -366,7 +366,7 @@ class IPv6(BaseValidator[str]):
 		:rtype: bool
 		"""
 
-		try: 
+		try:
 			Result = validators.ipv6(value)
 			if type(Result) is bool: return Result
 		except validators.ValidationError: pass
@@ -388,7 +388,7 @@ class Number(BaseValidator[float | int]):
 		"""
 
 		return float(value) if "." in value else int(value)
-	
+
 	@override
 	@staticmethod
 	def validate(value: str) -> bool:
@@ -402,7 +402,7 @@ class Number(BaseValidator[float | int]):
 		"""
 
 		if "." in value:
-			try: 
+			try:
 				float(value)
 				return True
 			except ValueError: return False
@@ -428,7 +428,7 @@ class Path(BaseValidator[PathlibPath]):
 		"""
 
 		return PathlibPath(value)
-	
+
 	@override
 	@staticmethod
 	def validate(value: str) -> bool:
@@ -458,7 +458,7 @@ class UnsignedInteger(BaseValidator[int]):
 		"""
 
 		return int(value)
-	
+
 	@override
 	@staticmethod
 	def validate(value: str) -> bool:
@@ -472,7 +472,7 @@ class UnsignedInteger(BaseValidator[int]):
 		"""
 
 		return value.isdigit()
-	
+
 class URL(BaseValidator[str]):
 
 	@override
@@ -488,7 +488,7 @@ class URL(BaseValidator[str]):
 		"""
 
 		return value
-	
+
 	@override
 	@staticmethod
 	def validate(value: str) -> bool:
@@ -501,7 +501,7 @@ class URL(BaseValidator[str]):
 		:rtype: bool
 		"""
 
-		try: 
+		try:
 			Result = validators.url(value)
 			if type(Result) is bool: return Result
 		except validators.ValidationError: pass
@@ -523,7 +523,7 @@ class ValidPath(BaseValidator[PathlibPath]):
 		"""
 
 		return PathlibPath(value)
-	
+
 	@override
 	@staticmethod
 	def validate(value: str) -> bool:

@@ -20,7 +20,7 @@ class Patch:
 		"""File lines."""
 
 		return tuple(self.__lines)
-	
+
 	@property
 	def lines_count(self) -> int:
 		"""File lines count."""

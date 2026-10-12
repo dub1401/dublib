@@ -10,7 +10,7 @@ from .options import HelperOptions
 if TYPE_CHECKING:
 	from ..commands import CommandModel, ModelsGroup
 	from ..commands.positions import BasePosition, Position
-	
+
 __all__ = ["Helper", "HelperOptions"]
 
 class Helper:
@@ -121,7 +121,7 @@ class Helper:
 		name = FastStyler(name).decorate.bold if self.options.stylize else name
 
 		if self.options.stylize:
-			for Index in range(len(aliases)): 
+			for Index in range(len(aliases)):
 				aliases[Index] = FastStyler(aliases[Index]).decorate.bold
 
 		if aliases:
@@ -140,7 +140,7 @@ class Helper:
 		"""
 
 		info: list[str] = []
-		
+
 		title = self.options.position_marker
 		title += self.__get_stylized_position_name(position)
 
@@ -168,7 +168,7 @@ class Helper:
 					parameter_info += f": {parameter.description}"
 
 				info.append(parameter_info)
-	
+
 		for Index in range(len(info)):
 			info[Index] = f"\n{self.options.indent}" + info[Index]
 
@@ -249,7 +249,7 @@ class Helper:
 
 		if self.options.sort:
 			models = tuple(sorted(models, key = lambda model: model.name))
-			
+
 		table_data: dict[str, str] = {
 			model.indentificator.as_str(): model.description or ""
 			for model in models

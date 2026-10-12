@@ -11,7 +11,7 @@ def test_check_data():
 	assert Result.check_data(456) is False
 
 def test_merge():
-	
+
 	# Слияние целочисленных кодов.
 	ResultOne = ExecutionResult()
 	ResultTwo = ExecutionResult()
@@ -28,7 +28,7 @@ def test_merge():
 	# Проверка инициализации значений.
 	IsExceptionRaised = None
 
-	try: 
+	try:
 		ResultOne.value
 		IsExceptionRaised = False
 	except BusExceptions.ValueNotInitializedError: IsExceptionRaised = True
@@ -36,7 +36,7 @@ def test_merge():
 
 	IsExceptionRaised = None
 	ResultOne.rules.require_value_initialization.disable()
-	try: 
+	try:
 		ResultOne.value
 		IsExceptionRaised = False
 	except BusExceptions.ValueNotInitializedError: IsExceptionRaised = True

@@ -39,7 +39,7 @@ def deep_merge(
 		#---> Слияние словарей.
 		#==========================================================================================#
 		if isinstance(base_value, dict) and isinstance(content_value, dict):
-			base_value = deep_merge(base_value, content_value, sequences_type, uniqueness) 
+			base_value = deep_merge(base_value, content_value, sequences_type, uniqueness)
 			continue
 
 		#---> Слияние последовательностей.
@@ -155,7 +155,7 @@ def replace_key(dictionary: dict, old_key: Any, new_key: Any) -> dict:
 	:return: Обработанный словарь.
 	:rtype: dict
 	"""
-	
+
 	Result = {}
 	if old_key not in dictionary:
 		raise KeyError(old_key)

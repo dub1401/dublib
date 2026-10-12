@@ -38,11 +38,11 @@ class _curl_cffi_config:
 
 		self.__HttpVersion = CurlHttpVersion.V1_1
 		self.__Fingerprint: BrowserTypeLiteral | None = None
-	
+
 	def select_http_version(self, version: CurlHttpVersion):
 		"""
 		Указывает используемую версию протокола HTTP.
-		
+
 		:param version: Версия протокола HTTP.
 		:type version: CurlHttpVersion
 		"""
@@ -55,7 +55,7 @@ class _curl_cffi_config:
 
 		:param fingerprint: Строковый идентификатор отпечатка браузера или `None` для удаления. Список идентификаторов можно получить на [странице](https://github.com/lexiforest/curl_cffi?tab=readme-ov-file#supported-impersonate-browsers) библиотеки.
 		:type fingerprint: str | None
-		:raises ValueError: 
+		:raises ValueError: Unsupported fingerprint.
 		"""
 
 		if fingerprint not in get_args(BrowserTypeLiteral): raise ValueError(fingerprint)
@@ -82,7 +82,7 @@ class _httpx_config:
 		"""Дополнительная конфигурация библиотеки curl_cffi."""
 
 		self.__EnableHTTP2 = False
-	
+
 	def enable_http2(self, status: bool):
 		"""
 		Переключает режим использования протокола HTTP/2 для запросов.
@@ -123,7 +123,7 @@ class WebConfig:
 		"""Указывает, требуется ли вести логи при помощи стандартного модуля **Python**."""
 
 		return self.__EnableLogging
-	
+
 	@property
 	def redirecting(self) -> bool:
 		"""Указывает, следует ли выполнять автоматическую переадресацию."""
@@ -141,7 +141,7 @@ class WebConfig:
 		"""Указывает, необходимо ли проводить верификацию SSL."""
 
 		return self.__VerifySSL
-	
+
 	#==========================================================================================#
 	# >>>>> СВОЙСТВА <<<<< #
 	#==========================================================================================#
@@ -182,7 +182,7 @@ class WebConfig:
 
 	def __init__(self):
 		"""Конфигурация оператора запросов."""
-		
+
 		self.__Retries: int = 0
 		self.__UsedLib = WebLibs.requests
 		self.__GoodCodes: tuple[int | None, ...] = (200,)

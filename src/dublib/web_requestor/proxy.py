@@ -12,25 +12,25 @@ class Proxy:
 		"""Тип протокола подключения."""
 
 		return self.__Protocol
-	
+
 	@property
 	def host(self) -> str | None:
 		"""IP адрес или домен хоста."""
 
 		return self.__Host
-	
+
 	@property
 	def port(self) -> int | None:
 		"""Номер порта."""
 
 		return self.__Port
-	
+
 	@property
 	def login(self) -> str | None:
 		"""Логин."""
 
 		return self.__Login
-	
+
 	@property
 	def password(self) -> str | None:
 		"""Пароль."""
@@ -62,7 +62,7 @@ class Proxy:
 		self.__Port = port
 		self.__Login = login
 		self.__Password = password
-	
+
 	def parse(self, proxy: str) -> "Proxy":
 		"""
 		Парсит данные прокси из строки.
@@ -137,4 +137,3 @@ class Proxy:
 		if force_http and ProxyString.startswith("https"): ProxyString = "http" + ProxyString[5:]
 
 		return ProxyString
-	

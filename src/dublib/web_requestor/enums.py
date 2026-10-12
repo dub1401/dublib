@@ -6,7 +6,7 @@ from enum import Enum
 
 class Protocols(Enum):
 	"""Перечисление типов протоколов."""
-	
+
 	SOCKS4 = "socks4"
 	SOCKS5 = "socks5"
 	HTTPS = "https"
@@ -16,7 +16,7 @@ class Protocols(Enum):
 
 class RequestsTypes(Enum):
 	"""Перечисление типов поддерживаемыйх запросов."""
-	
+
 	DELETE = "delete"
 	GET = "get"
 	POST = "post"

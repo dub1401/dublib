@@ -46,7 +46,7 @@ class Terminalyzer:
 
 	def set_models_groups(self, groups: ModelsGroup | Sequence[ModelsGroup]):
 		"""
-		Set commands models group sequence. Sequence will be transformed into a tuple to protect it from external modification. 
+		Set commands models group sequence. Sequence will be transformed into a tuple to protect it from external modification.
 
 		:param groups: Group of commands models or it sequence.
 		:type groups: ModelsGroup | Sequence[ModelsGroup]
@@ -56,7 +56,7 @@ class Terminalyzer:
 
 	def parse_command(self, data: str | Sequence[str] | None = None, call_handler: bool = True) -> "CommandEntity | None":
 		"""
-		Parse command data. 
+		Parse command data.
 
 		:param data: Input data. If no data, it will be received from Python script arguments. If data given as string, it will be split by `shlex.split()`.
 		:type data: str | Sequence[str] | None

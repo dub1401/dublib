@@ -28,7 +28,7 @@ class _Validator(HTMLParser):
 		if not self.stack:
 			self.errors.append(f"Closing tag </{tag}> not opened.")
 			return
-		
+
 		if self.stack[-1] == tag:
 			self.stack.pop()
 
@@ -71,7 +71,7 @@ class HTML:
 	@property
 	def plain_text(self) -> str:
 		"""Текст без тегов и спецсимволов HTML."""
-		
+
 		PlainText = html.unescape(self.__Text)
 		PlainText = str(re.sub(self.__AllTagsRegex, "", PlainText))
 
@@ -171,7 +171,7 @@ class HTML:
 		self.__Text = html.unescape(self.__Text)
 
 		return self.__Text
-	
+
 	def validate(self, raise_exception: bool = False) -> tuple[str, ...]:
 		"""
 		Проверяет валидность структуры HTML.

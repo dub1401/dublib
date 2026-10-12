@@ -108,7 +108,7 @@ class CommandModel:
 		self.__identifier: CommandIdentifier = CommandIdentifier(self)
 
 		self.__handler: Callable[[CommandEntity], None] | None = None
-		self.__handler_args: tuple[Any, ...] = () 
+		self.__handler_args: tuple[Any, ...] = ()
 		self.__handler_kwargs: dict[str, Any] = {}
 
 		self.__base_position = BasePosition()
@@ -132,7 +132,7 @@ class CommandModel:
 		self.__positions[name] = position
 
 		return position
-	
+
 	def get_position(self, name: str) -> Position:
 		"""
 		Возвращает позицию.

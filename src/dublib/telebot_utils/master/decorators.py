@@ -13,7 +13,7 @@ def ignore_frequency_errors(function):
 	@wraps(function)
 	def Wrapper(*args, **kwargs):
 		Value = None
-			
+
 		try: Value = function(*args, **kwargs)
 		except apihelper.ApiTelegramException as ExceptionData:
 
@@ -24,5 +24,5 @@ def ignore_frequency_errors(function):
 			else: raise ExceptionData
 
 		else: return Value
-	
+
 	return Wrapper

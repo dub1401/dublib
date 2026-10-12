@@ -20,9 +20,9 @@ def deprecated(message: str | None = None):
 			warnings.warn(f"{Function} is deprecated.{Message}", DeprecationWarning, stacklevel = 2)
 
 			return function(*args, **kwargs)
-		
+
 		return wrapper
-	
+
 	return decorator
 
 def run_before_method(method_name: str):
@@ -35,7 +35,7 @@ def run_before_method(method_name: str):
 
 	if method_name.startswith("__"):
 		raise ValueError("Only public and protected methods supported in @run_before_method decorator.")
-	
+
 	def decorator(function):
 
 		@functools.wraps(function)
@@ -47,7 +47,7 @@ def run_before_method(method_name: str):
 					Method()
 
 			return function(*args, **kwargs)
-		
+
 		return wrapper
-	
+
 	return decorator

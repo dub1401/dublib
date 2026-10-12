@@ -55,7 +55,7 @@ class GetText:
 		:return: _description_
 		:rtype: str
 		"""
-		
+
 		if languages:
 			if type(languages) is str: languages = [languages]
 
@@ -63,5 +63,5 @@ class GetText:
 			except FileNotFoundError: return GetText.gettext(message)
 
 		else: return GetText._METHOD(message)
-	
+
 _ = GetText.gettext

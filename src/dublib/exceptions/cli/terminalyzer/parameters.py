@@ -14,7 +14,7 @@ class KeyMissingError(Exception):
 		:type key: str
 		"""
 
-		super().__init__(key) 
+		super().__init__(key)
 
 class NamedParameterMissingInModelError(Exception):
 	"""Исключение: именованный параметр отсутствует в модели команды."""
@@ -27,7 +27,7 @@ class NamedParameterMissingInModelError(Exception):
 		:type parameter_name: str
 		"""
 
-		super().__init__(parameter_name) 
+		super().__init__(parameter_name)
 
 class NotEnoughParametersError(Exception):
 	"""Исключение: недостаточно параметров."""
@@ -42,7 +42,7 @@ class NotEnoughParametersError(Exception):
 		:type given: int
 		"""
 
-		super().__init__(f"Minimal parameters count is {minimal}. Given {given}.") 
+		super().__init__(f"Minimal parameters count is {minimal}. Given {given}.")
 
 class TooManyParametersError(Exception):
 	"""Исключение: слишком много параметров."""
@@ -57,7 +57,7 @@ class TooManyParametersError(Exception):
 		:type given: int
 		"""
 
-		super().__init__(f"Maximal parameters count is {maximal}. Given {given}.") 
+		super().__init__(f"Maximal parameters count is {maximal}. Given {given}.")
 
 class UnboundKeyError(Exception):
 	"""Исключение: ключ не связан со значением."""
@@ -69,7 +69,7 @@ class UnboundKeyError(Exception):
 		:param key: Название ключа.
 		:type key: str
 		"""
-		
+
 		super().__init__(f"\"{key}\".")
 
 class UnboundParameterError(Exception):
@@ -96,4 +96,4 @@ class UnfamiliarParametersError(Exception):
 		:type identifier: CommandIdentifier
 		"""
 
-		super().__init__(identifier.as_str()) 
+		super().__init__(identifier.as_str())

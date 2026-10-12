@@ -19,7 +19,7 @@ __all__ = [
 def deep_copy(data: Any) -> Any:
 	"""
 	Выполняет глубокое копирование объекта с автоматическим определением наилучшего метода.
-	
+
 	Объекты, которые могут быть сериализованы в JSON (`dict`, `list`, `tuple`), копируются с помощью десериализации/сериализации библиотекой **orjson**. В остальных случаях вызывается `copy.deepcopy()`.
 
 	:param data: Копируемый объект.
@@ -27,7 +27,7 @@ def deep_copy(data: Any) -> Any:
 	:return: Копия объекта.
 	:rtype: Any
 	"""
-	
+
 	try: return orjson.loads(orjson.dumps(data))
 	except (orjson.JSONDecodeError, orjson.JSONEncodeError): return copy.deepcopy(data)
 
@@ -51,7 +51,7 @@ def stringify_float(number: float, round_factor: int = 2) -> str:
 def string_to_bool(value: str, literals: Sequence[str] = ("false", "0")) -> bool:
 	"""
 	Преобразует строку в логический тип, учитывая её содержимое.
-	
+
 	Например, `"false"` будет приведено к `False`, в отличие от стандартной реализации.
 
 	:param value: Преобразуемая строка.

@@ -104,7 +104,7 @@ class ExecutionResult:
 		"""Целочисленный код."""
 
 		return self._Code
-	
+
 	@code.setter
 	def code(self, new_code: int | None):
 		"""Код выполнения."""
@@ -128,7 +128,7 @@ class ExecutionResult:
 		"""Контейнер сообщений."""
 
 		return self._Messages
-	
+
 	@property
 	def rules(self) -> RulesContainer:
 		"""Набор правил взаимодействия."""
@@ -200,10 +200,10 @@ class ExecutionResult:
 		"""
 
 		return self._Data[key]
-	
+
 	def __iadd__(self, status: "ExecutionResult") -> "ExecutionResult":
 		"""
-		Выполняет слияние другого контейнера с текущим, объединяя списки сообщений. 
+		Выполняет слияние другого контейнера с текущим, объединяя списки сообщений.
 
 		:param status: Контейнер результата для слияния.
 		:type status: ExecutionResult
@@ -260,7 +260,7 @@ class ExecutionResult:
 
 	def merge(self, result: "ExecutionResult", overwrite: bool = True):
 		"""
-		Выполняет слияние другого контейнера с текущим, объединяя списки сообщений. 
+		Выполняет слияние другого контейнера с текущим, объединяя списки сообщений.
 
 		:param status: Контейнер результата для слияния.
 		:type status: ExecutionResult
@@ -274,7 +274,7 @@ class ExecutionResult:
 
 		for Key in result.data.keys():
 			if Key in self._Data and overwrite or Key not in self._Data: self._Data[Key] = result.data[Key]
-		
+
 		for Element in result.messages.as_list(): self._Messages.add_message(Element)
 
 	def delete_value(self):

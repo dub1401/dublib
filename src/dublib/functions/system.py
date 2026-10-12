@@ -14,7 +14,7 @@ def check_python_minimal_version(major: int, minor: int, raise_exception: bool =
 	:raises RuntimeError: Неподдерживаемая версия Python.
 	"""
 
-	if sys.version_info < (major, minor): 
+	if sys.version_info < (major, minor):
 		if raise_exception:
 			raise RuntimeError(f"Python {major}.{minor} or newer is required.")
 		else:
@@ -37,7 +37,7 @@ def clear(clear_history: bool = True):
 
 def shutdown():
 	"""Выключает устройство."""
-	
+
 	match sys.platform:
 		case"linux":
 			subprocess.run(("sudo", "shutdown", "now"))

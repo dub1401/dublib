@@ -18,7 +18,7 @@ class ExecutionMessage:
 		"""Тип сообщения."""
 
 		return self._Type
-	
+
 	@property
 	def origin(self) -> str | None:
 		"""Строка идентификации источника сообщения."""
@@ -75,7 +75,7 @@ class MessagesContainer:
 		"""Состояние: имеются ли сообщения-ошибки."""
 
 		return self.__HasErrors
-	
+
 	@property
 	def has_warnings(self) -> bool:
 		"""Состояние: имеются ли сообщения-предупреждения."""
@@ -102,10 +102,10 @@ class MessagesContainer:
 		"""
 
 		self.__Messages.append(message)
-		
+
 		match message.type:
 			case MessagesTypes.Error: self.__HasErrors = True
-			case MessagesTypes.Warning: self.__HasWarnings = True 
+			case MessagesTypes.Warning: self.__HasWarnings = True
 
 	def as_list(self) -> list[ExecutionMessage]:
 		"""

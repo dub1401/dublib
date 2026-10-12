@@ -49,7 +49,7 @@ class CommandParser:
 	def __chack_parameters_count(self):
 		"""
 		Проверяет соответвтсие количества параметров.
-		
+
 		:raises TooManyParametersError: Слишком много параметров.
 		:raises NotEnoughParametersError: Недостаточно параметров.
 		"""
@@ -114,7 +114,7 @@ class CommandParser:
 		for position in self.__model.positions:
 
 			if self.__is_position_locked(position): continue
-				
+
 			if position.argument and self.__positions_parameters[position.name] is None:
 				value = position.argument.type.value.parse(parameter)
 				self.__lock_position(position.name, index, ArgumentEntity(position.argument, value))
@@ -131,7 +131,7 @@ class CommandParser:
 		"""
 
 		base = self.__model.base
-			
+
 		for argument in base.arguments:
 			value = argument.type.value.parse(parameter)
 			self.__add_base_position_parameter(index, ArgumentEntity(argument, value))
@@ -153,7 +153,7 @@ class CommandParser:
 			if parameter == flag.name or parameter in flag.aliases:
 				self.__add_base_position_parameter(index, FlagEntity(flag))
 				return
-		
+
 		for key in base.keys:
 			if parameter == key.name or parameter in key.aliases:
 				self.__check_unbound_key(parameter, index)
@@ -174,12 +174,12 @@ class CommandParser:
 		for position in self.__model.positions:
 
 			if self.__is_position_locked(position): continue
-			
+
 			for flag in position.flags:
 				if parameter == flag.name or parameter in flag.aliases:
 					self.__lock_position(position.name, index, FlagEntity(flag))
 					return
-			
+
 			for key in position.keys:
 				if parameter == key.name or parameter in key.aliases:
 					self.__check_unbound_key(parameter, index)

@@ -13,7 +13,7 @@ class ChatNotSpecifiedError(Exception):
 	def __init__(self):
 		"""Исключение: не указан чат для выгрузки."""
 
-		super().__init__() 
+		super().__init__()
 
 class UnableCacheFileError(Exception):
 	"""Исключение: не удалось кэшировать файл."""
@@ -26,7 +26,7 @@ class UnableCacheFileError(Exception):
 		:type path: Path
 		"""
 
-		super().__init__(path) 
+		super().__init__(path)
 
 #==========================================================================================#
 # >>>>> ПОЛЬЗОВАТЕЛИ <<<<< #
@@ -46,7 +46,7 @@ class RefreshingBlockedError(Exception):
 	def __init__(self):
 		"""Исключение: считывание данных из локального файла заблокировано."""
 
-		super().__init__("While saving suppressed refreshing is blocked.") 
+		super().__init__("While saving suppressed refreshing is blocked.")
 
 class SavingQueueBlockedError(Exception):
 	"""Исключение: очередь сохранения заблокирована."""
@@ -54,4 +54,4 @@ class SavingQueueBlockedError(Exception):
 	def __init__(self):
 		"""Исключение: очередь сохранения заблокирована."""
 
-		super().__init__("Saving queue disabled. If task remained they will be completed.") 
+		super().__init__("Saving queue disabled. If task remained they will be completed.")

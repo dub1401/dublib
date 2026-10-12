@@ -24,5 +24,5 @@ def to_sequence(value: Any, target_type: type[list | set | tuple] = tuple) -> li
 
 	if type(value) is target_type: return value
 	if type(value) in (list, set, tuple): return target_type(value)
-	
+
 	return target_type((value,))

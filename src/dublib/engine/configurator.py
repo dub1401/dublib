@@ -86,7 +86,7 @@ class Config[T: ConfigTemplate]:
 			cls.__INSTANCES[PosixConfigPath] = Instance
 
 		return cls.__INSTANCES[args[0]]
-	
+
 	def __init__(self, path: PathLike[str] | str, model: type[T]):
 		"""
 		Контейнер конфигурации.
@@ -105,7 +105,7 @@ class Config[T: ConfigTemplate]:
 		self.__Model: type[T] = model
 
 		self.__Data: T = self.load()
-		
+
 		self.__IsWatching: bool = False
 		self.__WatchingThread: Thread | None = None
 
@@ -169,7 +169,7 @@ class Config[T: ConfigTemplate]:
 		"""Включает асинхронное отслеживание изменений в файле конфигурации и автоматическую перезагрузку последнего."""
 
 		self.__IsWatching = True
-		
+
 		async for _ in awatch(self.__ConfigFile):
 			if not self.__IsWatching: break
 			await asyncio.to_thread(self.load)

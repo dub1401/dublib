@@ -67,7 +67,7 @@ class UserData:
 	@property
 	def is_chat_forbidden(self) -> bool:
 		"""Состояние: может ли бот контактировать с пользователем."""
-		
+
 		return self.__Data["is_chat_forbidden"]
 
 	@property
@@ -296,7 +296,7 @@ class UserData:
 		:param force: Указывает, нужно ли перезаписывать уже существующий объект.
 		:type force: bool
 		"""
-		
+
 		if key not in self.__Objects or force: self.__Objects[key] = custom_object
 
 	def check_flags(self, flags: Sequence[str] | str) -> bool:
@@ -320,7 +320,7 @@ class UserData:
 		"""Очищает временные свойства пользователя."""
 
 		self.__Data["temp"] = {}
-		self.save()		
+		self.save()
 
 	def get_object(self, key: str) -> Any:
 		"""
@@ -374,7 +374,7 @@ class UserData:
 			if Permission not in self.__Data["permissions"]: return False
 
 		return True
-	
+
 	def has_object(self, key: str) -> bool:
 		"""
 		Проверяет, прикреплён ли к пользователю объект с переданным ключом.
@@ -399,7 +399,7 @@ class UserData:
 
 		if key in self.__Data["data"].keys() or key in self.__Data["temp"].keys(): return True
 
-		return False 
+		return False
 
 	def refresh(self):
 		"""
@@ -418,7 +418,7 @@ class UserData:
 			Date = dateparser.parse(Data["last_activity"])
 			if Date: Date.replace(tzinfo = None)
 			Data["last_activity"] = Date
-		
+
 		self.__Data = Data
 
 	def remove_object(self, key: str):
@@ -488,11 +488,11 @@ class UserData:
 		:type use_queue: bool
 		"""
 
-		
+
 		if self.__SuppressSaving or self.__DeltaHash == self.__CalculateHash():
 			LOGGER.debug(f"{self} data saving skipped.")
 			return
-		
+
 		if self.__Manager.is_saving_queue_enabled and use_queue:
 			self.__Manager.push_to_saving_queue(self)
 			return
@@ -534,7 +534,7 @@ class UserData:
 		:param force: Указывает, нужно ли перезаписывать уже существующее свойство.
 		:type force: bool
 		"""
-		
+
 		if key not in self.__Data["data"].keys() or force: self.__SetProperty("data", key, value)
 
 	def set_temp_property(self, key: str, value: Any, force: bool = True):
@@ -550,13 +550,13 @@ class UserData:
 		:param force: Указывает, нужно ли перезаписывать уже существующее свойство.
 		:type force: bool
 		"""
-		
+
 		if key not in self.__Data["temp"].keys() or force: self.__SetProperty("temp", key, value)
 
 	def suppress_saving(self, status: bool, save_on_disabling: bool = True):
 		"""
 		Подавляет сохранение в локальный файл.
-		
+
 		Следует использовать для оптимизации при множественных изменениях. Во время подавления недоступен вызов метода `refresh()`.
 
 		:param status: Статус подавления.
@@ -651,7 +651,7 @@ class UsersManager:
 		"""Состояние: форматировать ли локальные файлы отступами."""
 
 		return self.__IsPrettySaving
-	
+
 	@property
 	def is_saving_queue_enabled(self) -> bool:
 		"""Состояние: используется ли очередь сохранений."""
@@ -743,7 +743,7 @@ class UsersManager:
 		:return: Данные пользователя.
 		:rtype: UserData
 		"""
-		
+
 		if type(user) is not types.User: raise TypeError(f"telebot.types.User object expected, not {type(user)}.")
 
 		if user.id not in self.__Users: self.__Users[user.id] = UserData(self, user.id)
@@ -793,13 +793,13 @@ class UsersManager:
 		:rtype: UserData
 		"""
 
-		if user_id not in self.__Users: 
+		if user_id not in self.__Users:
 			UserPath = f"{self.__StorageDirectory}/{user_id}.json"
 			if not os.path.exists(UserPath): raise KeyError(f"User with ID {user_id} not exists.")
 			self.__Users[user_id] = UserData(self, user_id)
 
 		return self.__Users[user_id]
-	
+
 	def is_user_exists(self, user_id: int) -> bool:
 		"""
 		Проверяет, зарегестрирован ли пользователь в системе.
@@ -825,7 +825,7 @@ class UsersManager:
 
 		if user.id not in self.__SavingQueue:
 			self.__SavingQueue.append(user.id)
-			
+
 			if not self.__SavingQueueThread or not self.__SavingQueueThread.is_alive():
 				self.__SavingQueueThread = Thread(target = self.__SavingQueueProcessor, name = "Users manager saving queue.")
 				self.__SavingQueueThread.start()
@@ -833,7 +833,7 @@ class UsersManager:
 	def reload_users(self, threads: int = 1):
 		"""
 		Загружает данные пользователей из локальных файлов.
-		
+
 		Вызывается автоматически при инициализации менеджера. Повторный вызов без реализации механизмов защиты может привести к потере данных.
 
 		:param threads: Число потоков, использующихся для операций чтения. По умолчанию 1.
@@ -877,7 +877,7 @@ class UsersManager:
 	def stop_unloader(self):
 		"""Останавливает фоновую задачу по периодической выгрузке неактивных пользователей из памяти."""
 
-		if not self.__Scheduler: return 
+		if not self.__Scheduler: return
 		self.__Scheduler.remove_job(self.__UnloaderTaskID)
 		self.__Scheduler = None
 

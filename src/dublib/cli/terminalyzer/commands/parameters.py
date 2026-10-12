@@ -12,7 +12,7 @@ class Argument:
 		"""Описание аргумента."""
 
 		return self.__Description
-	
+
 	@property
 	def is_important(self) -> bool:
 		"""Состояние: является ли аргумент обязательным."""
@@ -55,13 +55,13 @@ class Flag:
 		"""Описание флага."""
 
 		return self.__Description
-	
+
 	@property
 	def is_important(self) -> bool:
 		"""Состояние: является ли флаг обязательным."""
 
 		return self.__IsImportant
-	
+
 	@property
 	def name(self) -> str:
 		"""Название флага."""
@@ -101,19 +101,19 @@ class Key:
 		"""Описание ключа."""
 
 		return self.__Description
-	
+
 	@property
 	def is_important(self) -> bool:
 		"""Состояние: является ли ключ обязательным."""
 
 		return self.__IsImportant
-	
+
 	@property
 	def name(self) -> str:
 		"""Название ключа."""
 
 		return self.__Name
-	
+
 	@property
 	def type(self) -> ValidableTypes:
 		"""Тип значения ключа."""
@@ -135,7 +135,7 @@ class Key:
 		:param important: Указывает, является ли ключ обязательным.
 		:type important: bool
 		"""
-		
+
 		self.__Name = name
 		self.__Aliases = list(aliases) if aliases else []
 		self.__Type = value_type

@@ -12,7 +12,7 @@ def test_HTML():
 	assert Object.has_tag("u") == 0
 	assert Object.remove_tags("i") == "<b>test</b><b>123</b>"
 	assert Object.replace_tag("b", "span") == "<span>test</span><span>123</span>"
-	
+
 	TestData = "&copy;"
 	Object = HTML(TestData)
 	assert Object.unescape() == "©"

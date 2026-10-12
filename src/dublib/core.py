@@ -14,10 +14,10 @@ class ColorFormatter(logging.Formatter):
 		:return: Текст сообщения.
 		:rtype: str
 		"""
-		
+
 		Message = super().format(record)
 
-		match record.levelno: 
+		match record.levelno:
 			case logging.WARNING: Message = FastStyler(Message).colorize.yellow
 			case logging.ERROR: Message = FastStyler(Message).colorize.red
 

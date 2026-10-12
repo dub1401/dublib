@@ -51,19 +51,19 @@ class TextStyler:
 		"""Набор кодов декораций."""
 
 		return self.__Decorations
-	
+
 	@property
 	def text_color(self) -> codes.Colors | None:
 		"""Код цвета текста."""
 
 		return self.__TextColor
-	
+
 	@property
 	def background_color(self) -> codes.BackgroundsColors | None:
 		"""Код цвета фона."""
 
 		return self.__BackgroundColor
-	
+
 	@property
 	def is_autoreset(self) -> bool:
 		"""Состояние переключателя: нужно ли добавлять последовательность сброса стилей в конец строки."""
@@ -128,12 +128,12 @@ class TextStyler:
 		if self.__Decorations: Codes.extend(self.__Decorations)
 		if self.__TextColor: Codes.append(self.__TextColor)
 		if self.__BackgroundColor: Codes.append(self.__BackgroundColor)
-		
+
 		text = self.build_ansi_escape(Codes) + text
 		if self.__Autoreset: text += escapes.Drops.RESET
 
 		return text
-	
+
 	#==========================================================================================#
 	# >>>>> МЕТОДЫ УСТАНОВКИ СТИЛЕЙ <<<<< #
 	#==========================================================================================#
@@ -175,5 +175,5 @@ class TextStyler:
 		:param status: Статус добавления последовательности.
 		:type status: bool
 		"""
-		
+
 		self.__Autoreset = status

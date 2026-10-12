@@ -209,7 +209,7 @@ class CommandEntity:
 		"""
 
 		arguments: list[ArgumentEntity] = []
-		
+
 		for position in self.__positions.values():
 			parameter = position.content
 
@@ -318,7 +318,7 @@ class CommandEntity:
 	def check_flag(self, flag: str, missing_error: bool = True) -> bool:
 		"""
 		Проверяет, активирован ли флаг.
-		
+
 		:param flag: Имя флага.
 		:type flag: str
 		:param missing_error: Enable raising `NamedParameterMissingInModelError` exception.
@@ -336,7 +336,7 @@ class CommandEntity:
 	def check_key(self, key: str, missing_error: bool = True) -> bool:
 		"""
 		Проверяет, активирован ли ключ.
-		
+
 		:param key: Имя ключа.
 		:type key: str
 		:param missing_error: Enable raising `NamedParameterMissingInModelError` exception.

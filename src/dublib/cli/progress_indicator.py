@@ -57,7 +57,7 @@ class ProgressIndicator:
 			cls.__INSTANCE = Instance
 
 		return cls.__INSTANCE
-	
+
 	def __init__(self):
 		"""Терминальный индикатор прогресса на основе протокола **OSC 9;4**."""
 
@@ -117,4 +117,3 @@ class ProgressIndicator:
 		self.__Progress = Progress
 		self.__Write()
 
-		

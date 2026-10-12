@@ -42,7 +42,7 @@ class WebRequestor:
 	#==========================================================================================#
 	# >>>>> СВОЙСТВА <<<<< #
 	#==========================================================================================#
-	
+
 	@property
 	def config(self) -> WebConfig:
 		"""Конфигурация оператора запросов."""
@@ -86,11 +86,11 @@ class WebRequestor:
 		while Try < tries and not Response.ok:
 			if Try > 0: sleep(self.__Config.delay)
 			Try += 1
-			
+
 			try:
 				CurrentProxy = random.choice(self.__Proxies) if self.__Proxies else None
 				self.__RequestsMethods[request_type][self.__Config.lib](Response, url, CurrentProxy, **kwargs)
-				
+
 				#---> Переключение HTTP/HTTPS протоколов прокси при неудачном запросе.
 				#==========================================================================================#
 				if not Response.ok and CurrentProxy and self.__Config.switch_proxy_protocol and CurrentProxy.protocol in (Protocols.HTTP, Protocols.HTTPS):
@@ -280,7 +280,7 @@ class WebRequestor:
 		))
 
 		return response
-	
+
 	#==========================================================================================#
 	# >>>>> ПРИВАТНЫЕ МЕТОДЫ ЗАПРОСОВ БИБЛИОТЕКИ HTTPX <<<<< #
 	#==========================================================================================#
@@ -312,7 +312,7 @@ class WebRequestor:
 		headers = self.__MergeHeaders(headers)
 		CurrentCookies = self.cookies or {}
 		cookies = cookies or {}
-		
+
 		self.__Session = httpx.Client(
 			params = params,
 			headers = headers,
@@ -392,7 +392,7 @@ class WebRequestor:
 		headers = self.__MergeHeaders(headers)
 		CurrentCookies = self.cookies or {}
 		cookies = cookies or {}
-		
+
 		self.__Session = httpx.Client(
 			params = params,
 			headers = headers,
@@ -406,7 +406,7 @@ class WebRequestor:
 		response.parse_response(self.__Session.post(url, data = data, json = json))
 
 		return response
-	
+
 	#==========================================================================================#
 	# >>>>> ПРИВАТНЫЕ МЕТОДЫ ЗАПРОСОВ БИБЛИОТЕКИ REQUESTS <<<<< #
 	#==========================================================================================#
@@ -434,7 +434,7 @@ class WebRequestor:
 		:return: Контейнер ответа от библиотеки **requests**.
 		:rtype: WebResponse
 		"""
-		
+
 		self.__Session = cast("requests.Session", self.__Session)
 		headers = self.__MergeHeaders(headers)
 
@@ -471,7 +471,7 @@ class WebRequestor:
 		:return: Контейнер ответа от библиотеки **requests**.
 		:rtype: WebResponse
 		"""
-		
+
 		self.__Session = cast("requests.Session", self.__Session)
 		headers = self.__MergeHeaders(headers)
 
@@ -486,7 +486,7 @@ class WebRequestor:
 		))
 
 		return response
-	
+
 	def __requests_POST(self, response: WebResponse, url: str, proxy: Proxy | None = None, params: dict | None = None, headers: dict | None = None, cookies: dict | None = None, data: Any = None, json: dict | None = None) -> WebResponse:
 		"""
 		Отправляет POST запрос через библиотеку **requests**.
@@ -527,7 +527,7 @@ class WebRequestor:
 		))
 
 		return response
-		
+
 	#==========================================================================================#
 	# >>>>> ПУБЛИЧНЫЕ МЕТОДЫ <<<<< #
 	#==========================================================================================#
@@ -567,11 +567,11 @@ class WebRequestor:
 
 	def close(self):
 		"""Закрывает менеджер запросов."""
-			
-		if self.__Session is not None: 
+
+		if self.__Session is not None:
 			self.__Session.close()
 			self.__Session = None
-			
+
 	def add_proxies(self, proxies: Sequence[Proxy] | Proxy):
 		"""
 		Добавляет прокси в систему ротации.
@@ -579,13 +579,13 @@ class WebRequestor:
 		:param proxy: Набор данных прокси-серверов.
 		:type proxy: Sequence[Proxy] | Proxy
 		"""
-		
+
 		if proxies:
 			ProxiesList = to_sequence(proxies, list)
 			Buffer = list(self.__Proxies)
 			Buffer += ProxiesList
 			self.__Proxies = tuple(Buffer)
-	
+
 	def remove_proxies(self):
 		"""Удаляет данные используемых прокси."""
 
@@ -614,7 +614,7 @@ class WebRequestor:
 
 	#==========================================================================================#
 	# >>>>> ПУБЛИЧНЫЕ МЕТОДЫ ВЫПОЛНЕНИЯ ЗАПРОСОВ <<<<< #
-	#==========================================================================================#	
+	#==========================================================================================#
 
 	def delete(self, url: str, params: dict | None = None, headers: dict | None = None, cookies: dict | None = None, data: Any = None, json: dict | None = None) -> WebResponse:
 		"""
@@ -653,9 +653,9 @@ class WebRequestor:
 		:return: Унифицированный контейнер ответа на веб-запросы.
 		:rtype: WebResponse
 		"""
-		
+
 		return self.request(RequestsTypes.GET, url, params = params, headers = headers, cookies = cookies)
-	
+
 	def post(self, url: str, params: dict | None = None, headers: dict | None = None, cookies: dict | None = None, data: Any = None, json: dict | None = None) -> WebResponse:
 		"""
 		Отправляет POST-запрос.

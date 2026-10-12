@@ -66,8 +66,8 @@ Changelog = "https://github.com/DUB1401/dublib/releases"
 include = ["src/*", "tests/*"]
 
 [tool.ruff.lint]
-select = ["A", "ARG", "C", "COM", "E", "F", "I", "N818", "TC", "UP"]
-ignore = ["E701", "E501"]
+select = ["A", "ARG", "C", "COM", "E", "F", "I", "N818", "TC", "UP", "W"]
+ignore = ["E701", "E501", "W191"]
 
 [tool.ruff.lint.per-file-ignores]
 "dublib/functions/**.py" = ["N"]
