@@ -22,7 +22,6 @@ All functions, classes and methods in **dublib** provides detailed docstrings in
 - **Engine** – talking bus, configs operator, patcher and localisation helper.
 - **Functions** – functions to data processing and transformation, unified system calls, decorators.
 - **Polyglot** – simple formatters for _Markdown_ and _HTML_.
-- **TelebotUtils** – users manager based on JSON, caching operator and extensions for [pyTelegramBotAPI](https://github.com/eternnoir/pyTelegramBotAPI).
 - **Validators** – validators and parsers for string-type data.
 - **WebRequestor** – WEB-requests operator, that unified work with [requests](https://github.com/psf/requests), [httpx](https://github.com/encode/httpx) and [curl_cffi](https://github.com/lexiforest/curl_cffi) libs and add many automations.
 

@@ -43,9 +43,6 @@ classifiers = [
 ]
 
 [project.optional-dependencies]
-telebot = [
-	"APScheduler",
-	"pyTelegramBotAPI"
 ]
 dev = [
 	"myst_parser",

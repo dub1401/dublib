@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 For visual categorization of changes emojis are used in accordance with [gitmoji](https://gitmoji.dev).
 
+## [Unreleased]
+
+### 🔥 Removed
+- Module `telebot_utils`.
+
 ## [0.32.0] - 2026-10-12
 
 ### ✨ Added
