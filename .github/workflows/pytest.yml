@@ -4,18 +4,17 @@ permissions:
   contents: read
 
 on:
-  workflow_dispatch:
   push:
     paths:
-      - "src/dublib/Engine/Bus.py"
-      - "src/dublib/Functions/Data.py"
-      - "src/dublib/Polyglot/**"
+      - "src/dublib/engine/bus.py"
+      - "src/dublib/functions/data.py"
+      - "src/dublib/polyglot/**"
       - "tests/**"
   pull_request:
     paths:
-      - "src/dublib/Engine/Bus.py"
-      - "src/dublib/Functions/Data.py"
-      - "src/dublib/Polyglot/**"
+      - "src/dublib/engine/bus.py"
+      - "src/dublib/functions/data.py"
+      - "src/dublib/polyglot/**"
       - "tests/**"
 
 jobs:
