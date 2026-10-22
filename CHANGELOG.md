@@ -7,7 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 For visual categorization of changes emojis are used in accordance with [gitmoji](https://gitmoji.dev).
 
-## [Unreleased]
+## [0.33.0]
+
+### 🎨 Changed
+- Dependencies separated in optional groups.
+
+#### engine.config
+- Module renamed to `config` from `configurator`.
+- Migration to [pydantic-settings](https://github.com/pydantic/pydantic-settings).
+- `Config` now isn't singleton.
+- Support many config sources.
+- Switched in read-only mode.
+- Support values from environment variables and *.toml files.
 
 ### 🔥 Removed
 - Module `telebot_utils`.

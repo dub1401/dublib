@@ -1,5 +1,5 @@
 # Engine
 ```{toctree}
-configurator
+config
 patcher
 ```
