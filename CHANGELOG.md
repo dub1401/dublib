@@ -9,6 +9,10 @@ For visual categorization of changes emojis are used in accordance with [gitmoji
 
 ## [0.33.0]
 
+### ✨ Added
+#### validators
+- All validators now can be used as [pydantic](https://github.com/pydantic/pydantic) annotations.
+
 ### 🎨 Changed
 - Dependencies separated in optional groups.
 

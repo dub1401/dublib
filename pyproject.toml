@@ -52,7 +52,6 @@ validators = [
 	"pathvalidate",
 	"validators>=0.36",
 ]
-
 dev = [
 	"myst_parser",
 	"pytest",

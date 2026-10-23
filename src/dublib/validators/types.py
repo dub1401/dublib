@@ -14,12 +14,12 @@ class All(BaseValidator[str]):
 	@staticmethod
 	def convert(value: str) -> str:
 		"""
-		Конвертирует строку в значение определённого типа.
+		Convert value into target type without validation.
 
-		:param value: Конвертируемая строка.
+		:param value: Convertible string.
 		:type value: str
-		:return: Конвертированное значение.
-		:rtype: str
+		:return: Conversion result.
+		:rtype: T
 		"""
 
 		return value
@@ -28,11 +28,11 @@ class All(BaseValidator[str]):
 	@staticmethod
 	def validate(value: str) -> bool:
 		"""
-		Проверяет, соответствует ли строка критериям валидируемого типа.
+		Validate is string can be converted into target type.
 
-		:param value: Проверяемая строка.
+		:param value: Validable string.
 		:type value: str
-		:return: Возвращает `True`, если строка является валидным значением типа.
+		:return: `True` if string valid.
 		:rtype: bool
 		"""
 
@@ -44,12 +44,12 @@ class Alpha(BaseValidator[str]):
 	@staticmethod
 	def convert(value: str) -> str:
 		"""
-		Конвертирует строку в значение определённого типа.
+		Convert value into target type without validation.
 
-		:param value: Конвертируемая строка.
+		:param value: Convertible string.
 		:type value: str
-		:return: Конвертированное значение.
-		:rtype: str
+		:return: Conversion result.
+		:rtype: T
 		"""
 
 		return value
@@ -58,11 +58,11 @@ class Alpha(BaseValidator[str]):
 	@staticmethod
 	def validate(value: str) -> bool:
 		"""
-		Проверяет, соответствует ли строка критериям валидируемого типа.
+		Validate is string can be converted into target type.
 
-		:param value: Проверяемая строка.
+		:param value: Validable string.
 		:type value: str
-		:return: Возвращает `True`, если строка является валидным значением типа.
+		:return: `True` if string valid.
 		:rtype: bool
 		"""
 
@@ -74,12 +74,12 @@ class Base64(BaseValidator[str]):
 	@staticmethod
 	def convert(value: str) -> str:
 		"""
-		Конвертирует строку в значение определённого типа.
+		Convert value into target type without validation.
 
-		:param value: Конвертируемая строка.
+		:param value: Convertible string.
 		:type value: str
-		:return: Конвертированное значение.
-		:rtype: str
+		:return: Conversion result.
+		:rtype: T
 		"""
 
 		return value
@@ -88,11 +88,11 @@ class Base64(BaseValidator[str]):
 	@staticmethod
 	def validate(value: str) -> bool:
 		"""
-		Проверяет, соответствует ли строка критериям валидируемого типа.
+		Validate is string can be converted into target type.
 
-		:param value: Проверяемая строка.
+		:param value: Validable string.
 		:type value: str
-		:return: Возвращает `True`, если строка является валидным значением типа.
+		:return: `True` if string valid.
 		:rtype: bool
 		"""
 
@@ -109,11 +109,11 @@ class Bool(BaseValidator[bool]):
 	@staticmethod
 	def convert(value: str) -> bool:
 		"""
-		Конвертирует строку в значение определённого типа.
+		Convert value into target type without validation.
 
-		:param value: Конвертируемая строка.
+		:param value: Convertible string.
 		:type value: str
-		:return: Конвертированное значение.
+		:return: Conversion result.
 		:rtype: bool
 		"""
 
@@ -126,11 +126,11 @@ class Bool(BaseValidator[bool]):
 	@staticmethod
 	def validate(value: str) -> bool:
 		"""
-		Проверяет, соответствует ли строка критериям валидируемого типа.
+		Validate is string can be converted into target type.
 
-		:param value: Проверяемая строка.
+		:param value: Validable string.
 		:type value: str
-		:return: Возвращает `True`, если строка является валидным значением типа.
+		:return: `True` if string valid.
 		:rtype: bool
 		"""
 
@@ -144,11 +144,11 @@ class Datetime(BaseValidator[datetime]):
 	@staticmethod
 	def convert(value: str) -> datetime:
 		"""
-		Конвертирует строку в значение определённого типа.
+		Convert value into target type without validation.
 
-		:param value: Конвертируемая строка.
+		:param value: Convertible string.
 		:type value: str
-		:return: Конвертированное значение.
+		:return: Conversion result.
 		:rtype: datetime
 		"""
 
@@ -158,11 +158,11 @@ class Datetime(BaseValidator[datetime]):
 	@staticmethod
 	def validate(value: str) -> bool:
 		"""
-		Проверяет, соответствует ли строка критериям валидируемого типа.
+		Validate is string can be converted into target type.
 
-		:param value: Проверяемая строка.
+		:param value: Validable string.
 		:type value: str
-		:return: Возвращает `True`, если строка является валидным значением типа.
+		:return: `True` if string valid.
 		:rtype: bool
 		"""
 
@@ -179,12 +179,12 @@ class Domain(BaseValidator[str]):
 	@staticmethod
 	def convert(value: str) -> str:
 		"""
-		Конвертирует строку в значение определённого типа.
+		Convert value into target type without validation.
 
-		:param value: Конвертируемая строка.
+		:param value: Convertible string.
 		:type value: str
-		:return: Конвертированное значение.
-		:rtype: str
+		:return: Conversion result.
+		:rtype: T
 		"""
 
 		return value
@@ -193,11 +193,11 @@ class Domain(BaseValidator[str]):
 	@staticmethod
 	def validate(value: str) -> bool:
 		"""
-		Проверяет, соответствует ли строка критериям валидируемого типа.
+		Validate is string can be converted into target type.
 
-		:param value: Проверяемая строка.
+		:param value: Validable string.
 		:type value: str
-		:return: Возвращает `True`, если строка является валидным значением типа.
+		:return: `True` if string valid.
 		:rtype: bool
 		"""
 
@@ -214,12 +214,12 @@ class Email(BaseValidator[str]):
 	@staticmethod
 	def convert(value: str) -> str:
 		"""
-		Конвертирует строку в значение определённого типа.
+		Convert value into target type without validation.
 
-		:param value: Конвертируемая строка.
+		:param value: Convertible string.
 		:type value: str
-		:return: Конвертированное значение.
-		:rtype: str
+		:return: Conversion result.
+		:rtype: T
 		"""
 
 		return value
@@ -228,11 +228,11 @@ class Email(BaseValidator[str]):
 	@staticmethod
 	def validate(value: str) -> bool:
 		"""
-		Проверяет, соответствует ли строка критериям валидируемого типа.
+		Validate is string can be converted into target type.
 
-		:param value: Проверяемая строка.
+		:param value: Validable string.
 		:type value: str
-		:return: Возвращает `True`, если строка является валидным значением типа.
+		:return: `True` if string valid.
 		:rtype: bool
 		"""
 
@@ -249,11 +249,11 @@ class Float(BaseValidator[float]):
 	@staticmethod
 	def convert(value: str) -> float:
 		"""
-		Конвертирует строку в значение определённого типа.
+		Convert value into target type without validation.
 
-		:param value: Конвертируемая строка.
+		:param value: Convertible string.
 		:type value: str
-		:return: Конвертированное значение.
+		:return: Conversion result.
 		:rtype: float
 		"""
 
@@ -263,11 +263,11 @@ class Float(BaseValidator[float]):
 	@staticmethod
 	def validate(value: str) -> bool:
 		"""
-		Проверяет, соответствует ли строка критериям валидируемого типа.
+		Validate is string can be converted into target type.
 
-		:param value: Проверяемая строка.
+		:param value: Validable string.
 		:type value: str
-		:return: Возвращает `True`, если строка является валидным значением типа.
+		:return: `True` if string valid.
 		:rtype: bool
 		"""
 
@@ -279,11 +279,11 @@ class Integer(BaseValidator[int]):
 	@staticmethod
 	def convert(value: str) -> int:
 		"""
-		Конвертирует строку в значение определённого типа.
+		Convert value into target type without validation.
 
-		:param value: Конвертируемая строка.
+		:param value: Convertible string.
 		:type value: str
-		:return: Конвертированное значение.
+		:return: Conversion result.
 		:rtype: int
 		"""
 
@@ -293,11 +293,11 @@ class Integer(BaseValidator[int]):
 	@staticmethod
 	def validate(value: str) -> bool:
 		"""
-		Проверяет, соответствует ли строка критериям валидируемого типа.
+		Validate is string can be converted into target type.
 
-		:param value: Проверяемая строка.
+		:param value: Validable string.
 		:type value: str
-		:return: Возвращает `True`, если строка является валидным значением типа.
+		:return: `True` if string valid.
 		:rtype: bool
 		"""
 
@@ -309,12 +309,12 @@ class IPv4(BaseValidator[str]):
 	@staticmethod
 	def convert(value: str) -> str:
 		"""
-		Конвертирует строку в значение определённого типа.
+		Convert value into target type without validation.
 
-		:param value: Конвертируемая строка.
+		:param value: Convertible string.
 		:type value: str
-		:return: Конвертированное значение.
-		:rtype: str
+		:return: Conversion result.
+		:rtype: T
 		"""
 
 		return value
@@ -323,11 +323,11 @@ class IPv4(BaseValidator[str]):
 	@staticmethod
 	def validate(value: str) -> bool:
 		"""
-		Проверяет, соответствует ли строка критериям валидируемого типа.
+		Validate is string can be converted into target type.
 
-		:param value: Проверяемая строка.
+		:param value: Validable string.
 		:type value: str
-		:return: Возвращает `True`, если строка является валидным значением типа.
+		:return: `True` if string valid.
 		:rtype: bool
 		"""
 
@@ -344,12 +344,12 @@ class IPv6(BaseValidator[str]):
 	@staticmethod
 	def convert(value: str) -> str:
 		"""
-		Конвертирует строку в значение определённого типа.
+		Convert value into target type without validation.
 
-		:param value: Конвертируемая строка.
+		:param value: Convertible string.
 		:type value: str
-		:return: Конвертированное значение.
-		:rtype: str
+		:return: Conversion result.
+		:rtype: T
 		"""
 
 		return value
@@ -358,11 +358,11 @@ class IPv6(BaseValidator[str]):
 	@staticmethod
 	def validate(value: str) -> bool:
 		"""
-		Проверяет, соответствует ли строка критериям валидируемого типа.
+		Validate is string can be converted into target type.
 
-		:param value: Проверяемая строка.
+		:param value: Validable string.
 		:type value: str
-		:return: Возвращает `True`, если строка является валидным значением типа.
+		:return: `True` if string valid.
 		:rtype: bool
 		"""
 
@@ -379,11 +379,11 @@ class Number(BaseValidator[float | int]):
 	@staticmethod
 	def convert(value: str) -> float | int:
 		"""
-		Конвертирует строку в значение определённого типа.
+		Convert value into target type without validation.
 
-		:param value: Конвертируемая строка.
+		:param value: Convertible string.
 		:type value: str
-		:return: Конвертированное значение.
+		:return: Conversion result.
 		:rtype: float | int
 		"""
 
@@ -393,11 +393,11 @@ class Number(BaseValidator[float | int]):
 	@staticmethod
 	def validate(value: str) -> bool:
 		"""
-		Проверяет, соответствует ли строка критериям валидируемого типа.
+		Validate is string can be converted into target type.
 
-		:param value: Проверяемая строка.
+		:param value: Validable string.
 		:type value: str
-		:return: Возвращает `True`, если строка является валидным значением типа.
+		:return: `True` if string valid.
 		:rtype: bool
 		"""
 
@@ -419,11 +419,11 @@ class Path(BaseValidator[PathlibPath]):
 	@staticmethod
 	def convert(value: str) ->  PathlibPath:
 		"""
-		Конвертирует строку в значение определённого типа.
+		Convert value into target type without validation.
 
-		:param value: Конвертируемая строка.
+		:param value: Convertible string.
 		:type value: str
-		:return: Конвертированное значение.
+		:return: Conversion result.
 		:rtype: pathlib.Path
 		"""
 
@@ -433,11 +433,11 @@ class Path(BaseValidator[PathlibPath]):
 	@staticmethod
 	def validate(value: str) -> bool:
 		"""
-		Проверяет, соответствует ли строка критериям валидируемого типа.
+		Validate is string can be converted into target type.
 
-		:param value: Проверяемая строка.
+		:param value: Validable string.
 		:type value: str
-		:return: Возвращает `True`, если строка является валидным значением типа.
+		:return: `True` if string valid.
 		:rtype: bool
 		"""
 
@@ -449,11 +449,11 @@ class UnsignedInteger(BaseValidator[int]):
 	@staticmethod
 	def convert(value: str) ->  int:
 		"""
-		Конвертирует строку в значение определённого типа.
+		Convert value into target type without validation.
 
-		:param value: Конвертируемая строка.
+		:param value: Convertible string.
 		:type value: str
-		:return: Конвертированное значение.
+		:return: Conversion result.
 		:rtype: int
 		"""
 
@@ -463,11 +463,11 @@ class UnsignedInteger(BaseValidator[int]):
 	@staticmethod
 	def validate(value: str) -> bool:
 		"""
-		Проверяет, соответствует ли строка критериям валидируемого типа.
+		Validate is string can be converted into target type.
 
-		:param value: Проверяемая строка.
+		:param value: Validable string.
 		:type value: str
-		:return: Возвращает `True`, если строка является валидным значением типа.
+		:return: `True` if string valid.
 		:rtype: bool
 		"""
 
@@ -479,12 +479,12 @@ class URL(BaseValidator[str]):
 	@staticmethod
 	def convert(value: str) ->  str:
 		"""
-		Конвертирует строку в значение определённого типа.
+		Convert value into target type without validation.
 
-		:param value: Конвертируемая строка.
+		:param value: Convertible string.
 		:type value: str
-		:return: Конвертированное значение.
-		:rtype: str
+		:return: Conversion result.
+		:rtype: T
 		"""
 
 		return value
@@ -493,11 +493,11 @@ class URL(BaseValidator[str]):
 	@staticmethod
 	def validate(value: str) -> bool:
 		"""
-		Проверяет, соответствует ли строка критериям валидируемого типа.
+		Validate is string can be converted into target type.
 
-		:param value: Проверяемая строка.
+		:param value: Validable string.
 		:type value: str
-		:return: Возвращает `True`, если строка является валидным значением типа.
+		:return: `True` if string valid.
 		:rtype: bool
 		"""
 
@@ -514,11 +514,11 @@ class ValidPath(BaseValidator[PathlibPath]):
 	@staticmethod
 	def convert(value: str) ->  PathlibPath:
 		"""
-		Конвертирует строку в значение определённого типа.
+		Convert value into target type without validation.
 
-		:param value: Конвертируемая строка.
+		:param value: Convertible string.
 		:type value: str
-		:return: Конвертированное значение.
+		:return: Conversion result.
 		:rtype: pathlib.Path
 		"""
 
@@ -528,11 +528,11 @@ class ValidPath(BaseValidator[PathlibPath]):
 	@staticmethod
 	def validate(value: str) -> bool:
 		"""
-		Проверяет, соответствует ли строка критериям валидируемого типа.
+		Validate is string can be converted into target type.
 
-		:param value: Проверяемая строка.
+		:param value: Validable string.
 		:type value: str
-		:return: Возвращает `True`, если строка является валидным значением типа.
+		:return: `True` if string valid.
 		:rtype: bool
 		"""
 
