@@ -168,8 +168,7 @@ class Datetime(BaseValidator[datetime]):
 		"""
 
 		try:
-			dateparser.parse(value)
-			return True
+			return bool(dateparser.parse(value))
 		except (ValueError, TypeError): pass
 
 		return False

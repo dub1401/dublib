@@ -48,7 +48,7 @@ requestor = [
 	"PyJWT",
 ]
 validators = [
-	"dateparser",
+	"dateparser>=1.4",
 	"pathvalidate",
 	"pydantic>=2",
 	"validators>=0.36",

@@ -16,7 +16,6 @@ For visual categorization of changes emojis are used in accordance with [gitmoji
 
 ### 🎨 Changed
 - Dependencies separated in optional groups.
-
 #### engine.config
 - Module renamed to `config` from `configurator`.
 - Migration to [pydantic-settings](https://github.com/pydantic/pydantic-settings).
@@ -27,6 +26,10 @@ For visual categorization of changes emojis are used in accordance with [gitmoji
 
 ### 🔥 Removed
 - Module `telebot_utils`.
+
+### 🐛 Fixed
+#### validators
+- False positive `Datetime` validator.
 
 ## [0.32.0] - 2026-10-12
 
@@ -43,14 +46,14 @@ For visual categorization of changes emojis are used in accordance with [gitmoji
 #### engine.patcher
 - Module fully rewritten.
 
+### 🔥 Removed
+- Module `cli.templates`.
+
 ### 🐛 Fixed
 #### cli.messages
 - URL validation for scheme `file://` failed (upstream for `validators>=0.36`).
 #### engine.configurator
 - Config instance initialization failure.
-
-### 🔥 Removed
-- Module `cli.templates`.
 
 ## [0.31.1] - 2026-09-23
 
