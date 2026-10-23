@@ -30,7 +30,7 @@ classifiers = [
 
 [project.optional-dependencies]
 engine = [
-	"pydantic-settings>=2.16",
+	"pydantic-settings>=2",
 	"watchfiles",
 ]
 cli = [
@@ -50,6 +50,7 @@ requestor = [
 validators = [
 	"dateparser",
 	"pathvalidate",
+	"pydantic>=2",
 	"validators>=0.36",
 ]
 dev = [

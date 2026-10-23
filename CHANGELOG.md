@@ -12,6 +12,7 @@ For visual categorization of changes emojis are used in accordance with [gitmoji
 ### ✨ Added
 #### validators
 - All validators now can be used as [pydantic](https://github.com/pydantic/pydantic) annotations.
+- Validators for [packaging](https://pypi.org/project/packaging) `Version` and `SpecifierSet`.
 
 ### 🎨 Changed
 - Dependencies separated in optional groups.

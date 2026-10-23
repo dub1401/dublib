@@ -4,6 +4,7 @@ from typing import cast, override
 
 import dateparser
 import validators
+from packaging import specifiers, version
 from pathvalidate import is_valid_filepath
 
 from .base import BaseValidator
@@ -537,3 +538,71 @@ class ValidPath(BaseValidator[PathlibPath]):
 		"""
 
 		return PathlibPath(value).exists()
+
+class Version(BaseValidator[version.Version]):
+
+	@override
+	@staticmethod
+	def convert(value: str) -> version.Version:
+		"""
+		Convert value into target type without validation.
+
+		:param value: Convertible string.
+		:type value: str
+		:return: Conversion result.
+		:rtype: packaging.version.Version
+		"""
+
+		return version.Version(value)
+
+	@override
+	@staticmethod
+	def validate(value: str) -> bool:
+		"""
+		Validate is string can be converted into target type.
+
+		:param value: Validable string.
+		:type value: str
+		:return: `True` if string valid.
+		:rtype: bool
+		"""
+
+		try:
+			version.Version(value)
+			return True
+		except version.InvalidVersion:
+			return False
+
+class VersionsRange(BaseValidator[specifiers.SpecifierSet]):
+
+	@override
+	@staticmethod
+	def convert(value: str) -> specifiers.SpecifierSet:
+		"""
+		Convert value into target type without validation.
+
+		:param value: Convertible string.
+		:type value: str
+		:return: Conversion result.
+		:rtype: packaging.specifiers.SpecifierSet
+		"""
+
+		return specifiers.SpecifierSet(value)
+
+	@override
+	@staticmethod
+	def validate(value: str) -> bool:
+		"""
+		Validate is string can be converted into target type.
+
+		:param value: Validable string.
+		:type value: str
+		:return: `True` if string valid.
+		:rtype: bool
+		"""
+
+		try:
+			specifiers.SpecifierSet(value)
+			return True
+		except specifiers.InvalidSpecifier:
+			return False
