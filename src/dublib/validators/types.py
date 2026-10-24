@@ -1,3 +1,4 @@
+import sys
 from datetime import datetime
 from pathlib import Path as PathlibPath
 from typing import cast, override
@@ -447,7 +448,7 @@ class Path(BaseValidator[PathlibPath]):
 		:rtype: bool
 		"""
 
-		return is_valid_filepath(value)
+		return is_valid_filepath(value, platform = sys.platform)
 
 class UnsignedInteger(BaseValidator[int]):
 
