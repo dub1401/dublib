@@ -16,6 +16,7 @@ For visual categorization of changes emojis are used in accordance with [gitmoji
 - Validators for exists file and directory.
 
 ### 🎨 Changed
+- Minimal supported **Python** raised to 3.13.
 - All enumerations renamed in accordance with [PEP 435](https://peps.python.org/pep-0435).
 - Dependencies separated in optional groups.
 - Exceptions now replaced at modules roots in `exceptions` submodule.
@@ -32,8 +33,13 @@ For visual categorization of changes emojis are used in accordance with [gitmoji
 - Validator `ValidPath` renamed to `ExistingPath`.
 - Validator `All` renamed to `Any`.
 
+### 🗑️ Deprecated
+- Module `engine.bus`.
+
 ### 🔥 Removed
 - Module `telebot_utils`.
+#### functions.decorators
+- Decorator `deprecated()`.
 #### validators
 - Validator `Number`.
 

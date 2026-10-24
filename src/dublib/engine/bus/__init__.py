@@ -1,5 +1,6 @@
 from collections.abc import Sequence
 from typing import Any
+from warnings import deprecated
 
 from ...cli.text_styler import TextStyler, codes
 from ..exceptions import bus as BusExceptions
@@ -92,6 +93,7 @@ class RulesContainer:
 # >>>>> ОСНОВНЫЕ КЛАССЫ <<<<< #
 #==========================================================================================#
 
+@deprecated("Planned to be reworked as Rust-like Result.")
 class ExecutionResult:
 	"""Контейнер результата выполнения."""
 
@@ -201,7 +203,7 @@ class ExecutionResult:
 
 		return self._Data[key]
 
-	def __iadd__(self, status: "ExecutionResult") -> "ExecutionResult":
+	def __iadd__(self, status: "ExecutionResult") -> "ExecutionResult":  # ty: ignore[deprecated]
 		"""
 		Выполняет слияние другого контейнера с текущим, объединяя списки сообщений.
 
@@ -212,7 +214,7 @@ class ExecutionResult:
 		:raises TypeError: Выбрасывается при попытке слияния с объектом другого типа.
 		"""
 
-		if isinstance(status, ExecutionResult): self.merge(status)
+		if isinstance(status, ExecutionResult): self.merge(status)  # ty: ignore[deprecated]
 		else: raise TypeError("Can only concatenate ExecutionResult objects.")
 
 		return self
@@ -258,7 +260,7 @@ class ExecutionResult:
 
 		return key in self._Data
 
-	def merge(self, result: "ExecutionResult", overwrite: bool = True):
+	def merge(self, result: "ExecutionResult", overwrite: bool = True):  # ty: ignore[deprecated]
 		"""
 		Выполняет слияние другого контейнера с текущим, объединяя списки сообщений.
 

@@ -6,14 +6,12 @@ permissions:
 on:
   push:
     paths:
-      - "src/dublib/engine/bus/**"
       - "src/dublib/functions/data/**"
       - "src/dublib/polyglot/**"
       - "src/dublib/validators/**"
       - "tests/**"
   pull_request:
     paths:
-      - "src/dublib/engine/bus/**"
       - "src/dublib/functions/data/**"
       - "src/dublib/polyglot/**"
       - "src/dublib/validators/**"

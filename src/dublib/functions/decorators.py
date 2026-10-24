@@ -1,29 +1,4 @@
 import functools
-import warnings
-
-from ..cli.text_styler import FastStyler
-
-def deprecated(message: str | None = None):
-	"""
-	Декоратор: помечает функцию как устаревшую.
-
-	:param message: Сопровождающее сообщение.
-	:type message: str | None
-	"""
-
-	def decorator(function):
-
-		@functools.wraps(function)
-		def wrapper(*args, **kwargs):
-			Message = f" {message}" or ""
-			Function = FastStyler(function.__name__).decorate.bold
-			warnings.warn(f"{Function} is deprecated.{Message}", DeprecationWarning, stacklevel = 2)
-
-			return function(*args, **kwargs)
-
-		return wrapper
-
-	return decorator
 
 def run_before_method(method_name: str):
 	"""
