@@ -1,7 +1,7 @@
 import enum
 
-class Drops(enum.Enum):
-	"""Перечисление сбрасывающих кодов ANSI."""
+class Drop(enum.Enum):
+	"""Drop ANSI code."""
 
 	RESET = 0
 
@@ -15,53 +15,53 @@ class Drops(enum.Enum):
 	DISABLE_THROUGHLINED = 29
 	DISABLE_UPPERLINED = 29
 
-class Colors(enum.Enum):
-	"""Перечисление кодов цветов ANSI."""
+class Color(enum.Enum):
+	"""Color ANSI code."""
 
-	Black = 30
-	Red = 31
-	Green = 32
-	Yellow = 33
-	Blue = 34
-	Magenta = 35
-	Cyan = 36
-	White = 37
-	Gray = 90
-	BrightRed = 91
-	BrightGreen = 92
-	BrightYellow = 93
-	BrightBlue = 94
-	BrightMagenta = 95
-	BrightCyan = 96
-	BrightWhite = 97
+	BLACK = 30
+	RED = 31
+	GREEN = 32
+	YELLOW = 33
+	BLUE = 34
+	MAGENTA = 35
+	CYAN = 36
+	WHITE = 37
+	GRAY = 90
+	BRIGHT_RED = 91
+	BRIGHT_GREEN = 92
+	BRIGHT_YELLOW = 93
+	BRIGHT_BLUE = 94
+	BRIGHT_MAGENTA = 95
+	BRIGHT_CYAN = 96
+	BRIGHT_WHITE = 97
 
-class BackgroundsColors(enum.Enum):
-	"""Перечисление кодов цветов фона ANSI."""
+class BackgroundColor(enum.Enum):
+	"""Background color ANSI code."""
 
-	Black = 40
-	Red = 41
-	Green = 42
-	Yellow = 43
-	Blue = 44
-	Magenta = 45
-	Cyan = 46
-	White = 47
-	Gray = 100
-	BrightRed = 101
-	BrightGreen = 102
-	BrightYellow = 103
-	BrightBlue = 104
-	BrightMagenta = 105
-	BrightCyan = 106
-	BrightWhite = 107
+	BLACK = 40
+	RED = 41
+	GREEN = 42
+	YELLOW = 43
+	BLUE = 44
+	MAGENTA = 45
+	CYAN = 46
+	WHITE = 47
+	GRAY = 100
+	BRIGHT_RED = 101
+	BRIGHT_GREEN = 102
+	BRIGHT_YELLOW = 103
+	BRIGHT_BLUE = 104
+	BRIGHT_MAGENTA = 105
+	BRIGHT_CYAN = 106
+	BRIGHT_WHITE = 107
 
-class Decorations(enum.Enum):
-	"""Перечисление кодов декораций ANSI."""
+class Decoration(enum.Enum):
+	"""Decoration ANSI code."""
 
-	Bold = 1
-	Italic = 3
-	Underlined = 4
-	Blincked = 5
-	Throughline = 9
-	DoubleUnderlined = 21
-	Upperlined = 53
+	BOLD = 1
+	ITALIC = 3
+	UNDERLINED = 4
+	BLINKING = 5
+	THROUGHLINED = 9
+	DOUBLE_UNDERLINED = 21
+	UPPERLINED = 53

@@ -10,30 +10,30 @@ from .fast_styler import FastStyler as FastStyler
 # >>>>> СТИЛИЗАЦИЯ ИЗ HTML <<<<< #
 #==========================================================================================#
 
-_SupportedTags = MappingProxyType({
-	"b": (escapes.Decorations.Bold, escapes.Drops.DISABLE_BOLD),
-	"i": (escapes.Decorations.Italic, escapes.Drops.DISABLE_ITALIC),
-	"u": (escapes.Decorations.Underlined, escapes.Drops.DISABLE_UNDERLINED),
-	"s": (escapes.Decorations.Throughline, escapes.Drops.DISABLE_THROUGHLINED),
+__SUPPORTED_TAGS = MappingProxyType({
+	"b": (escapes.Decoration.BOLD, escapes.Drop.DISABLE_BOLD),
+	"i": (escapes.Decoration.ITALIC, escapes.Drop.DISABLE_ITALIC),
+	"u": (escapes.Decoration.UNDERLINED, escapes.Drop.DISABLE_UNDERLINED),
+	"s": (escapes.Decoration.THROUGHLINED, escapes.Drop.DISABLE_THROUGHLINED),
 })
 
 def get_styled_text_from_html(text: str) -> str:
-		"""
-		Преобразовывает теги HTML в управляющие последовательности ANSI.
+	"""
+	Преобразовывает теги HTML в управляющие последовательности ANSI.
 
-		Поддерживаемые теги: `b`, `i`, `u`, `s`.
+	Поддерживаемые теги: `b`, `i`, `u`, `s`.
 
-		:param text: Стилизуемый текст.
-		:type text: str
-		:return: Стилизованный текст.
-		:rtype: str
-		"""
+	:param text: Стилизуемый текст.
+	:type text: str
+	:return: Стилизованный текст.
+	:rtype: str
+	"""
 
-		for Tag in _SupportedTags.keys():
-			text = text.replace(f"<{Tag}>", _SupportedTags[Tag][0])
-			text = text.replace(f"</{Tag}>", _SupportedTags[Tag][1])
+	for Tag in __SUPPORTED_TAGS.keys():
+		text = text.replace(f"<{Tag}>", __SUPPORTED_TAGS[Tag][0])
+		text = text.replace(f"</{Tag}>", __SUPPORTED_TAGS[Tag][1])
 
-		return text
+	return text
 
 #==========================================================================================#
 # >>>>> ОСНОВНОЙ КЛАСС <<<<< #
@@ -47,19 +47,19 @@ class TextStyler:
 	#==========================================================================================#
 
 	@property
-	def decorations(self) -> tuple[codes.Decorations, ...] | None:
+	def decorations(self) -> tuple[codes.Decoration, ...] | None:
 		"""Набор кодов декораций."""
 
 		return self.__Decorations
 
 	@property
-	def text_color(self) -> codes.Colors | None:
+	def text_color(self) -> codes.Color | None:
 		"""Код цвета текста."""
 
 		return self.__TextColor
 
 	@property
-	def background_color(self) -> codes.BackgroundsColors | None:
+	def background_color(self) -> codes.BackgroundColor | None:
 		"""Код цвета фона."""
 
 		return self.__BackgroundColor
@@ -76,9 +76,9 @@ class TextStyler:
 
 	def __init__(
 			self,
-			decorations: codes.Decorations | Sequence[codes.Decorations] | None = None,
-			text_color: codes.Colors | None = None,
-			background_color: codes.BackgroundsColors | None = None,
+			decorations: codes.Decoration | Sequence[codes.Decoration] | None = None,
+			text_color: codes.Color | None = None,
+			background_color: codes.BackgroundColor | None = None,
 			autoreset: bool = True,
 		):
 		"""
@@ -94,12 +94,12 @@ class TextStyler:
 		:type autoreset: bool
 		"""
 
-		self.__Decorations: tuple[codes.Decorations, ...] | None = cast("tuple[codes.Decorations, ...]", to_sequence(decorations)) if decorations else None
+		self.__Decorations: tuple[codes.Decoration, ...] | None = cast("tuple[codes.Decoration, ...]", to_sequence(decorations)) if decorations else None
 		self.__TextColor = text_color
 		self.__BackgroundColor = background_color
 		self.__Autoreset = autoreset
 
-	def build_ansi_escape(self, codes: Sequence[codes.BackgroundsColors | codes.Colors | codes.Decorations | codes.Drops]) -> str:
+	def build_ansi_escape(self, codes: Sequence[codes.BackgroundColor | codes.Color | codes.Decoration | codes.Drop]) -> str:
 		"""
 		Строит управляющую последовательность из кодов.
 
@@ -130,7 +130,7 @@ class TextStyler:
 		if self.__BackgroundColor: Codes.append(self.__BackgroundColor)
 
 		text = self.build_ansi_escape(Codes) + text
-		if self.__Autoreset: text += escapes.Drops.RESET
+		if self.__Autoreset: text += escapes.Drop.RESET
 
 		return text
 
@@ -138,7 +138,7 @@ class TextStyler:
 	# >>>>> МЕТОДЫ УСТАНОВКИ СТИЛЕЙ <<<<< #
 	#==========================================================================================#
 
-	def set_decorations(self, decorations: codes.Decorations | Sequence[codes.Decorations] | None):
+	def set_decorations(self, decorations: codes.Decoration | Sequence[codes.Decoration] | None):
 		"""
 		Задаёт декорации.
 
@@ -146,9 +146,9 @@ class TextStyler:
 		:type decorations: Codes.Decorations | Sequence[Codes.Decorations] | None
 		"""
 
-		self.__Decorations = cast("tuple[codes.Decorations, ...]", to_sequence(decorations)) if decorations else None
+		self.__Decorations = cast("tuple[codes.Decoration, ...]", to_sequence(decorations)) if decorations else None
 
-	def set_text_color(self, text_color: codes.Colors | None):
+	def set_text_color(self, text_color: codes.Color | None):
 		"""
 		Задаёт цвет текста.
 
@@ -158,7 +158,7 @@ class TextStyler:
 
 		self.__TextColor = text_color
 
-	def set_background_color(self, background_color: codes.BackgroundsColors | None):
+	def set_background_color(self, background_color: codes.BackgroundColor | None):
 		"""
 		Задаёт цвет фона.
 

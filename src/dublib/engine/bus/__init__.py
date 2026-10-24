@@ -2,7 +2,6 @@ from collections.abc import Sequence
 from typing import Any
 from warnings import deprecated
 
-from ...cli.text_styler import TextStyler, codes
 from ..exceptions import bus as BusExceptions
 from .messages import MessagesContainer
 
@@ -233,20 +232,6 @@ class ExecutionResult:
 		if self._Rules.allowed_data_keys and key not in self._Rules.allowed_data_keys: raise BusExceptions.KeyNotAllowedError()
 		self._Data[key] = value
 
-	def __str__(self) -> str:
-		"""Возвращает текстовое представление результата."""
-
-		Status = ""
-		Bolder = TextStyler(codes.Decorations.Bold)
-		Status += Bolder.get_styled_text("Code:") + f" {self._Code}\n"
-		Status += Bolder.get_styled_text("Value:") + f" {self._Value}\n"
-
-		if self._Data: Status += Bolder.get_styled_text("Data:") + "\n"
-		for Key in self._Data: Status += f"    {Key}: " + str(self._Data[Key]) + "\n"
-		if self._Messages: Status += Bolder.get_styled_text("Messages:") + "\n"
-		for Message in self._Messages.as_list(): Status += f"    {Message}\n"
-
-		return Status.rstrip()
 
 	def check_data(self, key: Any) -> bool:
 		"""

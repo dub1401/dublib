@@ -1,76 +1,76 @@
 from dataclasses import dataclass
 
-from .codes import BackgroundsColors as _BackgroundsColorsCodes
-from .codes import Colors as _ColorsCodes
-from .codes import Decorations as _DecorationsCodes
-from .codes import Drops as _DropsCodes
+from .codes import BackgroundColor as _BackgroundColorsCode
+from .codes import Color as _ColorCode
+from .codes import Decoration as _DecorationCode
+from .codes import Drop as _DropCode
 
 @dataclass(frozen = True)
-class Drops:
-	"""Набор специальных управляющих последовательностей ANSI."""
+class Drop:
+	"""Drop ANSI escape sequence."""
 
-	RESET: str = f"\033[{_DropsCodes.RESET.value}m"
+	RESET: str = f"\033[{_DropCode.RESET.value}m"
 
-	DEFAULT_COLOR: str = f"\033[{_DropsCodes.DEFAULT_COLOR.value}m"
-	DEFAULT_BACKGROUND: str = f"\033[{_DropsCodes.DEFAULT_BACKGROUND.value}m"
+	DEFAULT_COLOR: str = f"\033[{_DropCode.DEFAULT_COLOR.value}m"
+	DEFAULT_BACKGROUND: str = f"\033[{_DropCode.DEFAULT_BACKGROUND.value}m"
 
-	DISABLE_BOLD: str = f"\033[{_DropsCodes.DISABLE_BOLD.value}m"
-	DISABLE_ITALIC: str = f"\033[{_DropsCodes.DISABLE_ITALIC.value}m"
-	DISABLE_UNDERLINED: str = f"\033[{_DropsCodes.DISABLE_UNDERLINED.value}m"
-	DISABLE_BLINCKED: str = f"\033[{_DropsCodes.DISABLE_BLINCKED.value}m"
-	DISABLE_THROUGHLINED: str = f"\033[{_DropsCodes.DISABLE_THROUGHLINED.value}m"
-	DISABLE_UPPERLINED: str = f"\033[{_DropsCodes.DISABLE_UPPERLINED.value}m"
-
-@dataclass(frozen = True)
-class Colors:
-	"""Набор управляющих последовательностей цветов ANSI."""
-
-	Black: str = f"\033[{_ColorsCodes.Black.value}m"
-	Red: str = f"\033[{_ColorsCodes.Red.value}m"
-	Green: str = f"\033[{_ColorsCodes.Green.value}m"
-	Yellow: str = f"\033[{_ColorsCodes.Yellow.value}m"
-	Blue: str = f"\033[{_ColorsCodes.Blue.value}m"
-	Magenta: str = f"\033[{_ColorsCodes.Magenta.value}m"
-	Cyan: str = f"\033[{_ColorsCodes.Cyan.value}m"
-	White: str = f"\033[{_ColorsCodes.White.value}m"
-	Gray: str = f"\033[{_ColorsCodes.Gray.value}m"
-	BrightRed: str = f"\033[{_ColorsCodes.BrightRed.value}m"
-	BrightGreen: str = f"\033[{_ColorsCodes.BrightGreen.value}m"
-	BrightYellow: str = f"\033[{_ColorsCodes.BrightYellow.value}m"
-	BrightBlue: str = f"\033[{_ColorsCodes.BrightBlue.value}m"
-	BrightMagenta: str = f"\033[{_ColorsCodes.BrightMagenta.value}m"
-	BrightCyan: str = f"\033[{_ColorsCodes.BrightCyan.value}m"
-	BrightWhite: str = f"\033[{_ColorsCodes.BrightWhite.value}m"
+	DISABLE_BOLD: str = f"\033[{_DropCode.DISABLE_BOLD.value}m"
+	DISABLE_ITALIC: str = f"\033[{_DropCode.DISABLE_ITALIC.value}m"
+	DISABLE_UNDERLINED: str = f"\033[{_DropCode.DISABLE_UNDERLINED.value}m"
+	DISABLE_BLINCKED: str = f"\033[{_DropCode.DISABLE_BLINCKED.value}m"
+	DISABLE_THROUGHLINED: str = f"\033[{_DropCode.DISABLE_THROUGHLINED.value}m"
+	DISABLE_UPPERLINED: str = f"\033[{_DropCode.DISABLE_UPPERLINED.value}m"
 
 @dataclass(frozen = True)
-class BackgroundColors:
-	"""Набор управляющих последовательностей цветов фона ANSI."""
+class Color:
+	"""Color ANSI escape sequence."""
 
-	Black: str = f"\033[{_BackgroundsColorsCodes.Black.value}m"
-	Red: str = f"\033[{_BackgroundsColorsCodes.Red.value}m"
-	Green: str = f"\033[{_BackgroundsColorsCodes.Green.value}m"
-	Yellow: str = f"\033[{_BackgroundsColorsCodes.Yellow.value}m"
-	Blue: str = f"\033[{_BackgroundsColorsCodes.Blue.value}m"
-	Magenta: str = f"\033[{_BackgroundsColorsCodes.Magenta.value}m"
-	Cyan: str = f"\033[{_BackgroundsColorsCodes.Cyan.value}m"
-	White: str = f"\033[{_BackgroundsColorsCodes.White.value}m"
-	Gray: str = f"\033[{_BackgroundsColorsCodes.Gray.value}m"
-	BrightRed: str = f"\033[{_BackgroundsColorsCodes.BrightRed.value}m"
-	BrightGreen: str = f"\033[{_BackgroundsColorsCodes.BrightGreen.value}m"
-	BrightYellow: str = f"\033[{_BackgroundsColorsCodes.BrightYellow.value}m"
-	BrightBlue: str = f"\033[{_BackgroundsColorsCodes.BrightBlue.value}m"
-	BrightMagenta: str = f"\033[{_BackgroundsColorsCodes.BrightMagenta.value}m"
-	BrightCyan: str = f"\033[{_BackgroundsColorsCodes.BrightCyan.value}m"
-	BrightWhite: str = f"\033[{_BackgroundsColorsCodes.BrightWhite.value}m"
+	BLACK: str = f"\033[{_ColorCode.BLACK.value}m"
+	RED: str = f"\033[{_ColorCode.RED.value}m"
+	GREEN: str = f"\033[{_ColorCode.GREEN.value}m"
+	YELLOW: str = f"\033[{_ColorCode.YELLOW.value}m"
+	BLUE: str = f"\033[{_ColorCode.BLUE.value}m"
+	MAGENTA: str = f"\033[{_ColorCode.MAGENTA.value}m"
+	CYAN: str = f"\033[{_ColorCode.CYAN.value}m"
+	WHITE: str = f"\033[{_ColorCode.WHITE.value}m"
+	GRAY: str = f"\033[{_ColorCode.GRAY.value}m"
+	BRIGHT_RED: str = f"\033[{_ColorCode.BRIGHT_RED.value}m"
+	BRIGHT_GREEN: str = f"\033[{_ColorCode.BRIGHT_GREEN.value}m"
+	BRIGHT_YELLOW: str = f"\033[{_ColorCode.BRIGHT_YELLOW.value}m"
+	BRIGHT_BLUE: str = f"\033[{_ColorCode.BRIGHT_BLUE.value}m"
+	BRIGHT_MAGENTA: str = f"\033[{_ColorCode.BRIGHT_MAGENTA.value}m"
+	BRIGHT_CYAN: str = f"\033[{_ColorCode.BRIGHT_CYAN.value}m"
+	BRIGHT_WHITE: str = f"\033[{_ColorCode.BRIGHT_WHITE.value}m"
 
 @dataclass(frozen = True)
-class Decorations:
+class BackgroundColor:
+	"""Background color ANSI escape sequence."""
+
+	BLACK: str = f"\033[{_BackgroundColorsCode.BLACK.value}m"
+	RED: str = f"\033[{_BackgroundColorsCode.RED.value}m"
+	GREEN: str = f"\033[{_BackgroundColorsCode.GREEN.value}m"
+	YELLOW: str = f"\033[{_BackgroundColorsCode.YELLOW.value}m"
+	BLUE: str = f"\033[{_BackgroundColorsCode.BLUE.value}m"
+	MAGENTA: str = f"\033[{_BackgroundColorsCode.MAGENTA.value}m"
+	CYAN: str = f"\033[{_BackgroundColorsCode.CYAN.value}m"
+	WHITE: str = f"\033[{_BackgroundColorsCode.WHITE.value}m"
+	GRAY: str = f"\033[{_BackgroundColorsCode.GRAY.value}m"
+	BRIGHT_RED: str = f"\033[{_BackgroundColorsCode.BRIGHT_RED.value}m"
+	BRIGHT_GREEN: str = f"\033[{_BackgroundColorsCode.BRIGHT_GREEN.value}m"
+	BRIGHT_YELLOW: str = f"\033[{_BackgroundColorsCode.BRIGHT_YELLOW.value}m"
+	BRIGHT_BLUE: str = f"\033[{_BackgroundColorsCode.BRIGHT_BLUE.value}m"
+	BRIGHT_MAGENTA: str = f"\033[{_BackgroundColorsCode.BRIGHT_MAGENTA.value}m"
+	BRIGHT_CYAN: str = f"\033[{_BackgroundColorsCode.BRIGHT_CYAN.value}m"
+	BRIGHT_WHITE: str = f"\033[{_BackgroundColorsCode.BRIGHT_WHITE.value}m"
+
+@dataclass(frozen = True)
+class Decoration:
 	"""Набор управляющих последовательностей декораций ANSI."""
 
-	Bold: str = f"\033[{_DecorationsCodes.Bold.value}m"
-	Italic: str = f"\033[{_DecorationsCodes.Italic.value}m"
-	Underlined: str = f"\033[{_DecorationsCodes.Underlined.value}m"
-	Blincked: str = f"\033[{_DecorationsCodes.Blincked.value}m"
-	Throughline: str = f"\033[{_DecorationsCodes.Throughline.value}m"
-	DoubleUnderlined: str = f"\033[{_DecorationsCodes.DoubleUnderlined.value}m"
-	Upperlined: str = f"\033[{_DecorationsCodes.Upperlined.value}m"
+	BOLD: str = f"\033[{_DecorationCode.BOLD.value}m"
+	ITALIC: str = f"\033[{_DecorationCode.ITALIC.value}m"
+	UNDERLINED: str = f"\033[{_DecorationCode.UNDERLINED.value}m"
+	BLINKING: str = f"\033[{_DecorationCode.BLINKING.value}m"
+	THROUGHLINED: str = f"\033[{_DecorationCode.THROUGHLINED.value}m"
+	DOUBLE_UNDERLINED: str = f"\033[{_DecorationCode.DOUBLE_UNDERLINED.value}m"
+	UPPERLINED: str = f"\033[{_DecorationCode.UPPERLINED.value}m"

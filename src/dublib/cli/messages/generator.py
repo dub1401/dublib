@@ -3,12 +3,12 @@ from types import MappingProxyType
 from ..text_styler import TextStyler, codes
 from .types import MessageType
 
-__COLORS: MappingProxyType[MessageType | None, codes.Colors | None] = MappingProxyType({
-	MessageType.Debug: codes.Colors.Gray,
-	MessageType.Info: codes.Colors.White,
-	MessageType.Error: codes.Colors.Red,
-	MessageType.Warning: codes.Colors.Yellow,
-	MessageType.Critical: codes.Colors.Red,
+__COLORS: MappingProxyType[MessageType | None, codes.Color | None] = MappingProxyType({
+	MessageType.Debug: codes.Color.GRAY,
+	MessageType.Info: codes.Color.WHITE,
+	MessageType.Error: codes.Color.RED,
+	MessageType.Warning: codes.Color.YELLOW,
+	MessageType.Critical: codes.Color.RED,
 	None: None,
 })
 

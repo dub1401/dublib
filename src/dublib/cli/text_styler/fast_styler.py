@@ -1,4 +1,4 @@
-from .escapes import BackgroundColors, Colors, Decorations, Drops
+from .escapes import BackgroundColor, Color, Decoration, Drop
 
 #==========================================================================================#
 # >>>>> НАБОРЫ БЫСТРЫХ СТИЛИЗАТОРОВ <<<<< #
@@ -11,49 +11,49 @@ class Background:
 	def black(self) -> str:
 		"""Чёрный."""
 
-		return f"{BackgroundColors.Black}{self.__Styler.plain_text}{Drops.DEFAULT_BACKGROUND}"
+		return f"{BackgroundColor.BLACK}{self.__Styler.plain_text}{Drop.DEFAULT_BACKGROUND}"
 
 	@property
 	def red(self) -> str:
 		"""Красный."""
 
-		return f"{BackgroundColors.Red}{self.__Styler.plain_text}{Drops.DEFAULT_BACKGROUND}"
+		return f"{BackgroundColor.RED}{self.__Styler.plain_text}{Drop.DEFAULT_BACKGROUND}"
 
 	@property
 	def green(self) -> str:
 		"""Зелёный."""
 
-		return f"{BackgroundColors.Green}{self.__Styler.plain_text}{Drops.DEFAULT_BACKGROUND}"
+		return f"{BackgroundColor.GREEN}{self.__Styler.plain_text}{Drop.DEFAULT_BACKGROUND}"
 
 	@property
 	def yellow(self) -> str:
 		"""Жёлтый."""
 
-		return f"{BackgroundColors.Yellow}{self.__Styler.plain_text}{Drops.DEFAULT_BACKGROUND}"
+		return f"{BackgroundColor.YELLOW}{self.__Styler.plain_text}{Drop.DEFAULT_BACKGROUND}"
 
 	@property
 	def blue(self) -> str:
 		"""Синий."""
 
-		return f"{BackgroundColors.Blue}{self.__Styler.plain_text}{Drops.DEFAULT_BACKGROUND}"
+		return f"{BackgroundColor.BLUE}{self.__Styler.plain_text}{Drop.DEFAULT_BACKGROUND}"
 
 	@property
 	def magenta(self) -> str:
 		"""Фиолетовый."""
 
-		return f"{BackgroundColors.Magenta}{self.__Styler.plain_text}{Drops.DEFAULT_BACKGROUND}"
+		return f"{BackgroundColor.MAGENTA}{self.__Styler.plain_text}{Drop.DEFAULT_BACKGROUND}"
 
 	@property
 	def cyan(self) -> str:
 		"""Бирюзовый."""
 
-		return f"{BackgroundColors.Cyan}{self.__Styler.plain_text}{Drops.DEFAULT_BACKGROUND}"
+		return f"{BackgroundColor.CYAN}{self.__Styler.plain_text}{Drop.DEFAULT_BACKGROUND}"
 
 	@property
 	def white(self) -> str:
 		"""Белый."""
 
-		return f"{BackgroundColors.White}{self.__Styler.plain_text}{Drops.DEFAULT_BACKGROUND}"
+		return f"{BackgroundColor.WHITE}{self.__Styler.plain_text}{Drop.DEFAULT_BACKGROUND}"
 
 	def __init__(self, fast_styler: "FastStyler"):
 		"""
@@ -76,49 +76,49 @@ class Colorize:
 	def black(self) -> str:
 		"""Чёрный."""
 
-		return f"{Colors.Black}{self.__Styler.plain_text}{Drops.DEFAULT_COLOR}"
+		return f"{Color.BLACK}{self.__Styler.plain_text}{Drop.DEFAULT_COLOR}"
 
 	@property
 	def red(self) -> str:
 		"""Красный."""
 
-		return f"{Colors.Red}{self.__Styler.plain_text}{Drops.DEFAULT_COLOR}"
+		return f"{Color.RED}{self.__Styler.plain_text}{Drop.DEFAULT_COLOR}"
 
 	@property
 	def green(self) -> str:
 		"""Зелёный."""
 
-		return f"{Colors.Green}{self.__Styler.plain_text}{Drops.DEFAULT_COLOR}"
+		return f"{Color.GREEN}{self.__Styler.plain_text}{Drop.DEFAULT_COLOR}"
 
 	@property
 	def yellow(self) -> str:
 		"""Жёлтый."""
 
-		return f"{Colors.Yellow}{self.__Styler.plain_text}{Drops.DEFAULT_COLOR}"
+		return f"{Color.YELLOW}{self.__Styler.plain_text}{Drop.DEFAULT_COLOR}"
 
 	@property
 	def blue(self) -> str:
 		"""Синий."""
 
-		return f"{Colors.Blue}{self.__Styler.plain_text}{Drops.DEFAULT_COLOR}"
+		return f"{Color.BLUE}{self.__Styler.plain_text}{Drop.DEFAULT_COLOR}"
 
 	@property
 	def magenta(self) -> str:
 		"""Фиолетовый."""
 
-		return f"{Colors.Magenta}{self.__Styler.plain_text}{Drops.DEFAULT_COLOR}"
+		return f"{Color.MAGENTA}{self.__Styler.plain_text}{Drop.DEFAULT_COLOR}"
 
 	@property
 	def cyan(self) -> str:
 		"""Бирюзовый."""
 
-		return f"{Colors.Cyan}{self.__Styler.plain_text}{Drops.DEFAULT_COLOR}"
+		return f"{Color.CYAN}{self.__Styler.plain_text}{Drop.DEFAULT_COLOR}"
 
 	@property
 	def white(self) -> str:
 		"""Белый."""
 
-		return f"{Colors.White}{self.__Styler.plain_text}{Drops.DEFAULT_COLOR}"
+		return f"{Color.WHITE}{self.__Styler.plain_text}{Drop.DEFAULT_COLOR}"
 
 	#==========================================================================================#
 	# >>>>> СВЕТЛЫЕ ОТТЕНКИ <<<<< #
@@ -128,49 +128,49 @@ class Colorize:
 	def gray(self) -> str:
 		"""Серый."""
 
-		return f"{Colors.Gray}{self.__Styler.plain_text}{Drops.DEFAULT_COLOR}"
+		return f"{Color.GRAY}{self.__Styler.plain_text}{Drop.DEFAULT_COLOR}"
 
 	@property
 	def bright_red(self) -> str:
 		"""Светло-красный."""
 
-		return f"{Colors.BrightRed}{self.__Styler.plain_text}{Drops.DEFAULT_COLOR}"
+		return f"{Color.BRIGHT_RED}{self.__Styler.plain_text}{Drop.DEFAULT_COLOR}"
 
 	@property
 	def bright_green(self) -> str:
 		"""Светло-зелёный."""
 
-		return f"{Colors.BrightGreen}{self.__Styler.plain_text}{Drops.DEFAULT_COLOR}"
+		return f"{Color.BRIGHT_GREEN}{self.__Styler.plain_text}{Drop.DEFAULT_COLOR}"
 
 	@property
 	def bright_yellow(self) -> str:
 		"""Светло-жёлтый."""
 
-		return f"{Colors.BrightYellow}{self.__Styler.plain_text}{Drops.DEFAULT_COLOR}"
+		return f"{Color.BRIGHT_YELLOW}{self.__Styler.plain_text}{Drop.DEFAULT_COLOR}"
 
 	@property
 	def bright_blue(self) -> str:
 		"""Светло-синий."""
 
-		return f"{Colors.BrightBlue}{self.__Styler.plain_text}{Drops.DEFAULT_COLOR}"
+		return f"{Color.BRIGHT_BLUE}{self.__Styler.plain_text}{Drop.DEFAULT_COLOR}"
 
 	@property
 	def bright_magenta(self) -> str:
 		"""Светло-фиолетовый."""
 
-		return f"{Colors.BrightMagenta}{self.__Styler.plain_text}{Drops.DEFAULT_COLOR}"
+		return f"{Color.BRIGHT_MAGENTA}{self.__Styler.plain_text}{Drop.DEFAULT_COLOR}"
 
 	@property
 	def bright_cyan(self) -> str:
 		"""Светло-бирюзовый."""
 
-		return f"{Colors.BrightCyan}{self.__Styler.plain_text}{Drops.DEFAULT_COLOR}"
+		return f"{Color.BRIGHT_CYAN}{self.__Styler.plain_text}{Drop.DEFAULT_COLOR}"
 
 	@property
 	def bright_white(self) -> str:
 		"""Светло-белый."""
 
-		return f"{Colors.BrightWhite}{self.__Styler.plain_text}{Drops.DEFAULT_COLOR}"
+		return f"{Color.BRIGHT_WHITE}{self.__Styler.plain_text}{Drop.DEFAULT_COLOR}"
 
 	#==========================================================================================#
 	# >>>>> ПУБЛИЧНЫЕ МЕТОДЫ <<<<< #
@@ -193,43 +193,43 @@ class Decorate:
 	def bold(self) -> str:
 		"""Полужирный."""
 
-		return f"{Decorations.Bold}{self.__Styler.plain_text}{Drops.DISABLE_BOLD}"
+		return f"{Decoration.BOLD}{self.__Styler.plain_text}{Drop.DISABLE_BOLD}"
 
 	@property
 	def italic(self) -> str:
 		"""Курсив."""
 
-		return f"{Decorations.Italic}{self.__Styler.plain_text}{Drops.DISABLE_ITALIC}"
+		return f"{Decoration.ITALIC}{self.__Styler.plain_text}{Drop.DISABLE_ITALIC}"
 
 	@property
 	def underlined(self) -> str:
 		"""Подчёркнутый."""
 
-		return f"{Decorations.Underlined}{self.__Styler.plain_text}{Drops.DISABLE_UNDERLINED}"
+		return f"{Decoration.UNDERLINED}{self.__Styler.plain_text}{Drop.DISABLE_UNDERLINED}"
 
 	@property
 	def blincked(self) -> str:
 		"""Мигающий."""
 
-		return f"{Decorations.Blincked}{self.__Styler.plain_text}{Drops.DISABLE_BLINCKED}"
+		return f"{Decoration.BLINKING}{self.__Styler.plain_text}{Drop.DISABLE_BLINCKED}"
 
 	@property
 	def throughline(self) -> str:
 		"""Перечёркнутый."""
 
-		return f"{Decorations.Throughline}{self.__Styler.plain_text}{Drops.DISABLE_THROUGHLINED}"
+		return f"{Decoration.THROUGHLINED}{self.__Styler.plain_text}{Drop.DISABLE_THROUGHLINED}"
 
 	@property
 	def double_underlined(self) -> str:
 		"""Дважды подчёркнутый."""
 
-		return f"{Decorations.DoubleUnderlined}{self.__Styler.plain_text}{Drops.DISABLE_UNDERLINED}"
+		return f"{Decoration.DOUBLE_UNDERLINED}{self.__Styler.plain_text}{Drop.DISABLE_UNDERLINED}"
 
 	@property
 	def upperlined(self) -> str:
 		"""Надчёркнутый."""
 
-		return f"{Decorations.Upperlined}{self.__Styler.plain_text}{Drops.DISABLE_UPPERLINED}"
+		return f"{Decoration.UPPERLINED}{self.__Styler.plain_text}{Drop.DISABLE_UPPERLINED}"
 
 	def __init__(self, fast_styler: "FastStyler"):
 		"""
