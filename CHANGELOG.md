@@ -30,6 +30,7 @@ For visual categorization of changes emojis are used in accordance with [gitmoji
 ### 🐛 Fixed
 #### validators
 - False positive `Datetime` validator.
+- Validator `Float` false positiove on non-human floats as `1.` or `.5`.
 
 ## [0.32.0] - 2026-10-12
 

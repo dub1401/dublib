@@ -271,7 +271,13 @@ class Float(BaseValidator[float]):
 		:rtype: bool
 		"""
 
-		return value.count("-") <= 1 and value.count(".") == 1 and value.replace(".", "").lstrip("-").isdigit()
+		value = value.strip(".")
+
+		return all((
+			value.count("-") <= 1,
+			value.count(".") == 1,
+			value.replace(".", "").lstrip("-").isdigit(),
+		))
 
 class Integer(BaseValidator[int]):
 
