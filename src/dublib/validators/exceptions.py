@@ -7,7 +7,7 @@ class ConversionError(Exception):
 		"""
 		Exception: unable convert value to target type.
 
-		:param value: Conversible value.
+		:param value: Convertible value.
 		:type value: Any
 		:param target_type: Target type.
 		:type target_type: type

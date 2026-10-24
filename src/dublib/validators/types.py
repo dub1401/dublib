@@ -49,7 +49,7 @@ class Any(BaseValidator[Any]):
 		"""
 		Validate is value can be converted into target type without data losses.
 
-		Value can't be of the target type if target type is `str`!
+		Value can't be of the target type if fast validation enabled!
 
 		:param value: Validable value.
 		:type value: Any
@@ -110,7 +110,7 @@ class Alpha(BaseValidator[str]):
 		"""
 		Validate is value can be converted into target type without data losses.
 
-		Value can't be of the target type if target type is `str`!
+		Value can't be of the target type if fast validation enabled!
 
 		:param value: Validable value.
 		:type value: Any
@@ -157,7 +157,7 @@ class Base64(BaseValidator[str]):
 		"""
 		Validate is value can be converted into target type without data losses.
 
-		Value can't be of the target type if target type is `str`!
+		Value can't be of the target type if fast validation enabled!
 
 		:param value: Validable value.
 		:type value: Any
@@ -216,7 +216,7 @@ class Bool(BaseValidator[bool]):
 		"""
 		Validate is value can be converted into target type without data losses.
 
-		Value can't be of the target type if target type is `str`!
+		Value can't be of the target type if fast validation enabled!
 
 		:param value: Validable value.
 		:type value: Any
@@ -276,7 +276,7 @@ class Datetime(BaseValidator[datetime]):
 		"""
 		Validate is value can be converted into target type without data losses.
 
-		Value can't be of the target type if target type is `str`!
+		Value can't be of the target type if fast validation enabled!
 
 		:param value: Validable value.
 		:type value: Any
@@ -332,7 +332,7 @@ class Domain(BaseValidator[str]):
 		"""
 		Validate is value can be converted into target type without data losses.
 
-		Value can't be of the target type if target type is `str`!
+		Value can't be of the target type if fast validation enabled!
 
 		:param value: Validable value.
 		:type value: Any
@@ -386,7 +386,7 @@ class Email(BaseValidator[str]):
 		"""
 		Validate is value can be converted into target type without data losses.
 
-		Value can't be of the target type if target type is `str`!
+		Value can't be of the target type if fast validation enabled!
 
 		:param value: Validable value.
 		:type value: Any
@@ -443,7 +443,7 @@ class ExistingDirPath(BaseValidator[PathlibPath]):
 		"""
 		Validate is value can be converted into target type without data losses.
 
-		Value can't be of the target type if target type is `str`!
+		Value can't be of the target type if fast validation enabled!
 
 		:param value: Validable value.
 		:type value: Any
@@ -497,7 +497,7 @@ class ExistingFilePath(BaseValidator[PathlibPath]):
 		"""
 		Validate is value can be converted into target type without data losses.
 
-		Value can't be of the target type if target type is `str`!
+		Value can't be of the target type if fast validation enabled!
 
 		:param value: Validable value.
 		:type value: Any
@@ -551,7 +551,7 @@ class ExistingPath(BaseValidator[PathlibPath]):
 		"""
 		Validate is value can be converted into target type without data losses.
 
-		Value can't be of the target type if target type is `str`!
+		Value can't be of the target type if fast validation enabled!
 
 		:param value: Validable value.
 		:type value: Any
@@ -605,7 +605,7 @@ class Float(BaseValidator[float]):
 		"""
 		Validate is value can be converted into target type without data losses.
 
-		Value can't be of the target type if target type is `str`!
+		Value can't be of the target type if fast validation enabled!
 
 		:param value: Validable value.
 		:type value: Any
@@ -667,7 +667,7 @@ class Integer(BaseValidator[int]):
 		"""
 		Validate is value can be converted into target type without data losses.
 
-		Value can't be of the target type if target type is `str`!
+		Value can't be of the target type if fast validation enabled!
 
 		:param value: Validable value.
 		:type value: Any
@@ -720,7 +720,7 @@ class IPv4(BaseValidator[str]):
 		"""
 		Validate is value can be converted into target type without data losses.
 
-		Value can't be of the target type if target type is `str`!
+		Value can't be of the target type if fast validation enabled!
 
 		:param value: Validable value.
 		:type value: Any
@@ -774,7 +774,7 @@ class IPv6(BaseValidator[str]):
 		"""
 		Validate is value can be converted into target type without data losses.
 
-		Value can't be of the target type if target type is `str`!
+		Value can't be of the target type if fast validation enabled!
 
 		:param value: Validable value.
 		:type value: Any
@@ -845,7 +845,7 @@ class Path(BaseValidator[PathlibPath]):
 		"""
 		Validate is value can be converted into target type without data losses.
 
-		Value can't be of the target type if target type is `str`!
+		Value can't be of the target type if fast validation enabled!
 
 		:param value: Validable value.
 		:type value: Any
@@ -915,7 +915,7 @@ class UnsignedInteger(BaseValidator[int]):
 		"""
 		Validate is value can be converted into target type without data losses.
 
-		Value can't be of the target type if target type is `str`!
+		Value can't be of the target type if fast validation enabled!
 
 		:param value: Validable value.
 		:type value: Any
@@ -971,7 +971,7 @@ class URL(BaseValidator[str]):
 		"""
 		Validate is value can be converted into target type without data losses.
 
-		Value can't be of the target type if target type is `str`!
+		Value can't be of the target type if fast validation enabled!
 
 		:param value: Validable value.
 		:type value: Any
@@ -1028,7 +1028,7 @@ class Version(BaseValidator[version.Version]):
 		"""
 		Validate is value can be converted into target type without data losses.
 
-		Value can't be of the target type if target type is `str`!
+		Value can't be of the target type if fast validation enabled!
 
 		:param value: Validable value.
 		:type value: Any
@@ -1085,7 +1085,7 @@ class VersionsRange(BaseValidator[specifiers.SpecifierSet]):
 		"""
 		Validate is value can be converted into target type without data losses.
 
-		Value can't be of the target type if target type is `str`!
+		Value can't be of the target type if fast validation enabled!
 
 		:param value: Validable value.
 		:type value: Any

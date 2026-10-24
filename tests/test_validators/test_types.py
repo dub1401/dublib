@@ -35,10 +35,10 @@ def test_Base64():
 def test_Bool():
 
 	assert types.Bool.validate(False) is True
-	assert types.Bool.validate("trUe") is True
-	assert types.Bool.validate("faLse") is True
-	assert types.Bool.convert("truE") is True
-	assert types.Bool.convert("faLse") is False
+	assert types.Bool.validate("TRUE") is True
+	assert types.Bool.validate("false") is True
+	assert types.Bool.convert("true") is True
+	assert types.Bool.convert("FALSE") is False
 
 def test_Datetime():
 

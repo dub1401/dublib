@@ -73,7 +73,7 @@ class BasePosition:
 		self.__Flags: list[Flag] = []
 		self.__Keys: list[Key] = []
 
-	def add_argument(self, value_type: ValidableTypes = ValidableTypes.All, description: str | None = None):
+	def add_argument(self, value_type: ValidableTypes = ValidableTypes.Any, description: str | None = None):
 		"""
 		Добавляет аргумент на позицию.
 
@@ -99,7 +99,7 @@ class BasePosition:
 
 		self.__Flags.append(Flag(name, aliases, description, important = False))
 
-	def add_key(self, name: str, aliases: Sequence[str] | None = None, value_type: ValidableTypes = ValidableTypes.All, description: str | None = None):
+	def add_key(self, name: str, aliases: Sequence[str] | None = None, value_type: ValidableTypes = ValidableTypes.Any, description: str | None = None):
 		"""
 		Добавляет ключ на позицию.
 
@@ -226,7 +226,7 @@ class Position:
 
 		self.__Flags.append(Flag(name, aliases, description, self.__IsImportant))
 
-	def add_key(self, name: str, aliases: Sequence[str] | None = None, value_type: ValidableTypes = ValidableTypes.All, description: str | None = None):
+	def add_key(self, name: str, aliases: Sequence[str] | None = None, value_type: ValidableTypes = ValidableTypes.Any, description: str | None = None):
 		"""
 		Добавляет ключ на позицию.
 
@@ -242,11 +242,11 @@ class Position:
 
 		self.__Keys.append(Key(name, aliases, value_type, description, self.__IsImportant))
 
-	def set_argument(self, value_type: ValidableTypes = ValidableTypes.All, description: str | None = None):
+	def set_argument(self, value_type: ValidableTypes = ValidableTypes.Any, description: str | None = None):
 		"""
 		Устанавливает аргумент на позицию.
 
-		:param value_type: Тип аргумента. По умолчанию `ValidableTypes.All`.
+		:param value_type: Тип аргумента. По умолчанию `ValidableTypes.Any`.
 		:type value_type: ValidableTypes
 		:param description: Описание аргумента. По умолчанию `None`.
 		:type description: str | None

@@ -49,6 +49,7 @@ requestor = [
 ]
 validators = [
 	"dateparser>=1.4",
+	"packaging",
 	"pathvalidate",
 	"pydantic>=2",
 	"validators>=0.36",

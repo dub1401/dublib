@@ -105,7 +105,7 @@ class BaseValidator[T](ABC):
 		"""
 		Validate is value can be converted into target type .
 
-		Value can't be of the target type if target type is `str`!
+		Value can't be of the target type if fast validation enabled!
 
 		:param value: Validable value.
 		:type value: Any
