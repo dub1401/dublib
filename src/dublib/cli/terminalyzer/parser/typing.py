@@ -1,4 +1,7 @@
 from datetime import datetime
 from pathlib import Path
 
-SUPPORTED_TYPES = bool | float | int | Path | str | datetime
+from packaging.specifiers import SpecifierSet
+from packaging.version import Version
+
+SUPPORTED_TYPES = bool | datetime | float | int | Path | SpecifierSet | str | Version

@@ -13,6 +13,7 @@ For visual categorization of changes emojis are used in accordance with [gitmoji
 #### validators
 - All validators now can be used as [pydantic](https://github.com/pydantic/pydantic) annotations.
 - Validators for [packaging](https://pypi.org/project/packaging) `Version` and `SpecifierSet`.
+- Validators for exists file and directory.
 
 ### 🎨 Changed
 - Dependencies separated in optional groups.
@@ -23,6 +24,8 @@ For visual categorization of changes emojis are used in accordance with [gitmoji
 - Support many config sources.
 - Switched in read-only mode.
 - Support values from environment variables and *.toml files.
+#### validators
+- Validator `ValidPath` renamed to `ExistingPath`.
 
 ### 🔥 Removed
 - Module `telebot_utils`.

@@ -1,10 +1,11 @@
+import inspect
 import sys
 from datetime import datetime
 from pathlib import Path
 
 from packaging.version import Version
 
-from dublib.validators import types
+from dublib.validators import ValidableTypes, types
 
 def test_All():
 
@@ -52,6 +53,52 @@ def test_Email():
 	assert types.Email.validate("test123.mailbox@mailbox.com") is True
 	assert types.Email.validate("test@mailbox") is False
 	assert types.Email.convert("test123.mailbox@mailbox.com") == "test123.mailbox@mailbox.com"
+
+def test_ExistingDirPath(tmp_path: Path):
+
+	tmp_file: Path = tmp_path / "test.txt"
+	tmp_file_str: str = tmp_file.as_posix()
+	tmp_file.touch()
+	tmp_dir: Path = tmp_path / "test"
+	tmp_dir_str: str = tmp_dir.as_posix()
+	tmp_dir.mkdir()
+
+	assert types.ExistingDirPath.validate(tmp_file_str) is False
+	assert types.ExistingDirPath.validate(tmp_dir_str) is True
+	assert types.ExistingDirPath.validate("missing_file.txt") is False
+	assert types.ExistingDirPath.validate("missing_dir") is False
+	assert types.ExistingDirPath.convert(tmp_dir_str) == tmp_dir
+
+def test_ExistingFilePath(tmp_path: Path):
+
+	tmp_file: Path = tmp_path / "test.txt"
+	tmp_file_str: str = tmp_file.as_posix()
+	tmp_file.touch()
+	tmp_dir: Path = tmp_path / "test"
+	tmp_dir_str: str = tmp_dir.as_posix()
+	tmp_dir.mkdir()
+
+	assert types.ExistingFilePath.validate(tmp_file_str) is True
+	assert types.ExistingFilePath.validate(tmp_dir_str) is False
+	assert types.ExistingFilePath.validate("missing_file.txt") is False
+	assert types.ExistingFilePath.validate("missing_dir") is False
+	assert types.ExistingFilePath.convert(tmp_file_str) == tmp_file
+
+def test_ExistingPath(tmp_path: Path):
+
+	tmp_file: Path = tmp_path / "test.txt"
+	tmp_file_str: str = tmp_file.as_posix()
+	tmp_file.touch()
+	tmp_dir: Path = tmp_path / "test"
+	tmp_dir_str: str = tmp_dir.as_posix()
+	tmp_dir.mkdir()
+
+	assert types.ExistingPath.validate(tmp_file_str) is True
+	assert types.ExistingPath.validate(tmp_dir_str) is True
+	assert types.ExistingPath.validate("missing_file.txt") is False
+	assert types.ExistingPath.validate("missing_dir") is False
+	assert types.ExistingPath.convert(tmp_file_str) == tmp_file
+	assert types.ExistingPath.convert(tmp_dir_str) == tmp_dir
 
 def test_Float():
 
@@ -120,22 +167,6 @@ def test_URL():
 	assert types.URL.validate("example.com") is False
 	assert types.URL.convert("https://www.example.com") == "https://www.example.com"
 
-def test_ValidPath(tmp_path: Path):
-
-	tmp_file: Path = tmp_path / "test.txt"
-	tmp_file_str: str = tmp_file.as_posix()
-	tmp_file.touch()
-	tmp_dir: Path = tmp_path / "test"
-	tmp_dir_str: str = tmp_dir.as_posix()
-	tmp_dir.mkdir()
-
-	assert types.ValidPath.validate(tmp_file_str) is True
-	assert types.ValidPath.validate(tmp_dir_str) is True
-	assert types.ValidPath.validate("missing_file.txt") is False
-	assert types.ValidPath.validate("missing_dir") is False
-	assert types.ValidPath.convert(tmp_file_str) == tmp_file
-	assert types.ValidPath.convert(tmp_dir_str) == tmp_dir
-
 def test_Version():
 
 	assert types.Version.validate("v1.0.0-rc.1") is True
@@ -151,3 +182,17 @@ def test_VersionsRange():
 	assert types.VersionsRange.validate(">=1.0;<1.1") is False
 	assert types.VersionsRange.validate(">=1..0;<1.1") is False
 	assert Version("v1.0.99") in types.VersionsRange.convert(">=1.0,<1.1")
+
+def test_ValidableTypes():
+	"""Check is all validators in `ValidableTypes` enumeration."""
+
+	target_classes: tuple[type[object], ...] = tuple(
+		cls
+		for _, cls in inspect.getmembers(types, inspect.isclass)
+		if cls.__module__ == types.__name__
+	)
+
+	enum_values: set[type] = {item.value for item in ValidableTypes}
+
+	for cls in target_classes:
+		assert cls in enum_values

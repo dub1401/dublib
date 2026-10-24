@@ -244,6 +244,100 @@ class Email(BaseValidator[str]):
 
 		return False
 
+class ExistingDirPath(BaseValidator[PathlibPath]):
+
+	@override
+	@staticmethod
+	def convert(value: str) ->  PathlibPath:
+		"""
+		Convert value into target type without validation.
+
+		:param value: Convertible string.
+		:type value: str
+		:return: Conversion result.
+		:rtype: pathlib.Path
+		"""
+
+		return PathlibPath(value)
+
+	@override
+	@staticmethod
+	def validate(value: str) -> bool:
+		"""
+		Validate is string can be converted into target type.
+
+		:param value: Validable string.
+		:type value: str
+		:return: `True` if string valid.
+		:rtype: bool
+		"""
+
+		path = PathlibPath(value)
+
+		return path.exists() and path.is_dir()
+
+class ExistingFilePath(BaseValidator[PathlibPath]):
+
+	@override
+	@staticmethod
+	def convert(value: str) ->  PathlibPath:
+		"""
+		Convert value into target type without validation.
+
+		:param value: Convertible string.
+		:type value: str
+		:return: Conversion result.
+		:rtype: pathlib.Path
+		"""
+
+		return PathlibPath(value)
+
+	@override
+	@staticmethod
+	def validate(value: str) -> bool:
+		"""
+		Validate is string can be converted into target type.
+
+		:param value: Validable string.
+		:type value: str
+		:return: `True` if string valid.
+		:rtype: bool
+		"""
+
+		path = PathlibPath(value)
+
+		return path.exists() and path.is_file()
+
+class ExistingPath(BaseValidator[PathlibPath]):
+
+	@override
+	@staticmethod
+	def convert(value: str) ->  PathlibPath:
+		"""
+		Convert value into target type without validation.
+
+		:param value: Convertible string.
+		:type value: str
+		:return: Conversion result.
+		:rtype: pathlib.Path
+		"""
+
+		return PathlibPath(value)
+
+	@override
+	@staticmethod
+	def validate(value: str) -> bool:
+		"""
+		Validate is string can be converted into target type.
+
+		:param value: Validable string.
+		:type value: str
+		:return: `True` if string valid.
+		:rtype: bool
+		"""
+
+		return PathlibPath(value).exists()
+
 class Float(BaseValidator[float]):
 
 	@override
@@ -514,36 +608,6 @@ class URL(BaseValidator[str]):
 		except validators.ValidationError: pass
 
 		return False
-
-class ValidPath(BaseValidator[PathlibPath]):
-
-	@override
-	@staticmethod
-	def convert(value: str) ->  PathlibPath:
-		"""
-		Convert value into target type without validation.
-
-		:param value: Convertible string.
-		:type value: str
-		:return: Conversion result.
-		:rtype: pathlib.Path
-		"""
-
-		return PathlibPath(value)
-
-	@override
-	@staticmethod
-	def validate(value: str) -> bool:
-		"""
-		Validate is string can be converted into target type.
-
-		:param value: Validable string.
-		:type value: str
-		:return: `True` if string valid.
-		:rtype: bool
-		"""
-
-		return PathlibPath(value).exists()
 
 class Version(BaseValidator[version.Version]):
 

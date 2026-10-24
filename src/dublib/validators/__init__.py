@@ -12,6 +12,9 @@ class ValidableTypes(Enum):
 	Datetime = types.Datetime
 	Domain = types.Domain
 	Email = types.Email
+	ExistingDirPath = types.ExistingDirPath
+	ExistingFilePath = types.ExistingFilePath
+	ExistingPath = types.ExistingPath
 	Float = types.Float
 	Integer = types.Integer
 	IPv4 = types.IPv4
@@ -20,4 +23,5 @@ class ValidableTypes(Enum):
 	Path = types.Path
 	UnsignedInteger = types.UnsignedInteger
 	URL = types.URL
-	ValidPath = types.ValidPath
+	Version = types.Version
+	VersionsRange = types.VersionsRange
