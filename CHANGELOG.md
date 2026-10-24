@@ -26,9 +26,12 @@ For visual categorization of changes emojis are used in accordance with [gitmoji
 - Support values from environment variables and *.toml files.
 #### validators
 - Validator `ValidPath` renamed to `ExistingPath`.
+- Validator `All` renamed to `Any`.
 
 ### 🔥 Removed
 - Module `telebot_utils`.
+#### validators
+- Validator `Number`.
 
 ### 🐛 Fixed
 #### validators

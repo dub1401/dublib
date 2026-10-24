@@ -1,7 +1,8 @@
 import sys
+from collections.abc import Buffer
 from datetime import datetime
 from pathlib import Path as PathlibPath
-from typing import cast, override
+from typing import Any, SupportsFloat, SupportsIndex, SupportsInt, override
 
 import dateparser
 import validators
@@ -9,670 +10,1094 @@ from packaging import specifiers, version
 from pathvalidate import is_valid_filepath
 
 from .base import BaseValidator
+from .exceptions import ConversionError
 
-class All(BaseValidator[str]):
+class Any(BaseValidator[Any]):
+	"""Validator: any value."""
 
-	@override
 	@staticmethod
-	def convert(value: str) -> str:
+	@override
+	def _export_target_type() -> type[Any]:
 		"""
-		Convert value into target type without validation.
+		Export target type.
 
-		:param value: Convertible string.
-		:type value: str
+		:return: Target type.
+		:rtype: type[Any]
+		"""
+
+		return Any
+
+	@staticmethod
+	@override
+	def _convert(value: Any) -> Any:
+		"""
+		Convert value into target type without validation. Can raise `ConversionError`.
+
+		Value can't be of the target type, because instance checked on public method wrapper!
+
+		:param value: Convertible value.
+		:type value: Any
 		:return: Conversion result.
-		:rtype: T
+		:rtype: Any
 		"""
 
 		return value
 
-	@override
 	@staticmethod
-	def validate(value: str) -> bool:
+	@override
+	def _validate(value: Any) -> bool:
 		"""
-		Validate is string can be converted into target type.
+		Validate is value can be converted into target type without data losses.
 
-		:param value: Validable string.
-		:type value: str
-		:return: `True` if string valid.
+		Value can't be of the target type if target type is `str`!
+
+		:param value: Validable value.
+		:type value: Any
+		:return: `True` if value valid.
 		:rtype: bool
 		"""
 
 		return True
 
-class Alpha(BaseValidator[str]):
-
-	@override
-	@staticmethod
-	def convert(value: str) -> str:
+	# Overridden to annotate same type returned as passed.
+	@classmethod
+	def convert[T](cls, value: T) -> T:
 		"""
 		Convert value into target type without validation.
 
-		:param value: Convertible string.
-		:type value: str
+		:param value: Convertible value.
+		:type value: Any
 		:return: Conversion result.
 		:rtype: T
 		"""
 
-		return value
+		return cls._convert(value)
 
-	@override
+class Alpha(BaseValidator[str]):
+	"""Validator: string that contains only alpha characters."""
+
 	@staticmethod
-	def validate(value: str) -> bool:
+	@override
+	def _export_target_type() -> type[str]:
 		"""
-		Validate is string can be converted into target type.
+		Export target type.
 
-		:param value: Validable string.
-		:type value: str
-		:return: `True` if string valid.
+		:return: Target type.
+		:rtype: type[str]
+		"""
+
+		return str
+
+	@staticmethod
+	@override
+	def _convert(value: Any) -> str:
+		"""
+		Convert value into target type without validation. Can raise `ConversionError`.
+
+		Value can't be of the target type, because instance checked on public method wrapper!
+
+		:param value: Convertible value.
+		:type value: Any
+		:return: Conversion result.
+		:rtype: str
+		"""
+
+		return str(value)
+
+	@staticmethod
+	@override
+	def _validate(value: Any) -> bool:
+		"""
+		Validate is value can be converted into target type without data losses.
+
+		Value can't be of the target type if target type is `str`!
+
+		:param value: Validable value.
+		:type value: Any
+		:return: `True` if value valid.
 		:rtype: bool
 		"""
 
-		return value.isalpha()
+		return isinstance(value, str) and value.isalpha()
 
 class Base64(BaseValidator[str]):
+	"""Validator: string in Base64 encoding."""
 
-	@override
 	@staticmethod
-	def convert(value: str) -> str:
+	@override
+	def _export_target_type() -> type[str]:
 		"""
-		Convert value into target type without validation.
+		Export target type.
 
-		:param value: Convertible string.
-		:type value: str
+		:return: Target type.
+		:rtype: type[str]
+		"""
+
+		return str
+
+	@staticmethod
+	@override
+	def _convert(value: Any) -> str:
+		"""
+		Convert value into target type without validation. Can raise `ConversionError`.
+
+		Value can't be of the target type, because instance checked on public method wrapper!
+
+		:param value: Convertible value.
+		:type value: Any
 		:return: Conversion result.
-		:rtype: T
+		:rtype: str
 		"""
 
-		return value
+		return str(value)
 
-	@override
 	@staticmethod
-	def validate(value: str) -> bool:
+	@override
+	def _validate(value: Any) -> bool:
 		"""
-		Validate is string can be converted into target type.
+		Validate is value can be converted into target type without data losses.
 
-		:param value: Validable string.
-		:type value: str
-		:return: `True` if string valid.
+		Value can't be of the target type if target type is `str`!
+
+		:param value: Validable value.
+		:type value: Any
+		:return: `True` if value valid.
 		:rtype: bool
 		"""
+
+		result: bool | None = None
 
 		try:
-			Result = validators.base64(value)
-			if type(Result) is bool: return Result
-		except validators.ValidationError: pass
+			result = validators.base64(value)
+		except validators.ValidationError:
+			pass
 
-		return False
+		return bool(result)
 
 class Bool(BaseValidator[bool]):
+	"""Validator: boolean value or case-insensitive strings `true`, `false`."""
 
-	@override
 	@staticmethod
-	def convert(value: str) -> bool:
+	@override
+	def _export_target_type() -> type[bool]:
 		"""
-		Convert value into target type without validation.
+		Export target type.
 
-		:param value: Convertible string.
-		:type value: str
+		:return: Target type.
+		:rtype: type[bool]
+		"""
+
+		return bool
+
+	@staticmethod
+	@override
+	def _convert(value: Any) -> bool:
+		"""
+		Convert value into target type without validation. Can raise `ConversionError`.
+
+		Value can't be of the target type, because instance checked on public method wrapper!
+
+		:param value: Convertible value.
+		:type value: Any
 		:return: Conversion result.
 		:rtype: bool
 		"""
 
-		value = value.lower()
-		if value in ("true",): return True
+		if isinstance(value, str):
+			buffer = value.lower()
+			if buffer in ("true",): return True
+			return False
 
-		return False
+		return bool(value)
 
-	@override
 	@staticmethod
-	def validate(value: str) -> bool:
+	@override
+	def _validate(value: Any) -> bool:
 		"""
-		Validate is string can be converted into target type.
+		Validate is value can be converted into target type without data losses.
 
-		:param value: Validable string.
-		:type value: str
-		:return: `True` if string valid.
+		Value can't be of the target type if target type is `str`!
+
+		:param value: Validable value.
+		:type value: Any
+		:return: `True` if value valid.
 		:rtype: bool
 		"""
 
-		Buffer = value.lower()
+		if isinstance(value, str):
+			buffer = value.lower()
+			return buffer in ("true", "false")
 
-		return Buffer in ("true", "false")
+		return False
 
 class Datetime(BaseValidator[datetime]):
+	"""Validator: datetime or interpritable string."""
 
-	@override
 	@staticmethod
-	def convert(value: str) -> datetime:
+	@override
+	def _export_target_type() -> type[datetime]:
 		"""
-		Convert value into target type without validation.
+		Export target type.
 
-		:param value: Convertible string.
-		:type value: str
+		:return: Target type.
+		:rtype: type[datetime]
+		"""
+
+		return datetime
+
+	@staticmethod
+	@override
+	def _convert(value: Any) -> datetime:
+		"""
+		Convert value into target type without validation. Can raise `ConversionError`.
+
+		Value can't be of the target type, because instance checked on public method wrapper!
+
+		:param value: Convertible value.
+		:type value: Any
 		:return: Conversion result.
 		:rtype: datetime
 		"""
 
-		return cast("datetime", dateparser.parse(value))
+		if isinstance(value, str):
+			buffer = dateparser.parse(value)
 
-	@override
+			if buffer:
+				return buffer
+
+		elif isinstance(value, int | float):
+			return datetime.fromtimestamp(value)
+
+		raise ConversionError(value, datetime)
+
 	@staticmethod
-	def validate(value: str) -> bool:
+	@override
+	def _validate(value: Any) -> bool:
 		"""
-		Validate is string can be converted into target type.
+		Validate is value can be converted into target type without data losses.
 
-		:param value: Validable string.
-		:type value: str
-		:return: `True` if string valid.
+		Value can't be of the target type if target type is `str`!
+
+		:param value: Validable value.
+		:type value: Any
+		:return: `True` if value valid.
 		:rtype: bool
 		"""
 
-		try:
-			return bool(dateparser.parse(value))
-		except (ValueError, TypeError): pass
+		if isinstance(value, datetime):
+			return True
+
+		if isinstance(value, str):
+			try:
+				return bool(dateparser.parse(value))
+			except (ValueError, TypeError):
+				pass
 
 		return False
 
 class Domain(BaseValidator[str]):
+	"""Validator: domain."""
 
-	@override
 	@staticmethod
-	def convert(value: str) -> str:
+	@override
+	def _export_target_type() -> type[str]:
 		"""
-		Convert value into target type without validation.
+		Export target type.
 
-		:param value: Convertible string.
-		:type value: str
+		:return: Target type.
+		:rtype: type[str]
+		"""
+
+		return str
+
+	@staticmethod
+	@override
+	def _convert(value: Any) -> str:
+		"""
+		Convert value into target type without validation. Can raise `ConversionError`.
+
+		Value can't be of the target type, because instance checked on public method wrapper!
+
+		:param value: Convertible value.
+		:type value: Any
 		:return: Conversion result.
-		:rtype: T
+		:rtype: str
 		"""
 
-		return value
+		return str(value)
 
-	@override
 	@staticmethod
-	def validate(value: str) -> bool:
+	@override
+	def _validate(value: Any) -> bool:
 		"""
-		Validate is string can be converted into target type.
+		Validate is value can be converted into target type without data losses.
 
-		:param value: Validable string.
-		:type value: str
-		:return: `True` if string valid.
+		Value can't be of the target type if target type is `str`!
+
+		:param value: Validable value.
+		:type value: Any
+		:return: `True` if value valid.
 		:rtype: bool
 		"""
 
-		try:
-			Result = validators.domain(value)
-			if type(Result) is bool: return Result
-		except validators.ValidationError: pass
+		result: bool | None = None
 
-		return False
+		try:
+			result = validators.domain(value)
+		except validators.ValidationError:
+			pass
+
+		return bool(result)
 
 class Email(BaseValidator[str]):
+	"""Validator: email."""
 
-	@override
 	@staticmethod
-	def convert(value: str) -> str:
+	@override
+	def _export_target_type() -> type[str]:
 		"""
-		Convert value into target type without validation.
+		Export target type.
 
-		:param value: Convertible string.
-		:type value: str
+		:return: Target type.
+		:rtype: type[str]
+		"""
+
+		return str
+
+	@staticmethod
+	@override
+	def _convert(value: Any) -> str:
+		"""
+		Convert value into target type without validation. Can raise `ConversionError`.
+
+		Value can't be of the target type, because instance checked on public method wrapper!
+
+		:param value: Convertible value.
+		:type value: Any
 		:return: Conversion result.
-		:rtype: T
+		:rtype: str
 		"""
 
-		return value
+		return str(value)
 
-	@override
 	@staticmethod
-	def validate(value: str) -> bool:
+	@override
+	def _validate(value: Any) -> bool:
 		"""
-		Validate is string can be converted into target type.
+		Validate is value can be converted into target type without data losses.
 
-		:param value: Validable string.
-		:type value: str
-		:return: `True` if string valid.
+		Value can't be of the target type if target type is `str`!
+
+		:param value: Validable value.
+		:type value: Any
+		:return: `True` if value valid.
 		:rtype: bool
 		"""
 
+		result: bool | None = None
+
 		try:
-			Result = validators.email(value)
-			if type(Result) is bool: return Result
-		except validators.ValidationError: pass
+			result = validators.email(value)
+		except validators.ValidationError:
+			pass
+
+		return bool(result)
+
+class ExistingDirPath(BaseValidator[PathlibPath]):
+	"""Validator: existing directory path."""
+
+	@staticmethod
+	@override
+	def _export_target_type() -> type[PathlibPath]:
+		"""
+		Export target type.
+
+		:return: Target type.
+		:rtype: type[Path]
+		"""
+
+		return PathlibPath
+
+	@staticmethod
+	@override
+	def _convert(value: Any) -> PathlibPath:
+		"""
+		Convert value into target type without validation. Can raise `ConversionError`.
+
+		Value can't be of the target type, because instance checked on public method wrapper!
+
+		:param value: Convertible value.
+		:type value: Any
+		:return: Conversion result.
+		:rtype: Path
+		"""
+
+		if isinstance(value, str):
+			return PathlibPath(value)
+
+		raise ConversionError(value, PathlibPath)
+
+	@staticmethod
+	@override
+	def _validate(value: Any) -> bool:
+		"""
+		Validate is value can be converted into target type without data losses.
+
+		Value can't be of the target type if target type is `str`!
+
+		:param value: Validable value.
+		:type value: Any
+		:return: `True` if value valid.
+		:rtype: bool
+		"""
+
+		if isinstance(value, PathlibPath | str):
+			path = PathlibPath(value)
+			return path.exists() and path.is_dir()
 
 		return False
 
-class ExistingDirPath(BaseValidator[PathlibPath]):
-
-	@override
-	@staticmethod
-	def convert(value: str) ->  PathlibPath:
-		"""
-		Convert value into target type without validation.
-
-		:param value: Convertible string.
-		:type value: str
-		:return: Conversion result.
-		:rtype: pathlib.Path
-		"""
-
-		return PathlibPath(value)
-
-	@override
-	@staticmethod
-	def validate(value: str) -> bool:
-		"""
-		Validate is string can be converted into target type.
-
-		:param value: Validable string.
-		:type value: str
-		:return: `True` if string valid.
-		:rtype: bool
-		"""
-
-		path = PathlibPath(value)
-
-		return path.exists() and path.is_dir()
-
 class ExistingFilePath(BaseValidator[PathlibPath]):
+	"""Validator: existing file path."""
 
-	@override
 	@staticmethod
-	def convert(value: str) ->  PathlibPath:
+	@override
+	def _export_target_type() -> type[PathlibPath]:
 		"""
-		Convert value into target type without validation.
+		Export target type.
 
-		:param value: Convertible string.
-		:type value: str
+		:return: Target type.
+		:rtype: type[Path]
+		"""
+
+		return PathlibPath
+
+	@staticmethod
+	@override
+	def _convert(value: Any) -> PathlibPath:
+		"""
+		Convert value into target type without validation. Can raise `ConversionError`.
+
+		Value can't be of the target type, because instance checked on public method wrapper!
+
+		:param value: Convertible value.
+		:type value: Any
 		:return: Conversion result.
-		:rtype: pathlib.Path
+		:rtype: Path
 		"""
 
-		return PathlibPath(value)
+		if isinstance(value, str):
+			return PathlibPath(value)
 
-	@override
+		raise ConversionError(value, PathlibPath)
+
 	@staticmethod
-	def validate(value: str) -> bool:
+	@override
+	def _validate(value: Any) -> bool:
 		"""
-		Validate is string can be converted into target type.
+		Validate is value can be converted into target type without data losses.
 
-		:param value: Validable string.
-		:type value: str
-		:return: `True` if string valid.
+		Value can't be of the target type if target type is `str`!
+
+		:param value: Validable value.
+		:type value: Any
+		:return: `True` if value valid.
 		:rtype: bool
 		"""
 
-		path = PathlibPath(value)
+		if isinstance(value, PathlibPath | str):
+			path = PathlibPath(value)
+			return path.exists() and path.is_file()
 
-		return path.exists() and path.is_file()
+		return False
 
 class ExistingPath(BaseValidator[PathlibPath]):
+	"""Validator: existing path."""
 
-	@override
 	@staticmethod
-	def convert(value: str) ->  PathlibPath:
+	@override
+	def _export_target_type() -> type[PathlibPath]:
 		"""
-		Convert value into target type without validation.
+		Export target type.
 
-		:param value: Convertible string.
-		:type value: str
+		:return: Target type.
+		:rtype: type[Path]
+		"""
+
+		return PathlibPath
+
+	@staticmethod
+	@override
+	def _convert(value: Any) -> PathlibPath:
+		"""
+		Convert value into target type without validation. Can raise `ConversionError`.
+
+		Value can't be of the target type, because instance checked on public method wrapper!
+
+		:param value: Convertible value.
+		:type value: Any
 		:return: Conversion result.
-		:rtype: pathlib.Path
+		:rtype: Path
 		"""
 
-		return PathlibPath(value)
+		if isinstance(value, str):
+			return PathlibPath(value)
 
-	@override
+		raise ConversionError(value, PathlibPath)
+
 	@staticmethod
-	def validate(value: str) -> bool:
+	@override
+	def _validate(value: Any) -> bool:
 		"""
-		Validate is string can be converted into target type.
+		Validate is value can be converted into target type without data losses.
 
-		:param value: Validable string.
-		:type value: str
-		:return: `True` if string valid.
+		Value can't be of the target type if target type is `str`!
+
+		:param value: Validable value.
+		:type value: Any
+		:return: `True` if value valid.
 		:rtype: bool
 		"""
 
-		return PathlibPath(value).exists()
+		if isinstance(value, PathlibPath | str):
+			path = PathlibPath(value)
+			return path.exists()
+
+		return False
 
 class Float(BaseValidator[float]):
+	"""Validator: float."""
 
-	@override
 	@staticmethod
-	def convert(value: str) -> float:
+	@override
+	def _export_target_type() -> type[float]:
 		"""
-		Convert value into target type without validation.
+		Export target type.
 
-		:param value: Convertible string.
-		:type value: str
+		:return: Target type.
+		:rtype: type[float]
+		"""
+
+		return float
+
+	@staticmethod
+	@override
+	def _convert(value: Any) -> float:
+		"""
+		Convert value into target type without validation. Can raise `ConversionError`.
+
+		Value can't be of the target type, because instance checked on public method wrapper!
+
+		:param value: Convertible value.
+		:type value: Any
 		:return: Conversion result.
 		:rtype: float
 		"""
 
-		return float(value)
+		if isinstance(value, str | Buffer | SupportsFloat | SupportsIndex):
+			return float(value)
 
-	@override
+		raise ConversionError(value, float)
+
 	@staticmethod
-	def validate(value: str) -> bool:
+	@override
+	def _validate(value: Any) -> bool:
 		"""
-		Validate is string can be converted into target type.
+		Validate is value can be converted into target type without data losses.
 
-		:param value: Validable string.
-		:type value: str
-		:return: `True` if string valid.
+		Value can't be of the target type if target type is `str`!
+
+		:param value: Validable value.
+		:type value: Any
+		:return: `True` if value valid.
 		:rtype: bool
 		"""
 
-		value = value.strip(".")
+		if isinstance(value, str):
+			buffer = value.strip(".")
 
-		return all((
-			value.count("-") <= 1,
-			value.count(".") == 1,
-			value.replace(".", "").lstrip("-").isdigit(),
-		))
+			return all((
+				buffer.count("-") <= 1,
+				buffer.count(".") == 1,
+				buffer.replace(".", "").lstrip("-").isdigit(),
+			))
+
+		if isinstance(value, int):
+			return True
+
+		return False
 
 class Integer(BaseValidator[int]):
+	"""Validator: integer."""
 
-	@override
 	@staticmethod
-	def convert(value: str) -> int:
+	@override
+	def _export_target_type() -> type[int]:
 		"""
-		Convert value into target type without validation.
+		Export target type.
 
-		:param value: Convertible string.
-		:type value: str
+		:return: Target type.
+		:rtype: type[int]
+		"""
+
+		return int
+
+	@staticmethod
+	@override
+	def _convert(value: Any) -> int:
+		"""
+		Convert value into target type without validation. Can raise `ConversionError`.
+
+		Value can't be of the target type, because instance checked on public method wrapper!
+
+		:param value: Convertible value.
+		:type value: Any
 		:return: Conversion result.
 		:rtype: int
 		"""
 
-		return int(value)
+		if isinstance(value, str | Buffer | SupportsInt | SupportsIndex):
+			return int(value)
 
-	@override
+		raise ConversionError(value, int)
+
 	@staticmethod
-	def validate(value: str) -> bool:
+	@override
+	def _validate(value: Any) -> bool:
 		"""
-		Validate is string can be converted into target type.
+		Validate is value can be converted into target type without data losses.
 
-		:param value: Validable string.
-		:type value: str
-		:return: `True` if string valid.
+		Value can't be of the target type if target type is `str`!
+
+		:param value: Validable value.
+		:type value: Any
+		:return: `True` if value valid.
 		:rtype: bool
 		"""
 
-		return value.count("-") <= 1 and value.lstrip("-").isdigit()
+		if isinstance(value, str):
+			return value.count("-") <= 1 and value.lstrip("-").isdigit()
+
+		if isinstance(value, Buffer | SupportsInt | SupportsIndex):
+			return True
+
+		return False
 
 class IPv4(BaseValidator[str]):
+	"""Validator: IPv4."""
 
-	@override
 	@staticmethod
-	def convert(value: str) -> str:
+	@override
+	def _export_target_type() -> type[str]:
 		"""
-		Convert value into target type without validation.
+		Export target type.
 
-		:param value: Convertible string.
-		:type value: str
+		:return: Target type.
+		:rtype: type[str]
+		"""
+
+		return str
+
+	@staticmethod
+	@override
+	def _convert(value: Any) -> str:
+		"""
+		Convert value into target type without validation. Can raise `ConversionError`.
+
+		Value can't be of the target type, because instance checked on public method wrapper!
+
+		:param value: Convertible value.
+		:type value: Any
 		:return: Conversion result.
-		:rtype: T
+		:rtype: str
 		"""
 
-		return value
+		return str(value)
 
-	@override
 	@staticmethod
-	def validate(value: str) -> bool:
+	@override
+	def _validate(value: Any) -> bool:
 		"""
-		Validate is string can be converted into target type.
+		Validate is value can be converted into target type without data losses.
 
-		:param value: Validable string.
-		:type value: str
-		:return: `True` if string valid.
+		Value can't be of the target type if target type is `str`!
+
+		:param value: Validable value.
+		:type value: Any
+		:return: `True` if value valid.
 		:rtype: bool
 		"""
 
-		try:
-			Result = validators.ipv4(value)
-			if type(Result) is bool: return Result
-		except validators.ValidationError: pass
+		result: bool | None = None
 
-		return False
+		try:
+			result = validators.ipv4(value)
+		except validators.ValidationError:
+			pass
+
+		return bool(result)
 
 class IPv6(BaseValidator[str]):
+	"""Validator: IPv6."""
 
-	@override
 	@staticmethod
-	def convert(value: str) -> str:
+	@override
+	def _export_target_type() -> type[str]:
 		"""
-		Convert value into target type without validation.
+		Export target type.
 
-		:param value: Convertible string.
-		:type value: str
+		:return: Target type.
+		:rtype: type[str]
+		"""
+
+		return str
+
+	@staticmethod
+	@override
+	def _convert(value: Any) -> str:
+		"""
+		Convert value into target type without validation. Can raise `ConversionError`.
+
+		Value can't be of the target type, because instance checked on public method wrapper!
+
+		:param value: Convertible value.
+		:type value: Any
 		:return: Conversion result.
-		:rtype: T
+		:rtype: str
 		"""
 
-		return value
+		return str(value)
 
-	@override
 	@staticmethod
-	def validate(value: str) -> bool:
+	@override
+	def _validate(value: Any) -> bool:
 		"""
-		Validate is string can be converted into target type.
+		Validate is value can be converted into target type without data losses.
 
-		:param value: Validable string.
-		:type value: str
-		:return: `True` if string valid.
+		Value can't be of the target type if target type is `str`!
+
+		:param value: Validable value.
+		:type value: Any
+		:return: `True` if value valid.
 		:rtype: bool
 		"""
 
+		result: bool | None = None
+
 		try:
-			Result = validators.ipv6(value)
-			if type(Result) is bool: return Result
-		except validators.ValidationError: pass
+			result = validators.ipv6(value)
+		except validators.ValidationError:
+			pass
+
+		return bool(result)
+
+class Path(BaseValidator[PathlibPath]):
+	"""Validator: path."""
+
+	@classmethod
+	@override
+	def _export_fast_validation_state(cls) -> bool:
+		"""
+		Export fast validation state: skip validation if value already in target type.
+
+		By default disabled for values types `str` and `pathlib.Path`.
+
+		:return: Fast validation state.
+		:rtype: bool
+		"""
+
+		return True
+
+	@staticmethod
+	@override
+	def _export_target_type() -> type[PathlibPath]:
+		"""
+		Export target type.
+
+		:return: Target type.
+		:rtype: type[Path]
+		"""
+
+		return PathlibPath
+
+	@staticmethod
+	@override
+	def _convert(value: Any) -> PathlibPath:
+		"""
+		Convert value into target type without validation. Can raise `ConversionError`.
+
+		Value can't be of the target type, because instance checked on public method wrapper!
+
+		:param value: Convertible value.
+		:type value: Any
+		:return: Conversion result.
+		:rtype: Path
+		"""
+
+		if isinstance(value, str):
+			return PathlibPath(value)
+
+		raise ConversionError(value, PathlibPath)
+
+	@staticmethod
+	@override
+	def _validate(value: Any) -> bool:
+		"""
+		Validate is value can be converted into target type without data losses.
+
+		Value can't be of the target type if target type is `str`!
+
+		:param value: Validable value.
+		:type value: Any
+		:return: `True` if value valid.
+		:rtype: bool
+		"""
+
+		if isinstance(value, PathlibPath):
+			return True
+
+		if isinstance(value, str):
+			return is_valid_filepath(value, platform = sys.platform)
 
 		return False
 
-class Number(BaseValidator[float | int]):
-
-	@override
-	@staticmethod
-	def convert(value: str) -> float | int:
-		"""
-		Convert value into target type without validation.
-
-		:param value: Convertible string.
-		:type value: str
-		:return: Conversion result.
-		:rtype: float | int
-		"""
-
-		return float(value) if "." in value else int(value)
-
-	@override
-	@staticmethod
-	def validate(value: str) -> bool:
-		"""
-		Validate is string can be converted into target type.
-
-		:param value: Validable string.
-		:type value: str
-		:return: `True` if string valid.
-		:rtype: bool
-		"""
-
-		if "." in value:
-			try:
-				float(value)
-				return True
-			except ValueError: return False
-
-		else:
-			try:
-				int(value)
-				return True
-			except ValueError: return False
-
-class Path(BaseValidator[PathlibPath]):
-
-	@override
-	@staticmethod
-	def convert(value: str) ->  PathlibPath:
-		"""
-		Convert value into target type without validation.
-
-		:param value: Convertible string.
-		:type value: str
-		:return: Conversion result.
-		:rtype: pathlib.Path
-		"""
-
-		return PathlibPath(value)
-
-	@override
-	@staticmethod
-	def validate(value: str) -> bool:
-		"""
-		Validate is string can be converted into target type.
-
-		:param value: Validable string.
-		:type value: str
-		:return: `True` if string valid.
-		:rtype: bool
-		"""
-
-		return is_valid_filepath(value, platform = sys.platform)
-
 class UnsignedInteger(BaseValidator[int]):
+	"""Validator: unsigned integer."""
 
+	@classmethod
 	@override
-	@staticmethod
-	def convert(value: str) ->  int:
+	def _export_fast_validation_state(cls) -> bool:
 		"""
-		Convert value into target type without validation.
+		Export fast validation state: skip validation if value already in target type.
 
-		:param value: Convertible string.
-		:type value: str
+		By default disabled for values types `str` and `pathlib.Path`.
+
+		:return: Fast validation state.
+		:rtype: bool
+		"""
+
+		return False
+
+	@staticmethod
+	@override
+	def _export_target_type() -> type[int]:
+		"""
+		Export target type.
+
+		:return: Target type.
+		:rtype: type[int]
+		"""
+
+		return int
+
+	@staticmethod
+	@override
+	def _convert(value: Any) -> int:
+		"""
+		Convert value into target type without validation. Can raise `ConversionError`.
+
+		Value can't be of the target type, because instance checked on public method wrapper!
+
+		:param value: Convertible value.
+		:type value: Any
 		:return: Conversion result.
 		:rtype: int
 		"""
 
-		return int(value)
+		if isinstance(value, str | Buffer | SupportsInt | SupportsIndex):
+			return int(value)
 
-	@override
+		raise ConversionError(value, int)
+
 	@staticmethod
-	def validate(value: str) -> bool:
+	@override
+	def _validate(value: Any) -> bool:
 		"""
-		Validate is string can be converted into target type.
+		Validate is value can be converted into target type without data losses.
 
-		:param value: Validable string.
-		:type value: str
-		:return: `True` if string valid.
+		Value can't be of the target type if target type is `str`!
+
+		:param value: Validable value.
+		:type value: Any
+		:return: `True` if value valid.
 		:rtype: bool
 		"""
 
-		return value.isdigit()
+		if isinstance(value, str):
+			return value.isdigit()
 
-class URL(BaseValidator[str]):
+		if isinstance(value, Buffer | SupportsInt | SupportsIndex):
+			return int(value) >= 0
 
-	@override
-	@staticmethod
-	def convert(value: str) ->  str:
-		"""
-		Convert value into target type without validation.
-
-		:param value: Convertible string.
-		:type value: str
-		:return: Conversion result.
-		:rtype: T
-		"""
-
-		return value
-
-	@override
-	@staticmethod
-	def validate(value: str) -> bool:
-		"""
-		Validate is string can be converted into target type.
-
-		:param value: Validable string.
-		:type value: str
-		:return: `True` if string valid.
-		:rtype: bool
-		"""
-
-		try:
-			Result = validators.url(value)
-			if type(Result) is bool: return Result
-		except validators.ValidationError: pass
+		if isinstance(value, int):
+			return value >= 0
 
 		return False
 
-class Version(BaseValidator[version.Version]):
+class URL(BaseValidator[str]):
+	"""Validator: URL."""
 
-	@override
 	@staticmethod
-	def convert(value: str) -> version.Version:
+	@override
+	def _export_target_type() -> type[str]:
 		"""
-		Convert value into target type without validation.
+		Export target type.
 
-		:param value: Convertible string.
-		:type value: str
+		:return: Target type.
+		:rtype: type[str]
+		"""
+
+		return str
+
+	@staticmethod
+	@override
+	def _convert(value: Any) -> str:
+		"""
+		Convert value into target type without validation. Can raise `ConversionError`.
+
+		Value can't be of the target type, because instance checked on public method wrapper!
+
+		:param value: Convertible value.
+		:type value: Any
 		:return: Conversion result.
-		:rtype: packaging.version.Version
+		:rtype: str
 		"""
 
-		return version.Version(value)
+		return str(value)
 
-	@override
 	@staticmethod
-	def validate(value: str) -> bool:
+	@override
+	def _validate(value: Any) -> bool:
 		"""
-		Validate is string can be converted into target type.
+		Validate is value can be converted into target type without data losses.
 
-		:param value: Validable string.
-		:type value: str
-		:return: `True` if string valid.
+		Value can't be of the target type if target type is `str`!
+
+		:param value: Validable value.
+		:type value: Any
+		:return: `True` if value valid.
 		:rtype: bool
 		"""
 
+		result: bool | None = None
+
 		try:
-			version.Version(value)
-			return True
-		except version.InvalidVersion:
-			return False
+			result = validators.url(value)
+		except validators.ValidationError:
+			pass
+
+		return bool(result)
+
+class Version(BaseValidator[version.Version]):
+	"""Validator: version."""
+
+	@staticmethod
+	@override
+	def _export_target_type() -> type[version.Version]:
+		"""
+		Export target type.
+
+		:return: Target type.
+		:rtype: type[version.Version]
+		"""
+
+		return version.Version
+
+	@staticmethod
+	@override
+	def _convert(value: Any) -> version.Version:
+		"""
+		Convert value into target type without validation. Can raise `ConversionError`.
+
+		Value can't be of the target type, because instance checked on public method wrapper!
+
+		:param value: Convertible value.
+		:type value: Any
+		:return: Conversion result.
+		:rtype: version.Version
+		"""
+
+		if isinstance(value, str):
+			return version.Version(value)
+
+		raise ConversionError(value, version.Version)
+
+	@staticmethod
+	@override
+	def _validate(value: Any) -> bool:
+		"""
+		Validate is value can be converted into target type without data losses.
+
+		Value can't be of the target type if target type is `str`!
+
+		:param value: Validable value.
+		:type value: Any
+		:return: `True` if value valid.
+		:rtype: bool
+		"""
+
+		if isinstance(value, str):
+			try:
+				version.Version(value)
+				return True
+			except version.InvalidVersion:
+				return False
+
+		return False
 
 class VersionsRange(BaseValidator[specifiers.SpecifierSet]):
+	"""Validator: versions range."""
 
-	@override
 	@staticmethod
-	def convert(value: str) -> specifiers.SpecifierSet:
+	@override
+	def _export_target_type() -> type[specifiers.SpecifierSet]:
 		"""
-		Convert value into target type without validation.
+		Export target type.
 
-		:param value: Convertible string.
-		:type value: str
+		:return: Target type.
+		:rtype: type[specifiers.SpecifierSet]
+		"""
+
+		return specifiers.SpecifierSet
+
+	@staticmethod
+	@override
+	def _convert(value: Any) -> specifiers.SpecifierSet:
+		"""
+		Convert value into target type without validation. Can raise `ConversionError`.
+
+		Value can't be of the target type, because instance checked on public method wrapper!
+
+		:param value: Convertible value.
+		:type value: Any
 		:return: Conversion result.
-		:rtype: packaging.specifiers.SpecifierSet
+		:rtype: specifiers.SpecifierSet
 		"""
 
-		return specifiers.SpecifierSet(value)
+		if isinstance(value, str):
+			return specifiers.SpecifierSet(value)
 
-	@override
+		raise ConversionError(value, specifiers.SpecifierSet)
+
 	@staticmethod
-	def validate(value: str) -> bool:
+	@override
+	def _validate(value: Any) -> bool:
 		"""
-		Validate is string can be converted into target type.
+		Validate is value can be converted into target type without data losses.
 
-		:param value: Validable string.
-		:type value: str
-		:return: `True` if string valid.
+		Value can't be of the target type if target type is `str`!
+
+		:param value: Validable value.
+		:type value: Any
+		:return: `True` if value valid.
 		:rtype: bool
 		"""
 
-		try:
-			specifiers.SpecifierSet(value)
-			return True
-		except specifiers.InvalidSpecifier:
-			return False
+		if isinstance(value, str):
+			try:
+				specifiers.SpecifierSet(value)
+				return True
+			except specifiers.InvalidSpecifier:
+				return False
+
+		return False

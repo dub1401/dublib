@@ -5,7 +5,7 @@ from . import types
 class ValidableTypes(Enum):
 	"""Перечисление типов валидаторов."""
 
-	All = types.All
+	Any = types.Any
 	Alpha = types.Alpha
 	Base64 = types.Base64
 	Bool = types.Bool
@@ -19,7 +19,6 @@ class ValidableTypes(Enum):
 	Integer = types.Integer
 	IPv4 = types.IPv4
 	IPv6 = types.IPv6
-	Number = types.Number
 	Path = types.Path
 	UnsignedInteger = types.UnsignedInteger
 	URL = types.URL

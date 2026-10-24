@@ -1,16 +1,21 @@
-import inspect
+
 import sys
 from datetime import datetime
 from pathlib import Path
 
+from packaging.specifiers import SpecifierSet
 from packaging.version import Version
 
-from dublib.validators import ValidableTypes, types
+from dublib.validators import types
 
-def test_All():
+def test_Any():
 
-	assert types.All.validate("") is True
-	assert types.All.convert("") == ""
+	assert types.Any.validate("") is True
+	assert types.Any.validate(1) is True
+	assert types.Any.validate(None) is True
+	assert types.Any.convert("") == ""
+	assert types.Any.convert(1) == 1
+	assert types.Any.convert(None) is None
 
 def test_Alpha():
 
@@ -27,9 +32,9 @@ def test_Base64():
 	assert types.Base64.validate("QQ=~") is False
 	assert types.Base64.convert("YWJj") == "YWJj"
 
-
 def test_Bool():
 
+	assert types.Bool.validate(False) is True
 	assert types.Bool.validate("trUe") is True
 	assert types.Bool.validate("faLse") is True
 	assert types.Bool.convert("truE") is True
@@ -37,9 +42,12 @@ def test_Bool():
 
 def test_Datetime():
 
+	test_value: datetime = datetime(2026, 1, 1)
+
+	assert types.Datetime.validate(test_value) is True
 	assert types.Datetime.validate("2026-01-01") is True
 	assert types.Datetime.validate("2026 13 32") is False
-	assert types.Datetime.convert("2026-1-1") == datetime(2026, 1, 1)
+	assert types.Datetime.convert("2026-1-1") == test_value
 
 def test_Domain():
 
@@ -102,6 +110,8 @@ def test_ExistingPath(tmp_path: Path):
 
 def test_Float():
 
+	assert types.Float.validate(1.0) is True
+	assert types.Float.validate(1) is True
 	assert types.Float.validate("1.0") is True
 	assert types.Float.validate("1.") is False
 	assert types.Float.validate(".1") is False
@@ -110,6 +120,8 @@ def test_Float():
 
 def test_Integer():
 
+	assert types.Integer.validate(1.0) is True
+	assert types.Integer.validate(1) is True
 	assert types.Integer.validate("1") is True
 	assert types.Integer.validate("1.0") is False
 	assert types.Integer.convert("1") == 1
@@ -126,19 +138,9 @@ def test_IPv6():
 	assert types.IPv6.validate("2001:0db8:85a3:0000:0000:g82e:0370:7334") is False
 	assert types.IPv6.convert("2001:0db8:85a3:0000:0000:8a2e:0370:7334") == "2001:0db8:85a3:0000:0000:8a2e:0370:7334"
 
-def test_Number():
-
-	assert types.Number.validate("1") is True
-	assert types.Number.validate("-1") is True
-	assert types.Number.validate("1.2") is True
-	assert types.Number.validate("-1.2") is True
-	assert types.Number.convert("0") == 0
-	assert types.Number.convert("-1") == -1
-	assert types.Number.convert("1.2") == 1.2
-	assert types.Number.convert("-1.2") == -1.2
-
 def test_Path():
 
+	assert types.Path.validate(Path("/src")) is True
 	assert types.Path.validate(".") is True
 	assert types.Path.validate("/etc") is True
 	assert types.Path.validate("/etc/") is True
@@ -154,6 +156,8 @@ def test_Path():
 
 def test_UnsignedInteger():
 
+	assert types.UnsignedInteger.validate(1.0) is True
+	assert types.UnsignedInteger.validate(1) is True
 	assert types.UnsignedInteger.validate("1") is True
 	assert types.UnsignedInteger.validate("-1") is False
 	assert types.UnsignedInteger.validate("1.0") is False
@@ -169,6 +173,8 @@ def test_URL():
 
 def test_Version():
 
+	assert types.Version.validate(Version("1.0.0")) is True
+	assert types.Version.validate(Version("1.0.0")) is True
 	assert types.Version.validate("v1.0.0-rc.1") is True
 	assert types.Version.validate("2026.01.01") is True
 	assert types.Version.validate("1..0") is False
@@ -176,23 +182,10 @@ def test_Version():
 
 def test_VersionsRange():
 
+	assert types.VersionsRange.validate(SpecifierSet(">=1.0,<1.2")) is True
 	assert types.VersionsRange.validate("<v1.0.0-rc.1") is True
 	assert types.VersionsRange.validate(">2026.01.01") is True
 	assert types.VersionsRange.validate(">=1.0,<1.1") is True
 	assert types.VersionsRange.validate(">=1.0;<1.1") is False
 	assert types.VersionsRange.validate(">=1..0;<1.1") is False
 	assert Version("v1.0.99") in types.VersionsRange.convert(">=1.0,<1.1")
-
-def test_ValidableTypes():
-	"""Check is all validators in `ValidableTypes` enumeration."""
-
-	target_classes: tuple[type[object], ...] = tuple(
-		cls
-		for _, cls in inspect.getmembers(types, inspect.isclass)
-		if cls.__module__ == types.__name__
-	)
-
-	enum_values: set[type] = {item.value for item in ValidableTypes}
-
-	for cls in target_classes:
-		assert cls in enum_values
