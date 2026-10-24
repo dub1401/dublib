@@ -1,6 +1,12 @@
 import logging
 
-from .cli.text_styler import FastStyler, get_styled_text_from_html
+__IS_STYLER_AVAILABLE: bool = False
+
+try:
+	from .cli.text_styler import FastStyler, get_styled_text_from_html
+	__IS_STYLER_AVAILABLE = True
+except ImportError:
+	pass
 
 class ColorFormatter(logging.Formatter):
 	"""Форматировщик вывода в консоль с поддержкой цветов."""
@@ -24,4 +30,8 @@ class ColorFormatter(logging.Formatter):
 		return Message
 
 LOGS_HANDLER = logging.StreamHandler()
-LOGS_HANDLER.setFormatter(ColorFormatter(get_styled_text_from_html("<b>[%(name)s]</b> %(levelname)s: %(message)s")))
+
+if __IS_STYLER_AVAILABLE:
+	LOGS_HANDLER.setFormatter(ColorFormatter(get_styled_text_from_html("<b>[%(name)s]</b> %(levelname)s: %(message)s")))
+else:
+	LOGS_HANDLER.setFormatter(logging.Formatter("[%(name)s] %(levelname)s: %(message)s"))

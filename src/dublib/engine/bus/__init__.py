@@ -2,7 +2,7 @@ from collections.abc import Sequence
 from typing import Any
 
 from ...cli.text_styler import TextStyler, codes
-from ...exceptions.engine import bus as BusExceptions
+from ..exceptions import bus as BusExceptions
 from .messages import MessagesContainer
 
 #==========================================================================================#

@@ -3,8 +3,8 @@ from typing import TYPE_CHECKING, cast
 
 import ua_generator
 
-from ...exceptions import web_requestor as Exceptions
 from ...functions.data import to_sequence
+from .. import exceptions as Exceptions
 from . import constants
 from .authorization import Authorizator
 

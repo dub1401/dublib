@@ -1,5 +1,5 @@
 from dublib.engine.bus import ExecutionResult
-from dublib.exceptions.engine import bus as BusExceptions
+from dublib.engine.exceptions import bus as BusExceptions
 
 def test_check_data():
 	Result = ExecutionResult()

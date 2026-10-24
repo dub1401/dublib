@@ -1,7 +1,7 @@
 from collections.abc import Sequence
 from typing import TYPE_CHECKING, Literal, overload
 
-from .... import exceptions
+from ... import exceptions
 from .typing import SUPPORTED_TYPES
 
 if TYPE_CHECKING:
@@ -122,7 +122,7 @@ class PositionEntity:
 		self.__content: ArgumentEntity | FlagEntity | KeyEntity | None = content
 
 		if self.__position.is_important and self.__content is None:
-			raise exceptions.cli.terminalyzer.positions.ImportantPositionEmptyError(self.__position.name)
+			raise exceptions.terminalyzer.positions.ImportantPositionEmptyError(self.__position.name)
 
 class CommandEntity:
 	"""Command entity."""
@@ -329,7 +329,7 @@ class CommandEntity:
 		"""
 
 		if missing_error and flag not in self.__flags_names:
-			raise exceptions.cli.terminalyzer.parameters.NamedParameterMissingInModelError(flag)
+			raise exceptions.terminalyzer.parameters.NamedParameterMissingInModelError(flag)
 
 		return flag in self.__get_activated_named_parameters_names(FlagEntity)
 
@@ -347,7 +347,7 @@ class CommandEntity:
 		"""
 
 		if missing_error and key not in self.__keys_names:
-			raise exceptions.cli.terminalyzer.parameters.NamedParameterMissingInModelError(key)
+			raise exceptions.terminalyzer.parameters.NamedParameterMissingInModelError(key)
 
 		return key in self.__get_activated_named_parameters_names(KeyEntity)
 
@@ -378,7 +378,7 @@ class CommandEntity:
 		"""
 
 		if not_found_error and key not in self.__keys_names:
-			raise exceptions.cli.terminalyzer.parameters.NamedParameterMissingInModelError(key)
+			raise exceptions.terminalyzer.parameters.NamedParameterMissingInModelError(key)
 
 		value: SUPPORTED_TYPES | None = None
 		is_key_found: bool = False
@@ -392,7 +392,7 @@ class CommandEntity:
 				break
 
 		if not is_key_found and not_found_error:
-			raise exceptions.cli.terminalyzer.parameters.KeyMissingError(key)
+			raise exceptions.terminalyzer.parameters.KeyMissingError(key)
 
 		return self.__check_value_type(value, expected_type)
 
@@ -417,7 +417,7 @@ class CommandEntity:
 		if position_name not in self.__positions:
 
 			if not_found_error:
-				raise exceptions.cli.terminalyzer.positions.PositionNotFoundError(position_name)
+				raise exceptions.terminalyzer.positions.PositionNotFoundError(position_name)
 
 			return None
 
@@ -482,7 +482,7 @@ class CommandEntity:
 			value = parameter_entity.value
 
 		if value is None and important:
-			raise exceptions.cli.terminalyzer.positions.ImportantPositionEmptyError(position_name)
+			raise exceptions.terminalyzer.positions.ImportantPositionEmptyError(position_name)
 
 		return self.__check_value_type(value, expected_type)
 

@@ -1,7 +1,7 @@
 from collections.abc import Sequence
 from typing import TYPE_CHECKING
 
-from .... import exceptions
+from ... import exceptions
 from .entities import (
 	ArgumentEntity,
 	CommandEntity,
@@ -32,7 +32,7 @@ class CommandParser:
 
 		for position in self.__model.positions:
 			if position.is_important and self.__positions_parameters[position.name] is None:
-				raise exceptions.cli.terminalyzer.positions.ImportantPositionEmptyError(position.name)
+				raise exceptions.terminalyzer.positions.ImportantPositionEmptyError(position.name)
 
 	def __check_parameters_bounds(self):
 		"""
@@ -44,7 +44,7 @@ class CommandParser:
 		if False in self.__parameters_locks:
 			index: int = self.__parameters_locks.index(False)
 			parameter: str = self.__parameters[index]
-			raise exceptions.cli.terminalyzer.parameters.UnboundParameterError(parameter)
+			raise exceptions.terminalyzer.parameters.UnboundParameterError(parameter)
 
 	def __chack_parameters_count(self):
 		"""
@@ -55,10 +55,10 @@ class CommandParser:
 		"""
 
 		if self.__parameters_count > self.__model.max_parameters_count:
-			raise exceptions.cli.terminalyzer.parameters.TooManyParametersError(self.__model.max_parameters_count, self.__parameters_count)
+			raise exceptions.terminalyzer.parameters.TooManyParametersError(self.__model.max_parameters_count, self.__parameters_count)
 
 		if self.__parameters_count < self.__model.min_parameters_count:
-			raise exceptions.cli.terminalyzer.parameters.NotEnoughParametersError(self.__model.min_parameters_count, self.__parameters_count)
+			raise exceptions.terminalyzer.parameters.NotEnoughParametersError(self.__model.min_parameters_count, self.__parameters_count)
 
 	def __check_unbound_key(self, key: str, index: int):
 		"""
@@ -75,7 +75,7 @@ class CommandParser:
 		"""
 
 		if index + 1 == self.__parameters_count or self.__parameters_locks[index + 1]:
-			raise exceptions.cli.terminalyzer.parameters.UnboundKeyError(key)
+			raise exceptions.terminalyzer.parameters.UnboundKeyError(key)
 
 	#==========================================================================================#
 	# >>>>> ПРИВАТНЫЕ МЕТОДЫ ПАРСИНГА <<<<< #
@@ -227,7 +227,7 @@ class CommandParser:
 			raise IndexError(f"Parameter with index {index} already locked.")
 
 		if self.__positions_parameters[position_name]:
-			raise exceptions.cli.terminalyzer.positions.MultipleParametersOnPositionError(position_name)
+			raise exceptions.terminalyzer.positions.MultipleParametersOnPositionError(position_name)
 
 		self.__parameters_locks[index] = True
 

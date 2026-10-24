@@ -9,8 +9,8 @@ import requests
 from curl_cffi import ProxySpec
 from curl_cffi import requests as curl_cffi_requests
 
-from ..core import LOGS_HANDLER
 from ..functions.data import to_sequence
+from ..logger import LOGS_HANDLER
 from .config import WebConfig
 from .enums import Protocols, RequestsTypes, WebLibs
 from .proxy import Proxy

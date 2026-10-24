@@ -1,7 +1,7 @@
 from collections.abc import Sequence
 from typing import TYPE_CHECKING
 
-from .... import exceptions
+from ... import exceptions
 
 if TYPE_CHECKING:
 	from .model import CommandModel
@@ -78,6 +78,6 @@ class CommandIdentifier:
 			is_match = parameters_tuple[: identifiers_count] == identifiers
 
 		if not is_match and exception:
-			raise exceptions.cli.terminalyzer.parameters.UnfamiliarParametersError(self)
+			raise exceptions.terminalyzer.parameters.UnfamiliarParametersError(self)
 
 		return is_match

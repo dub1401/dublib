@@ -8,8 +8,8 @@ from typing import TYPE_CHECKING
 
 from watchfiles import awatch, watch
 
-from ..core import LOGS_HANDLER
-from ..exceptions.engine.config import AlreadyWatchingError
+from ..logger import LOGS_HANDLER
+from .exceptions.config import AlreadyWatchingError
 
 if TYPE_CHECKING:
 	from pydantic_settings import BaseSettings

@@ -17,6 +17,9 @@ For visual categorization of changes emojis are used in accordance with [gitmoji
 
 ### 🎨 Changed
 - Dependencies separated in optional groups.
+- Exceptions now replaced at modules roots in `exceptions` submodule.
+- Logger now can used without `cli` dependencies (unstyled output).
+
 #### engine.config
 - Module renamed to `config` from `configurator`.
 - Migration to [pydantic-settings](https://github.com/pydantic/pydantic-settings).

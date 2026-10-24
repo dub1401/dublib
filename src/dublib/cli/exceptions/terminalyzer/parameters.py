@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-	from ....cli.terminalyzer.commands.identifier import CommandIdentifier
+	from ...terminalyzer.commands.identifier import CommandIdentifier
 
 class KeyMissingError(Exception):
 	"""Исключение: ключ не активирован."""

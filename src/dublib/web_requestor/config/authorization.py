@@ -6,7 +6,7 @@ from time import time
 
 import jwt
 
-from ...exceptions import web_requestor as Exceptions
+from .. import exceptions as Exceptions
 from . import constants
 
 #==========================================================================================#

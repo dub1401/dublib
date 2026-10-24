@@ -1,8 +1,8 @@
 
 from typing import TYPE_CHECKING
 
-from .... import exceptions
 from ....functions.data import to_sequence
+from ... import exceptions
 from .model import CommandModel
 
 if TYPE_CHECKING:
@@ -56,7 +56,7 @@ class ModelsGroup:
 			command_name: str = model.name
 
 			if command_name in self.__commands:
-				raise exceptions.cli.terminalyzer.groups.CommandModelOverridingError(command_name)
+				raise exceptions.terminalyzer.groups.CommandModelOverridingError(command_name)
 
 			self.__commands[command_name] = model
 
@@ -71,7 +71,7 @@ class ModelsGroup:
 
 		for position in model.positions:
 			if position.description and len(position.parameters) == 1 and position.parameters[0].description:
-				raise exceptions.cli.terminalyzer.positions.PositionDescriptionOverridingError(model.name, position.name)
+				raise exceptions.terminalyzer.positions.PositionDescriptionOverridingError(model.name, position.name)
 
 	def __check_for_empty_positions(self, model: "CommandModel"):
 		"""
@@ -84,7 +84,7 @@ class ModelsGroup:
 
 		for position in model.positions:
 			if not position.parameters:
-				raise exceptions.cli.terminalyzer.positions.EmptyPositionError(model.name, position.name)
+				raise exceptions.terminalyzer.positions.EmptyPositionError(model.name, position.name)
 
 	#==========================================================================================#
 	# >>>>> ПУБЛИЧНЫЕ МЕТОДЫ <<<<< #
