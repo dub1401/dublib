@@ -13,7 +13,7 @@ from . import constants
 # >>>>> ПЕРЕЧИСЛЕНИЯ <<<<< #
 #==========================================================================================#
 
-class AuthorizationSchemes(Enum):
+class AuthorizationScheme(Enum):
 	"""Схемы авторизации."""
 
 	Basic = "Basic"
@@ -37,7 +37,7 @@ class _BaseAuthorizationMethod(ABC):
 		return self._Value
 
 	@property
-	def scheme(self) -> AuthorizationSchemes:
+	def scheme(self) -> AuthorizationScheme:
 		"""Схема авторизации."""
 
 		return self._Scheme
@@ -68,15 +68,15 @@ class _BaseAuthorizationMethod(ABC):
 	#==========================================================================================#
 
 	@abstractmethod
-	def _export_scheme(self) -> AuthorizationSchemes:
+	def _export_scheme(self) -> AuthorizationScheme:
 		"""
 		Возвращает тип схемы авторизации.
 
 		:return: Тип схемы авторизации.
-		:rtype: AuthorizationSchemes
+		:rtype: AuthorizationScheme
 		"""
 
-		return AuthorizationSchemes.Basic
+		return AuthorizationScheme.Basic
 
 	#==========================================================================================#
 	# >>>>> ПУБЛИЧНЫЕ МЕТОДЫ <<<<< #
@@ -85,7 +85,7 @@ class _BaseAuthorizationMethod(ABC):
 	def __init__(self):
 		"""Базовый метод авторизации."""
 
-		self._Scheme: AuthorizationSchemes = self._export_scheme()
+		self._Scheme: AuthorizationScheme = self._export_scheme()
 		self._Value: str | None = None
 
 	def clear(self):
@@ -100,15 +100,15 @@ class Basic(_BaseAuthorizationMethod):
 	# >>>>> ПЕРЕОПРЕДЕЛЯЕМЫЕ МЕТОДЫ <<<<< #
 	#==========================================================================================#
 
-	def _export_scheme(self) -> AuthorizationSchemes:
+	def _export_scheme(self) -> AuthorizationScheme:
 		"""
 		Возвращает тип схемы авторизации.
 
 		:return: Тип схемы авторизации.
-		:rtype: AuthorizationSchemes
+		:rtype: AuthorizationScheme
 		"""
 
-		return AuthorizationSchemes.Basic
+		return AuthorizationScheme.Basic
 
 	#==========================================================================================#
 	# >>>>> ПУБЛИЧНЫЕ МЕТОДЫ <<<<< #
@@ -137,15 +137,15 @@ class Bearer(_BaseAuthorizationMethod):
 	# >>>>> ПЕРЕОПРЕДЕЛЯЕМЫЕ МЕТОДЫ <<<<< #
 	#==========================================================================================#
 
-	def _export_scheme(self) -> AuthorizationSchemes:
+	def _export_scheme(self) -> AuthorizationScheme:
 		"""
 		Возвращает тип схемы авторизации.
 
 		:return: Тип схемы авторизации.
-		:rtype: AuthorizationSchemes
+		:rtype: AuthorizationScheme
 		"""
 
-		return AuthorizationSchemes.Bearer
+		return AuthorizationScheme.Bearer
 
 	#==========================================================================================#
 	# >>>>> ПУБЛИЧНЫЕ МЕТОДЫ <<<<< #

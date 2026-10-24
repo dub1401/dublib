@@ -4,8 +4,8 @@ from enum import Enum
 # >>>>> ПЕРЕЧИСЛЕНИЯ <<<<< #
 #==========================================================================================#
 
-class Protocols(Enum):
-	"""Перечисление типов протоколов."""
+class Protocol(Enum):
+	"""Protocol type."""
 
 	SOCKS4 = "socks4"
 	SOCKS5 = "socks5"
@@ -14,15 +14,15 @@ class Protocols(Enum):
 	SFTP = "sftp"
 	FTP = "ftp"
 
-class RequestsTypes(Enum):
-	"""Перечисление типов поддерживаемыйх запросов."""
+class RequestType(Enum):
+	"""Supported request type."""
 
 	DELETE = "delete"
 	GET = "get"
 	POST = "post"
 
-class WebLibs(Enum):
-	"""Перечисление поддерживаемых библиотек запросов."""
+class WebLib(Enum):
+	"""Supported requests lib."""
 
 	curl_cffi = "curl_cffi"
 	requests = "requests"

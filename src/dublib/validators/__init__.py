@@ -2,8 +2,8 @@ from enum import Enum
 
 from . import types
 
-class ValidableTypes(Enum):
-	"""Перечисление типов валидаторов."""
+class ValidableType(Enum):
+	"""Validable type."""
 
 	Any = types.Any
 	Alpha = types.Alpha

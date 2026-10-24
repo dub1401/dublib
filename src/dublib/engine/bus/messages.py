@@ -1,4 +1,4 @@
-from ...cli.messages.types import MessagesTypes
+from ...cli.messages.types import MessageType
 
 class ExecutionMessage:
 	"""Сообщение процесса выполнения."""
@@ -14,7 +14,7 @@ class ExecutionMessage:
 		return self._Text
 
 	@property
-	def type(self) -> MessagesTypes | None:
+	def type(self) -> MessageType | None:
 		"""Тип сообщения."""
 
 		return self._Type
@@ -29,14 +29,14 @@ class ExecutionMessage:
 	# >>>>> ПУБЛИЧНЫЕ МЕТОДЫ <<<<< #
 	#==========================================================================================#
 
-	def __init__(self, text: str, message_type: MessagesTypes | None = None, origin: str | None = None):
+	def __init__(self, text: str, message_type: MessageType | None = None, origin: str | None = None):
 		"""
 		Сообщение процесса выполнения.
 
 		:param text: Текст сообщения.
 		:type text: str
 		:param message_type: Тип сообщения.
-		:type message_type: MessagesTypes | None
+		:type message_type: MessageType | None
 		:param origin: Источник сообщения.
 		:type origin: str | None
 		"""
@@ -104,8 +104,8 @@ class MessagesContainer:
 		self.__Messages.append(message)
 
 		match message.type:
-			case MessagesTypes.Error: self.__HasErrors = True
-			case MessagesTypes.Warning: self.__HasWarnings = True
+			case MessageType.Error: self.__HasErrors = True
+			case MessageType.Warning: self.__HasWarnings = True
 
 	def as_list(self) -> list[ExecutionMessage]:
 		"""
@@ -138,7 +138,7 @@ class MessagesContainer:
 		:type origin: str | None
 		"""
 
-		self.add_message(ExecutionMessage(text, MessagesTypes.Critical, origin))
+		self.add_message(ExecutionMessage(text, MessageType.Critical, origin))
 
 	def push_debug(self, text: str, origin: str | None = None):
 		"""
@@ -150,7 +150,7 @@ class MessagesContainer:
 		:type origin: str | None
 		"""
 
-		self.add_message(ExecutionMessage(text, MessagesTypes.Debug, origin))
+		self.add_message(ExecutionMessage(text, MessageType.Debug, origin))
 
 	def push_error(self, text: str, origin: str | None = None):
 		"""
@@ -162,7 +162,7 @@ class MessagesContainer:
 		:type origin: str | None
 		"""
 
-		self.add_message(ExecutionMessage(text, MessagesTypes.Error, origin))
+		self.add_message(ExecutionMessage(text, MessageType.Error, origin))
 
 	def push_info(self, text: str, origin: str | None = None):
 		"""
@@ -174,7 +174,7 @@ class MessagesContainer:
 		:type origin: str | None
 		"""
 
-		self.add_message(ExecutionMessage(text, MessagesTypes.Info, origin))
+		self.add_message(ExecutionMessage(text, MessageType.Info, origin))
 
 	def push_warning(self, text: str, origin: str | None = None):
 		"""
@@ -186,4 +186,4 @@ class MessagesContainer:
 		:type origin: str | None
 		"""
 
-		self.add_message(ExecutionMessage(text, MessagesTypes.Warning, origin))
+		self.add_message(ExecutionMessage(text, MessageType.Warning, origin))

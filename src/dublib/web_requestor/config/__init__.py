@@ -3,7 +3,7 @@ from typing import cast, get_args
 
 from curl_cffi import BrowserTypeLiteral, CurlHttpVersion
 
-from ..enums import WebLibs
+from ..enums import WebLib
 from .headers import ImportantHeaders
 
 #==========================================================================================#
@@ -159,7 +159,7 @@ class WebConfig:
 		return self.__Headers
 
 	@property
-	def lib(self) -> WebLibs:
+	def lib(self) -> WebLib:
 		"""Тип используемой библиотеки."""
 
 		return self.__UsedLib
@@ -184,7 +184,7 @@ class WebConfig:
 		"""Конфигурация оператора запросов."""
 
 		self.__Retries: int = 0
-		self.__UsedLib = WebLibs.requests
+		self.__UsedLib = WebLib.requests
 		self.__GoodCodes: tuple[int | None, ...] = (200,)
 		self.__Delay: float = 0.0
 
@@ -198,12 +198,12 @@ class WebConfig:
 		self.__curl_cffi = _curl_cffi_config()
 		self.__httpx = _httpx_config()
 
-	def select_lib(self, lib: WebLibs):
+	def select_lib(self, lib: WebLib):
 		"""
 		Задаёт тип используемой библиотеки запросов.
 
 		:param lib: Тип библиотеки.
-		:type lib: WebLibs
+		:type lib: WebLib
 		"""
 
 		self.__UsedLib = lib

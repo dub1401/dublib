@@ -1,4 +1,4 @@
-from .enums import Protocols
+from .enums import Protocol
 
 class Proxy:
 	"""Данные прокси-сервера."""
@@ -8,7 +8,7 @@ class Proxy:
 	#==========================================================================================#
 
 	@property
-	def protocol(self) -> Protocols:
+	def protocol(self) -> Protocol:
 		"""Тип протокола подключения."""
 
 		return self.__Protocol
@@ -41,12 +41,12 @@ class Proxy:
 	# >>>>> ПУБЛИЧНЫЕ МЕТОДЫ <<<<< #
 	#==========================================================================================#
 
-	def __init__(self, protocol: Protocols = Protocols.HTTPS, host: str | None = None, port: int | None = None, login: str | None = None, password: str | None = None):
+	def __init__(self, protocol: Protocol = Protocol.HTTPS, host: str | None = None, port: int | None = None, login: str | None = None, password: str | None = None):
 		"""
 		Данные прокси-сервера.
 
 		:param protocol: Тип протокола подключения.
-		:type protocol: Protocols
+		:type protocol: Protocol
 		:param host: IP адрес или домен хоста.
 		:type host: str | None
 		:param port: Номер порта.
@@ -84,7 +84,7 @@ class Proxy:
 
 		if LoginPart: Login, Password = LoginPart.split(":")
 
-		self.__Protocol = Protocols(ProtocolPart.lower())
+		self.__Protocol = Protocol(ProtocolPart.lower())
 		self.__Host = Host
 		self.__Port = int(Port)
 		self.__Login = Login
@@ -92,12 +92,12 @@ class Proxy:
 
 		return self
 
-	def set_protocol(self, protocol: Protocols):
+	def set_protocol(self, protocol: Protocol):
 		"""
 		Задаёт новый протокол для прокси.
 
 		:param protocol: Тип протокола.
-		:type protocol: Protocols
+		:type protocol: Protocol
 		"""
 
 		self.__Protocol = protocol
@@ -116,7 +116,7 @@ class Proxy:
 
 		if self.__Protocol.value.startswith("http"):
 			ProxyDict["http"] = self.to_string()
-			if self.__Protocol == Protocols.HTTPS: ProxyDict["https"] = self.to_string(force_http)
+			if self.__Protocol == Protocol.HTTPS: ProxyDict["https"] = self.to_string(force_http)
 
 		else: ProxyDict = {self.__Protocol.value: self.to_string(force_http = False)}
 

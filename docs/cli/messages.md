@@ -2,14 +2,14 @@
 Messages generator with fast pre-styled printers.
 
 ## How to use
-Generate message with function `generate_message()` and certain type from `MessagesTypes`.
+Generate message with function `generate_message()` and certain type from `MessageType`.
 
 ```Python
-from dublib.cli.messages.generator import MessagesTypes, generate_message
+from dublib.cli.messages.generator import MessageType, generate_message
 
 message: str = generate_message(
 	text = "Simple message.",
-	message_type = MessagesTypes.Warning,
+	message_type = MessageType.Warning,
 	origin = __name__,
 	colorize = True,
 )

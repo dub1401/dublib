@@ -12,14 +12,14 @@ from curl_cffi import requests as curl_cffi_requests
 from ..functions.data import to_sequence
 from ..logger import LOGS_HANDLER
 from .config import WebConfig
-from .enums import Protocols, RequestsTypes, WebLibs
+from .enums import Protocol, RequestType, WebLib
 from .proxy import Proxy
 from .response import WebResponse
 
 if TYPE_CHECKING:
 	from requests.cookies import RequestsCookieJar
 
-__all__ = ["Protocols", "Proxy", "WebConfig", "WebLibs", "WebRequestor", "WebResponse"]
+__all__ = ["Protocol", "Proxy", "WebConfig", "WebLib", "WebRequestor", "WebResponse"]
 
 #==========================================================================================#
 # >>>>> ИНИЦИАЛИЗАЦИЯ СИСТЕМЫ ЛОГГИРОВАНИЯ <<<<< #
@@ -55,10 +55,10 @@ class WebRequestor:
 
 		if self.__Session is None: return None
 		Cookies = None
-		if self.__Config.lib in (WebLibs.curl_cffi, WebLibs.requests):
+		if self.__Config.lib in (WebLib.curl_cffi, WebLib.requests):
 			CookiesSource = cast("curl_cffi_requests.cookies.Cookies | RequestsCookieJar", self.__Session.cookies)
 			Cookies = CookiesSource.get_dict()
-		elif self.__Config.lib == WebLibs.httpx: Cookies = dict(self.__Session.cookies)
+		elif self.__Config.lib == WebLib.httpx: Cookies = dict(self.__Session.cookies)
 
 		return Cookies
 
@@ -66,12 +66,12 @@ class WebRequestor:
 	# >>>>> ПРИВАТНЫЕ МЕТОДЫ <<<<< #
 	#==========================================================================================#
 
-	def __Request(self, request_type: RequestsTypes, url: str, **kwargs) -> WebResponse:
+	def __Request(self, request_type: RequestType, url: str, **kwargs) -> WebResponse:
 		"""
 		Базовый обработчик запроса.
 
 		:param request_type: Тип запроса.
-		:type request_type: RequestsTypes
+		:type request_type: RequestType
 		:param url: Адрес запроса.
 		:type url: str
 		:param kwargs: Дополнительные аргументы, соответствующие таковым именованным аргументам у конкретных методов запросов.
@@ -93,10 +93,10 @@ class WebRequestor:
 
 				#---> Переключение HTTP/HTTPS протоколов прокси при неудачном запросе.
 				#==========================================================================================#
-				if not Response.ok and CurrentProxy and self.__Config.switch_proxy_protocol and CurrentProxy.protocol in (Protocols.HTTP, Protocols.HTTPS):
+				if not Response.ok and CurrentProxy and self.__Config.switch_proxy_protocol and CurrentProxy.protocol in (Protocol.HTTP, Protocol.HTTPS):
 					match CurrentProxy.protocol:
-						case Protocols.HTTP: CurrentProxy.set_protocol(Protocols.HTTPS)
-						case Protocols.HTTPS: CurrentProxy.set_protocol(Protocols.HTTP)
+						case Protocol.HTTP: CurrentProxy.set_protocol(Protocol.HTTPS)
+						case Protocol.HTTPS: CurrentProxy.set_protocol(Protocol.HTTP)
 
 					NewResponse = WebResponse(self.__Config)
 					self.__RequestsMethods[request_type][self.__Config.lib](NewResponse, url, CurrentProxy, **kwargs)
@@ -129,15 +129,15 @@ class WebRequestor:
 
 		match self.__Config.lib:
 
-			case WebLibs.curl_cffi:
+			case WebLib.curl_cffi:
 				self.__Session = curl_cffi_requests.Session(
 					allow_redirects = self.__Config.redirecting,
 					impersonate = self.__Config.curl_cffi.fingerprint,
 					http_version = self.__Config.curl_cffi.http_version,
 				)
 
-			case WebLibs.httpx: self.__Session = httpx.Client(http2 = self.__Config.httpx.http2)
-			case WebLibs.requests: self.__Session = requests.Session()
+			case WebLib.httpx: self.__Session = httpx.Client(http2 = self.__Config.httpx.http2)
+			case WebLib.requests: self.__Session = requests.Session()
 
 	def __MergeHeaders(self, headers: dict | None) -> dict | None:
 		"""Объединяет заголовки конфигурации и параметров запроса."""
@@ -545,21 +545,21 @@ class WebRequestor:
 		self.__Session = None
 		self.__LastRequestTime: float | None = None
 
-		self.__RequestsMethods: dict[RequestsTypes, dict[WebLibs, Callable]] = {
-			RequestsTypes.DELETE: {
-				WebLibs.curl_cffi: self.__curl_cffi_DELETE,
-				WebLibs.httpx: self.__httpx_DELETE,
-				WebLibs.requests: self.__requests_DELETE,
+		self.__RequestsMethods: dict[RequestType, dict[WebLib, Callable]] = {
+			RequestType.DELETE: {
+				WebLib.curl_cffi: self.__curl_cffi_DELETE,
+				WebLib.httpx: self.__httpx_DELETE,
+				WebLib.requests: self.__requests_DELETE,
 			},
-			RequestsTypes.GET: {
-				WebLibs.curl_cffi: self.__curl_cffi_GET,
-				WebLibs.httpx: self.__httpx_GET,
-				WebLibs.requests: self.__requests_GET,
+			RequestType.GET: {
+				WebLib.curl_cffi: self.__curl_cffi_GET,
+				WebLib.httpx: self.__httpx_GET,
+				WebLib.requests: self.__requests_GET,
 			},
-			RequestsTypes.POST: {
-				WebLibs.curl_cffi: self.__curl_cffi_POST,
-				WebLibs.httpx: self.__httpx_POST,
-				WebLibs.requests: self.__requests_POST,
+			RequestType.POST: {
+				WebLib.curl_cffi: self.__curl_cffi_POST,
+				WebLib.httpx: self.__httpx_POST,
+				WebLib.requests: self.__requests_POST,
 			},
 		}
 
@@ -591,12 +591,12 @@ class WebRequestor:
 
 		self.__Proxies = ()
 
-	def request(self, request_type: RequestsTypes, url: str, **kwargs) -> WebResponse:
+	def request(self, request_type: RequestType, url: str, **kwargs) -> WebResponse:
 		"""
 		Базовый обработчик запроса.
 
 		:param request_type: Тип запроса.
-		:type request_type: RequestsTypes
+		:type request_type: RequestType
 		:param url: Адрес запроса.
 		:type url: str
 		:param kwargs: Дополнительные аргументы, соответствующие таковым именованным аргументам у конкретных методов запросов.
@@ -636,7 +636,7 @@ class WebRequestor:
 		:rtype: WebResponse
 		"""
 
-		return self.request(RequestsTypes.DELETE, url, params = params, headers = headers, cookies = cookies, data = data, json = json)
+		return self.request(RequestType.DELETE, url, params = params, headers = headers, cookies = cookies, data = data, json = json)
 
 	def get(self, url: str, params: dict | None = None, headers: dict | None = None, cookies: dict | None = None) -> WebResponse:
 		"""
@@ -654,7 +654,7 @@ class WebRequestor:
 		:rtype: WebResponse
 		"""
 
-		return self.request(RequestsTypes.GET, url, params = params, headers = headers, cookies = cookies)
+		return self.request(RequestType.GET, url, params = params, headers = headers, cookies = cookies)
 
 	def post(self, url: str, params: dict | None = None, headers: dict | None = None, cookies: dict | None = None, data: Any = None, json: dict | None = None) -> WebResponse:
 		"""
@@ -676,4 +676,4 @@ class WebRequestor:
 		:rtype: WebResponse
 		"""
 
-		return self.request(RequestsTypes.POST, url, params = params, headers = headers, cookies = cookies, data = data, json = json)
+		return self.request(RequestType.POST, url, params = params, headers = headers, cookies = cookies, data = data, json = json)

@@ -30,7 +30,7 @@ from typing import TYPE_CHECKING
 
 from dublib.cli.terminalyzer import ModelsGroup, Terminalyzer
 from dublib.functions.filesystem import text
-from dublib.validators import ValidableTypes
+from dublib.validators import ValidableType
 
 if TYPE_CHECKING:
     from dublib.cli.terminalyzer.parser.entities import CommandEntity
@@ -46,7 +46,7 @@ group = ModelsGroup()
 # Build model.
 model = group.create_model("touch", "Create empty file.")
 position = model.create_position("PATH", "File path.")
-position.set_argument(ValidableTypes.Path)
+position.set_argument(ValidableType.Path)
 model.register_handler(handler_touch)
 
 # Initialize terminalyzer.

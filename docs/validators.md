@@ -88,16 +88,16 @@ Module [Terminalyzer](./cli/terminalyzer.md) uses validators to parsing CLI para
 ```Python
 # main.py
 from dublib.cli.terminalyzer import Terminalyzer, Command
-from dublib.validators import ValidableTypes
+from dublib.validators import ValidableType
 
 from . import types
 
-class CustomValidableTypes(ValidableTypes):
+class CustomValidableType(ValidableType):
 	Digit = types.Digit
 
 # Terminalyzer commands models groups initialization…
 
-model.base.add_argument(CustomValidableTypes.Zero)
+model.base.add_argument(CustomValidableType.Zero)
 ```
 
 ## Types

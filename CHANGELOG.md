@@ -16,6 +16,7 @@ For visual categorization of changes emojis are used in accordance with [gitmoji
 - Validators for exists file and directory.
 
 ### 🎨 Changed
+- All enumerations renamed in accordance with [PEP 435](https://peps.python.org/pep-0435).
 - Dependencies separated in optional groups.
 - Exceptions now replaced at modules roots in `exceptions` submodule.
 - Logger now can used without `cli` dependencies (unstyled output).

@@ -1,7 +1,7 @@
 from enum import Enum
 
-class MessagesTypes(Enum):
-	"""Messages types enumeration."""
+class MessageType(Enum):
+	"""Messages type."""
 
 	Debug = "debug"
 	Info = "info"

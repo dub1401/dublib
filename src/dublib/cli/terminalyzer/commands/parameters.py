@@ -1,6 +1,6 @@
 from collections.abc import Sequence
 
-from ....validators import ValidableTypes
+from ....validators import ValidableType
 
 __all__ = ["Argument", "Flag", "Key"]
 
@@ -20,17 +20,17 @@ class Argument:
 		return self.__IsImportant
 
 	@property
-	def type(self) -> ValidableTypes:
+	def type(self) -> ValidableType:
 		"""Тип значения аргумента."""
 
 		return self.__Type
 
-	def __init__(self, value_type: ValidableTypes, description: str | None, important: bool):
+	def __init__(self, value_type: ValidableType, description: str | None, important: bool):
 		"""
 		Аргумент команды.
 
 		:param value_type: nип значения аргумента.
-		:type value_type: ValidableTypes
+		:type value_type: ValidableType
 		:param description: Описание аргумента.
 		:type description: str | None
 		:param important: Указывает, является ли аргумент обязательным.
@@ -115,12 +115,12 @@ class Key:
 		return self.__Name
 
 	@property
-	def type(self) -> ValidableTypes:
+	def type(self) -> ValidableType:
 		"""Тип значения ключа."""
 
 		return self.__Type
 
-	def __init__(self, name: str, aliases: Sequence[str] | None, value_type: ValidableTypes, description: str | None, important: bool):
+	def __init__(self, name: str, aliases: Sequence[str] | None, value_type: ValidableType, description: str | None, important: bool):
 		"""
 		Ключ команды.
 
@@ -129,7 +129,7 @@ class Key:
 		:param aliases: Список псевдонимов.
 		:type aliases: Sequence[str] | None
 		:param value_type: Тип значения ключа.
-		:type value_type: ValidableTypes
+		:type value_type: ValidableType
 		:param description: Описание ключа.
 		:type description: str | None
 		:param important: Указывает, является ли ключ обязательным.
