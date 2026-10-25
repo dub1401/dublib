@@ -1,179 +1,296 @@
-from collections.abc import Sequence
+import io
+from collections.abc import Callable
 from types import MappingProxyType
-from typing import cast
+from typing import TYPE_CHECKING
 
-from ...functions.data import to_sequence
-from . import codes, escapes
-from .fast_styler import FastStyler as FastStyler
+from bs4 import BeautifulSoup, NavigableString, PageElement, Tag
+from rich.console import Console
+from rich.style import Style
+from rich.table import Table
 
-#==========================================================================================#
-# >>>>> СТИЛИЗАЦИЯ ИЗ HTML <<<<< #
-#==========================================================================================#
-
-__SUPPORTED_TAGS = MappingProxyType({
-	"b": (escapes.Decoration.BOLD, escapes.Drop.DISABLE_BOLD),
-	"i": (escapes.Decoration.ITALIC, escapes.Drop.DISABLE_ITALIC),
-	"u": (escapes.Decoration.UNDERLINED, escapes.Drop.DISABLE_UNDERLINED),
-	"s": (escapes.Decoration.THROUGHLINED, escapes.Drop.DISABLE_THROUGHLINED),
-})
-
-def get_styled_text_from_html(text: str) -> str:
-	"""
-	Преобразовывает теги HTML в управляющие последовательности ANSI.
-
-	Поддерживаемые теги: `b`, `i`, `u`, `s`.
-
-	:param text: Стилизуемый текст.
-	:type text: str
-	:return: Стилизованный текст.
-	:rtype: str
-	"""
-
-	for Tag in __SUPPORTED_TAGS.keys():
-		text = text.replace(f"<{Tag}>", __SUPPORTED_TAGS[Tag][0])
-		text = text.replace(f"</{Tag}>", __SUPPORTED_TAGS[Tag][1])
-
-	return text
-
-#==========================================================================================#
-# >>>>> ОСНОВНОЙ КЛАСС <<<<< #
-#==========================================================================================#
+if TYPE_CHECKING:
+	from collections.abc import Sequence
 
 class TextStyler:
-	"""Стилизатор текста."""
+	"""Text styler."""
+
+	__INSTANCE: "TextStyler | None" = None
+	__IS_INITIALIZED: bool = False
 
 	#==========================================================================================#
-	# >>>>> СВОЙСТВА <<<<< #
+	# >>>>> PRIVATE HTML CONVERSION METHODS <<<<< #
 	#==========================================================================================#
 
-	@property
-	def decorations(self) -> tuple[codes.Decoration, ...] | None:
-		"""Набор кодов декораций."""
-
-		return self.__Decorations
-
-	@property
-	def text_color(self) -> codes.Color | None:
-		"""Код цвета текста."""
-
-		return self.__TextColor
-
-	@property
-	def background_color(self) -> codes.BackgroundColor | None:
-		"""Код цвета фона."""
-
-		return self.__BackgroundColor
-
-	@property
-	def is_autoreset(self) -> bool:
-		"""Состояние переключателя: нужно ли добавлять последовательность сброса стилей в конец строки."""
-
-		return self.__Autoreset
-
-	#==========================================================================================#
-	# >>>>> ПУБЛИЧНЫЕ МЕТОДЫ <<<<< #
-	#==========================================================================================#
-
-	def __init__(
-			self,
-			decorations: codes.Decoration | Sequence[codes.Decoration] | None = None,
-			text_color: codes.Color | None = None,
-			background_color: codes.BackgroundColor | None = None,
-			autoreset: bool = True,
-		):
+	def __extract_rich_styles(self, style: "str | Sequence[str]") -> tuple[str, ...]:
 		"""
-		Стилизатор текста.
+		Extract Rich styles.
 
-		:param decorations: Код декорации или набор кодов декораций.
-		:type decorations: Codes.Decorations | Sequence[Codes.Decorations] | None
-		:param text_color: Код цвета текста.
-		:type text_color: Codes.Colors | None
-		:param background_color: Код цвета фона.
-		:type background_color: Codes.BackgroundsColors | None
-		:param autoreset: Указывает, нужно ли добавить последовательность сброса стилей в конец строки.
-		:type autoreset: bool
+		:param style: Style attribute value.
+		:type style: str | Sequence[str]
+		:return: Rich styles.
+		:rtype: tuple[str, ...]
 		"""
 
-		self.__Decorations: tuple[codes.Decoration, ...] | None = cast("tuple[codes.Decoration, ...]", to_sequence(decorations)) if decorations else None
-		self.__TextColor = text_color
-		self.__BackgroundColor = background_color
-		self.__Autoreset = autoreset
+		if type(style) is not str:
+			style = "".join(style)
 
-	def build_ansi_escape(self, codes: Sequence[codes.BackgroundColor | codes.Color | codes.Decoration | codes.Drop]) -> str:
+		if not style:
+			return ()
+
+		rich_styles: list[str] = []
+		styles: list[str] = [s.strip() for s in style.split(";") if s.strip()]
+
+		for style in styles:
+
+			if ":" not in style:
+				continue
+
+			name, value = map(str.strip, style.split(":", 1))
+			name = name.lower()
+			value = value.lower()
+
+			match name:
+
+				case "color":
+					rich_styles.append(value)
+
+				case "font-weight":
+					if value == "bold":
+						rich_styles.append("bold")
+
+				case "font-style":
+					if value == "italic":
+						rich_styles.append("italic")
+
+		return tuple(rich_styles)
+
+	def __parse_style(self, style: "Sequence[str] | str | Style") -> Style:
 		"""
-		Строит управляющую последовательность из кодов.
+		Parse Rich style.
 
-		:param codes: Код ANSI или набор кодов из предоставляемых перечислений.
-		:type codes: Sequence[Codes.BackgroundsColors | Codes.Colors | Codes.Decorations | Codes.Drops]
-		:return: Управляющая последовательность.
+		:param style: Rich style one or several tags.
+		:type style: Sequence[str] | str | Style
+		:return: Rich style.
+		:rtype: Style
+		"""
+
+		if isinstance(style, Style):
+			return style
+
+		if type(style) is str:
+			return Style.parse(style)
+
+		return Style.parse(" ".join(style))
+
+	def __process_node(self, node: PageElement) -> str:
+		"""
+		Process HTML node into Rich format.
+
+		:param node: HTML node.
+		:type node: PageElement
+		:return: Processed text.
 		:rtype: str
 		"""
 
-		CodesStrings: tuple[str, ...] = tuple(str(Element.value) for Element in codes)
-		CodesString = ";".join(CodesStrings)
+		if isinstance(node, NavigableString):
+			return node.string.replace("[", "\\[")
 
-		return f"\033[{CodesString}m"
+		if not isinstance(node, Tag):
+			return ""
 
-	def get_styled_text(self, text: str) -> str:
+		inner_content: str = "".join(self.__process_node(child) for child in node.children)
+		rich_styles: set[str] = set()
+
+		if node.name in self.__tags_styles:
+			rich_styles.add(self.__tags_styles[node.name])
+
+		if node.name == "a" and node.has_attr("href"):
+			url: str = str(node["href"])
+			rich_styles.add(f"link={url}")
+
+		if node.has_attr("style"):
+			attr_styles: tuple[str, ...] = self.__extract_rich_styles(node["style"])
+			rich_styles.update(attr_styles)
+
+		if rich_styles:
+			rich_open_tag_styles: set[str] = rich_styles
+			rich_close_tag_styles: set[str] = {style.split("=")[0] for style in rich_styles}
+
+			rich_open_tag: str = " ".join(rich_open_tag_styles)
+			rich_close_tag: str = " ".join(rich_close_tag_styles)
+
+			return f"[{rich_open_tag}]{inner_content}[/{rich_close_tag}]"
+
+		return inner_content
+
+	#==========================================================================================#
+	# >>>>> PRIVATE METHODS <<<<< #
+	#==========================================================================================#
+
+	def __extract_buffer_value(self) -> str:
 		"""
-		Возвращает стилизованный с помощью управляющих последовательностей ANSI текст, используя заданные в объекте стили.
+		Extract value and clear buffer.
 
-		:param text: Стилизуемый текст.
+		:return: Buffer value.
+		:rtype: str
+		"""
+
+		value: str = self.__buffer.getvalue()
+		self.__clear_buffer()
+
+		return value
+
+	def __clear_buffer(self):
+		"""Clear text buffer."""
+
+		self.__buffer.seek(0)
+		self.__buffer.truncate(0)
+
+	#==========================================================================================#
+	# >>>>> PUBLIC METHODS <<<<< #
+	#==========================================================================================#
+
+	def __new__(cls, *args, **kwargs):
+		"""
+		Instance generator to Singleton pattern realization.
+
+		:return: _description_
+		:rtype: _type_
+		"""
+
+		if cls.__INSTANCE is None:
+			cls.__INSTANCE = super().__new__(cls, *args, **kwargs)
+
+		return cls.__INSTANCE
+
+	def __init__(self):
+		"""
+		Text styler. Provides [Rich](https://github.com/Textualize/rich) markup into ANSI styles converasion and HTML-Rich-ANSI conversion.
+
+		_This class is projected with Singleton pattern for optimized initialization._
+		"""
+
+		if self.__class__.__IS_INITIALIZED:
+			return
+
+		self.__buffer = io.StringIO()
+		self.__console = Console(
+			file = self.__buffer,
+			force_terminal = True,
+			color_system = "truecolor",
+			highlight = False,
+		)
+
+		self.__tags_styles: MappingProxyType[str, str] = MappingProxyType({
+			"b": "bold",
+			"strong": "bold",
+
+			"i": "italic",
+			"em": "italic",
+
+			"s": "strike",
+			"del": "strike",
+			"ins": "strike",
+			"strike": "strike",
+
+			"u": "underline",
+			"underline": "underline",
+		})
+
+		self.__class__.__IS_INITIALIZED = True
+
+	def convert(self, text: str) -> str:
+		"""
+		Convert text with Rich markup to ANSI-styled text.
+
+		:param text: Text with markup.
 		:type text: str
-		:return: Стилизованный текст.
+		:return: ANSI-styled text.
 		:rtype: str
 		"""
 
-		Codes: list = []
-		if self.__Decorations: Codes.extend(self.__Decorations)
-		if self.__TextColor: Codes.append(self.__TextColor)
-		if self.__BackgroundColor: Codes.append(self.__BackgroundColor)
+		self.__console.print(text, end = "")
 
-		text = self.build_ansi_escape(Codes) + text
-		if self.__Autoreset: text += escapes.Drop.RESET
+		return self.__extract_buffer_value()
 
-		return text
-
-	#==========================================================================================#
-	# >>>>> МЕТОДЫ УСТАНОВКИ СТИЛЕЙ <<<<< #
-	#==========================================================================================#
-
-	def set_decorations(self, decorations: codes.Decoration | Sequence[codes.Decoration] | None):
+	def convert_from_html(self, text: str) -> str:
 		"""
-		Задаёт декорации.
+		Convert HTML to ANSI-styled text.
 
-		:param decorations: Код декорации или набор кодов декораций.
-		:type decorations: Codes.Decorations | Sequence[Codes.Decorations] | None
+		:param text: HTML,
+		:type text: str
+		:return: ANSI-styled text.
+		:rtype: str
 		"""
 
-		self.__Decorations = cast("tuple[codes.Decoration, ...]", to_sequence(decorations)) if decorations else None
+		text = self.html_to_rich(text)
 
-	def set_text_color(self, text_color: codes.Color | None):
+		return self.convert(text)
+
+	def convert_table(self, table: Table) -> str:
 		"""
-		Задаёт цвет текста.
+		Convert Rich table to ANSI-styled text.
 
-		:param text_color: Код цвета текста.
-		:type text_color: Codes.Colors | None
-		"""
-
-		self.__TextColor = text_color
-
-	def set_background_color(self, background_color: codes.BackgroundColor | None):
-		"""
-		Задаёт цвет фона.
-
-		:param background_color: Код цвета фона.
-		:type background_color: Codes.BackgroundsColors | None
+		:param text: Rich table.
+		:type text: Table
+		:return: ANSI-styled text.
+		:rtype: str
 		"""
 
-		self.__BackgroundColor = background_color
+		self.__console.print(table, end = "")
 
-	def enable_autoreset(self, status: bool):
+		return self.__extract_buffer_value().rstrip("\n")
+
+	def html_to_rich(self, text: str) -> str:
 		"""
-		Переключает добавление последовательности сброса стилей в конец строки.
+		Convert HTML to Rich markup.
 
-		:param status: Статус добавления последовательности.
-		:type status: bool
+		Supported prestyled tags: `b`, `i`, `s`, `u` (and its semantic versions).
+
+		Supported functional tags: `a`.
+
+		Supported styles: `color`, `font-weight`, `font-style`.
+
+		:param text: HTML.
+		:type text: str
+		:return: Text in Rich markup.
+		:rtype: str
 		"""
 
-		self.__Autoreset = status
+		soup = BeautifulSoup(text, "html.parser")
+
+		return "".join(
+			self.__process_node(child)
+			for child in soup.children
+		)
+
+	def make_preset(self, style: "Sequence[str] | str | Style") -> Callable[[str], str]:
+		"""
+		Make style preset for fast templated stylization.
+
+		:param style: Rich style.
+		:type style: Sequence[str] | str | Style
+		:return: Lambda-preset, that accepts raw string.
+		:rtype: Callable[[str], str]
+		"""
+
+		style = self.__parse_style(style)
+
+		return lambda text: self.richify(text, style)
+
+	def richify(self, text: str, style: "Sequence[str] | str | Style") -> str:
+		"""
+		Generate ANSI-styled text with style.
+
+		:param text: Text for stilization.
+		:type text: str
+		:param style: Rich style.
+		:type style: Sequence[str] | str | rich.style.Style
+		:return: Stylized text.
+		:rtype: str
+		"""
+
+		style = self.__parse_style(style)
+		self.__console.print(text, style = style, end = "")
+
+		return self.__extract_buffer_value()

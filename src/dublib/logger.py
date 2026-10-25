@@ -3,7 +3,7 @@ import logging
 __IS_STYLER_AVAILABLE: bool = False
 
 try:
-	from .cli.text_styler import FastStyler, get_styled_text_from_html
+	from .cli.text_styler import TextStyler
 	__IS_STYLER_AVAILABLE = True
 except ImportError:
 	pass
@@ -21,17 +21,20 @@ class ColorFormatter(logging.Formatter):
 		:rtype: str
 		"""
 
-		Message = super().format(record)
+		styler: TextStyler = TextStyler()
+		message: str = super().format(record)
+
+		message = styler.convert(message)
 
 		match record.levelno:
-			case logging.WARNING: Message = FastStyler(Message).colorize.yellow
-			case logging.ERROR: Message = FastStyler(Message).colorize.red
+			case logging.WARNING: message = styler.convert(f"[yellow]{message}[/yellow]")
+			case logging.ERROR: message = styler.convert(f"[red]{message}[/red]")
 
-		return Message
+		return message
 
 LOGS_HANDLER = logging.StreamHandler()
 
 if __IS_STYLER_AVAILABLE:
-	LOGS_HANDLER.setFormatter(ColorFormatter(get_styled_text_from_html("<b>[%(name)s]</b> %(levelname)s: %(message)s")))
+	LOGS_HANDLER.setFormatter(ColorFormatter("[bold][%(name)s][/bold] %(levelname)s: %(message)s"))
 else:
 	LOGS_HANDLER.setFormatter(logging.Formatter("[%(name)s] %(levelname)s: %(message)s"))

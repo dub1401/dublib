@@ -1,14 +1,15 @@
 from types import MappingProxyType
 
-from ..text_styler import TextStyler, codes
+from dublib.cli.text_styler import TextStyler
+
 from .types import MessageType
 
-__COLORS: MappingProxyType[MessageType | None, codes.Color | None] = MappingProxyType({
-	MessageType.Debug: codes.Color.GRAY,
-	MessageType.Info: codes.Color.WHITE,
-	MessageType.Error: codes.Color.RED,
-	MessageType.Warning: codes.Color.YELLOW,
-	MessageType.Critical: codes.Color.RED,
+__COLORS: MappingProxyType[MessageType | None, str | None] = MappingProxyType({
+	MessageType.Debug: "gray",
+	MessageType.Info: "white",
+	MessageType.Error: "red",
+	MessageType.Warning: "yellow",
+	MessageType.Critical: "red",
 	None: None,
 })
 
@@ -41,4 +42,9 @@ def generate_message(text: str, message_type: MessageType | None = None, origin:
 	if not colorize:
 		return message
 
-	return TextStyler(text_color = __COLORS[message_type]).get_styled_text(message)
+	color: str | None = __COLORS[message_type]
+
+	if not color:
+		return message
+
+	return TextStyler().convert(f"[{color}]{message}[/{color}]")

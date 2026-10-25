@@ -1,9 +1,9 @@
 from collections.abc import Sequence
 from typing import TYPE_CHECKING, cast
 
-from prettytable import PLAIN_COLUMNS, PrettyTable
+from rich.table import Table
 
-from ...text_styler import FastStyler, get_styled_text_from_html
+from ...text_styler import TextStyler
 from ..commands.parameters import Argument, Flag, Key
 from .options import HelperOptions
 
@@ -118,11 +118,11 @@ class Helper:
 		:rtype: str
 		"""
 
-		name = FastStyler(name).decorate.bold if self.options.stylize else name
+		name = self.__styler.convert(f"[bold]{name}[/bold]") if self.options.stylize else name
 
 		if self.options.stylize:
 			for Index in range(len(aliases)):
-				aliases[Index] = FastStyler(aliases[Index]).decorate.bold
+				aliases[Index] = self.__styler.convert(f"[bold]{aliases[Index]}[/bold]")
 
 		if aliases:
 			return ", ".join([name] + aliases)
@@ -154,7 +154,7 @@ class Helper:
 
 		else:
 			if position.description:
-				description = get_styled_text_from_html(position.description) if self.options.parse_html else position.description
+				description = self.__styler.convert_from_html(position.description) if self.options.parse_html else position.description
 				title += f": {description}"
 
 			info.append(title)
@@ -164,7 +164,7 @@ class Helper:
 				parameter_info += self.__build_parameter_label(parameter)
 
 				if parameter.description:
-					description = get_styled_text_from_html(parameter.description) if self.options.parse_html else cast("str", position.description)
+					description = self.__styler.convert_from_html(parameter.description) if self.options.parse_html else cast("str", position.description)
 					parameter_info += f": {parameter.description}"
 
 				info.append(parameter_info)
@@ -190,9 +190,9 @@ class Helper:
 			return name
 
 		if position.is_important:
-			return FastStyler(name).colorize.blue
+			return self.__styler.convert(f"[blue]{name}[/blue]")
 
-		return FastStyler(name).colorize.gray
+		return self.__styler.convert(f"[gray]{name}[/gray]")
 
 	#==========================================================================================#
 	# >>>>> ПУБЛИЧНЫЕ МЕТОДЫ <<<<< #
@@ -208,6 +208,8 @@ class Helper:
 
 		self.__options: HelperOptions = options or HelperOptions()
 
+		self.__styler: TextStyler = TextStyler()
+
 	def generate_model_info(self, model: "CommandModel") -> str:
 		"""
 		Генерирует справку по команде.
@@ -219,12 +221,12 @@ class Helper:
 		"""
 
 		string_indentificator: str = model.indentificator.as_str()
-		info: str = FastStyler(string_indentificator).decorate.bold if self.options.stylize else string_indentificator
+		info: str = self.__styler.convert(f"[bold]{string_indentificator}[/bold]") if self.options.stylize else string_indentificator
 		info += self.__build_command_map(model)
 
 		if model.description:
 			info += "\n"
-			info += FastStyler(model.description).decorate.italic if self.options.stylize else model.description
+			info += self.__styler.convert(f"[italic]{model.description}[/italic]") if self.options.stylize else model.description
 
 		for position in model.positions:
 			lines: list[str] = self.__build_position_info(position)
@@ -255,15 +257,19 @@ class Helper:
 			for model in models
 		}
 
-		table_generator = PrettyTable()
-		table_generator.set_style(PLAIN_COLUMNS)
-		table_generator.align = "l"
-		table_generator.header = False
+		table_generator = Table(
+			box = None,
+			show_header = False,
+			pad_edge = False,
+			padding = (0, 2),
+		)
+		table_generator.add_column(justify = "left")
+		table_generator.add_column(justify = "left")
 
-		for command_data in table_data.items():
-			table_generator.add_row(list(command_data))
+		for name, description in table_data.items():
+			table_generator.add_row(name, description)
 
-		return table_generator.get_string()
+		return self.__styler.convert_table(table_generator)
 
 	def generate_groups_list(self, groups: Sequence["ModelsGroup"]) -> str:
 		"""
@@ -280,7 +286,7 @@ class Helper:
 
 		for group in groups:
 			if show_headers and group.name:
-				name = FastStyler(group.name).decorate.bold if self.options.stylize else group.name
+				name = self.__styler.convert(f"[bold]{group.name}[/bold]") if self.options.stylize else group.name
 				groups_lists.append(self.options.indent * 4 + name)
 
 			groups_lists.append(self.generate_group_list(group))

@@ -21,7 +21,8 @@ For visual categorization of changes emojis are used in accordance with [gitmoji
 - Dependencies separated in optional groups.
 - Exceptions now replaced at modules roots in `exceptions` submodule.
 - Logger now can used without `cli` dependencies (unstyled output).
-
+#### cli.text_styler
+- `TextStyler` now is serve to HTML-Rich-ANSI styles conversion and presets generation.
 #### engine.config
 - Module renamed to `config` from `configurator`.
 - Migration to [pydantic-settings](https://github.com/pydantic/pydantic-settings).
@@ -38,6 +39,8 @@ For visual categorization of changes emojis are used in accordance with [gitmoji
 
 ### 🔥 Removed
 - Module `telebot_utils`.
+#### cli.text_styler
+- Presets with `FastStyler`.
 #### functions.decorators
 - Decorator `deprecated()`.
 #### validators
