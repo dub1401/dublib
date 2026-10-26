@@ -19,6 +19,7 @@ class ValidableType(Enum):
 	Integer = types.Integer
 	IPv4 = types.IPv4
 	IPv6 = types.IPv6
+	LanguageCode = types.LanguageCode
 	Path = types.Path
 	UnsignedInteger = types.UnsignedInteger
 	URL = types.URL

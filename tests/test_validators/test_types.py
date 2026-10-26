@@ -138,6 +138,12 @@ def test_IPv6():
 	assert types.IPv6.validate("2001:0db8:85a3:0000:0000:g82e:0370:7334") is False
 	assert types.IPv6.convert("2001:0db8:85a3:0000:0000:8a2e:0370:7334") == "2001:0db8:85a3:0000:0000:8a2e:0370:7334"
 
+def test_LanguageCode():
+
+	assert types.LanguageCode.validate("en") is False
+	assert types.LanguageCode.validate("rus") is True
+	assert types.LanguageCode.convert("eng") == "eng"
+
 def test_Path():
 
 	assert types.Path.validate(Path("/src")) is True

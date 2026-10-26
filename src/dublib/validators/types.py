@@ -791,6 +791,67 @@ class IPv6(BaseValidator[str]):
 
 		return bool(result)
 
+class LanguageCode(BaseValidator[str]):
+	"""Validator: language code by [ISO 639-3](https://iso639-3.sil.org)."""
+
+	@staticmethod
+	@override
+	def _export_target_type() -> type[str]:
+		"""
+		Export target type.
+
+		:return: Target type.
+		:rtype: type[str]
+		"""
+
+		return str
+
+	@staticmethod
+	@override
+	def _convert(value: Any) -> str:
+		"""
+		Convert value into target type without validation. Can raise `ConversionError`.
+
+		Value can't be of the target type, because instance checked on public method wrapper!
+
+		:param value: Convertible value.
+		:type value: Any
+		:return: Conversion result.
+		:rtype: str
+		"""
+
+		if isinstance(value, str):
+			return value
+
+		return str(value)
+
+	@staticmethod
+	@override
+	def _validate(value: Any) -> bool:
+		"""
+		Validate is value can be converted into target type without data losses.
+
+		Value can't be of the target type if fast validation enabled!
+
+		:param value: Validable value.
+		:type value: Any
+		:return: `True` if value valid.
+		:rtype: bool
+		"""
+
+		if not isinstance(value, str):
+			return False
+
+		if not all((
+			len(value) != 3,
+			not value.isalpha(),
+			not value.islower(),
+		)):
+			return False
+
+		return True
+
+
 class Path(BaseValidator[PathlibPath]):
 	"""Validator: path."""
 

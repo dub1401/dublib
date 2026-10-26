@@ -12,6 +12,7 @@ For visual categorization of changes emojis are used in accordance with [gitmoji
 ### ✨ Added
 #### validators
 - JSON-unserializable objects now can be dumped with `str()` and also can be redefined.
+- Validator `LanguageCode` for [ISO 639-3](https://iso639-3.sil.org).
 
 ## [0.33.0] - 2026-10-26
 
