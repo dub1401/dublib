@@ -39,7 +39,7 @@ exclude_patterns = [
 	"README.md",
 ]
 
-html_theme = "sphinx_rtd_theme"
+html_theme = "shibuya"
 
 # Render Markdown docstrings into reStructuredText.
 def _docstring(app: Sphinx, what: str, name: str, obj: Any, options: dict[str, Any], lines: list[str]):  # noqa: ARG001

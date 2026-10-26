@@ -65,8 +65,8 @@ dev = [
 docs = [
 	"commonmark",
 	"myst_parser",
+	"shibuya",
 	"Sphinx",
-	"sphinx-rtd-theme"
 ]
 
 [project.urls]

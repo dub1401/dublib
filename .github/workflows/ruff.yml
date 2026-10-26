@@ -5,15 +5,12 @@ permissions:
 
 on:
   push:
-    paths:
-      - src/**
-      - tests/**
+    paths: &monitored_paths
+      - "src/**"
+      - "tests/**"
       - ruff.toml
   pull_request:
-    paths:
-      - src/**
-      - tests/**
-      - ruff.toml
+    paths: *monitored_paths
 
 jobs:
   lint:

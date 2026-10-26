@@ -5,17 +5,14 @@ permissions:
 
 on:
   push:
-    paths:
+    paths: &monitored_paths
       - "src/dublib/functions/data/**"
       - "src/dublib/polyglot/**"
       - "src/dublib/validators/**"
       - "tests/**"
+      - pyproject.toml
   pull_request:
-    paths:
-      - "src/dublib/functions/data/**"
-      - "src/dublib/polyglot/**"
-      - "src/dublib/validators/**"
-      - "tests/**"
+    paths: *monitored_paths
 
 jobs:
   test:
