@@ -1,4 +1,3 @@
-import io
 from collections.abc import Callable
 from types import MappingProxyType
 from typing import TYPE_CHECKING
@@ -11,14 +10,39 @@ from rich.table import Table
 if TYPE_CHECKING:
 	from collections.abc import Sequence
 
-class TextStyler:
-	"""Text styler."""
+_CONSOLE = Console()
 
-	__INSTANCE: "TextStyler | None" = None
-	__IS_INITIALIZED: bool = False
+_HTML_TAGS_STYLES: MappingProxyType[str, str] = MappingProxyType({
+	"b": "bold",
+	"strong": "bold",
+
+	"i": "italic",
+	"em": "italic",
+
+	"s": "strike",
+	"del": "strike",
+	"ins": "strike",
+	"strike": "strike",
+
+	"u": "underline",
+	"underline": "underline",
+})
+
+class TextStyler:
+	"""Text styler. Provides [Rich](https://github.com/Textualize/rich) markup into ANSI-styled string conversion and HTML-Rich-ANSI conversion."""
 
 	#==========================================================================================#
-	# >>>>> PRIVATE HTML CONVERSION METHODS <<<<< #
+	# >>>>> PROPERTIES <<<<< #
+	#==========================================================================================#
+
+	@property
+	def console(self) -> Console:
+		"""Rich console."""
+
+		return _CONSOLE
+
+	#==========================================================================================#
+	# >>>>> PRIVATE METHODS <<<<< #
 	#==========================================================================================#
 
 	def __extract_rich_styles(self, style: "str | Sequence[str]") -> tuple[str, ...]:
@@ -101,8 +125,8 @@ class TextStyler:
 		inner_content: str = "".join(self.__process_node(child) for child in node.children)
 		rich_styles: set[str] = set()
 
-		if node.name in self.__tags_styles:
-			rich_styles.add(self.__tags_styles[node.name])
+		if node.name in _HTML_TAGS_STYLES:
+			rich_styles.add(_HTML_TAGS_STYLES[node.name])
 
 		if node.name == "a" and node.has_attr("href"):
 			url: str = str(node["href"])
@@ -124,80 +148,8 @@ class TextStyler:
 		return inner_content
 
 	#==========================================================================================#
-	# >>>>> PRIVATE METHODS <<<<< #
-	#==========================================================================================#
-
-	def __extract_buffer_value(self) -> str:
-		"""
-		Extract value and clear buffer.
-
-		:return: Buffer value.
-		:rtype: str
-		"""
-
-		value: str = self.__buffer.getvalue()
-		self.__clear_buffer()
-
-		return value
-
-	def __clear_buffer(self):
-		"""Clear text buffer."""
-
-		self.__buffer.seek(0)
-		self.__buffer.truncate(0)
-
-	#==========================================================================================#
 	# >>>>> PUBLIC METHODS <<<<< #
 	#==========================================================================================#
-
-	def __new__(cls, *args, **kwargs):
-		"""
-		Instance generator to Singleton pattern realization.
-
-		:return: _description_
-		:rtype: _type_
-		"""
-
-		if cls.__INSTANCE is None:
-			cls.__INSTANCE = super().__new__(cls, *args, **kwargs)
-
-		return cls.__INSTANCE
-
-	def __init__(self):
-		"""
-		Text styler. Provides [Rich](https://github.com/Textualize/rich) markup into ANSI styles converasion and HTML-Rich-ANSI conversion.
-
-		_This class is projected with Singleton pattern for optimized initialization._
-		"""
-
-		if self.__class__.__IS_INITIALIZED:
-			return
-
-		self.__buffer = io.StringIO()
-		self.__console = Console(
-			file = self.__buffer,
-			force_terminal = True,
-			color_system = "truecolor",
-			highlight = False,
-		)
-
-		self.__tags_styles: MappingProxyType[str, str] = MappingProxyType({
-			"b": "bold",
-			"strong": "bold",
-
-			"i": "italic",
-			"em": "italic",
-
-			"s": "strike",
-			"del": "strike",
-			"ins": "strike",
-			"strike": "strike",
-
-			"u": "underline",
-			"underline": "underline",
-		})
-
-		self.__class__.__IS_INITIALIZED = True
 
 	def convert(self, text: str) -> str:
 		"""
@@ -209,9 +161,10 @@ class TextStyler:
 		:rtype: str
 		"""
 
-		self.__console.print(text, end = "")
+		with self.console.capture() as capture:
+			self.console.print(text, end = "")
 
-		return self.__extract_buffer_value()
+		return capture.get()
 
 	def convert_from_html(self, text: str) -> str:
 		"""
@@ -237,9 +190,10 @@ class TextStyler:
 		:rtype: str
 		"""
 
-		self.__console.print(table, end = "")
+		with self.console.capture() as capture:
+			self.console.print(table, end = "")
 
-		return self.__extract_buffer_value().rstrip("\n")
+		return capture.get().rstrip("\n")
 
 	def html_to_rich(self, text: str) -> str:
 		"""
@@ -291,6 +245,8 @@ class TextStyler:
 		"""
 
 		style = self.__parse_style(style)
-		self.__console.print(text, style = style, end = "")
 
-		return self.__extract_buffer_value()
+		with self.console.capture() as capture:
+			self.console.print(text, style = style, end = "")
+
+		return capture.get()

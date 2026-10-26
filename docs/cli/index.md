@@ -3,5 +3,5 @@
 messages
 progress_indicator
 terminalyzer
-text_styler/index
+text_styler
 ```

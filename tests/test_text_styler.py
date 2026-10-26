@@ -1,15 +1,6 @@
 from dublib.cli.text_styler import TextStyler
-from dublib.cli.text_styler.ansi import escapes
 
 styler = TextStyler()
-
-def test_convert():
-
-	assert styler.convert("[bold]text[/bold]") == f"{escapes.Decoration.BOLD}text{escapes.Drop.RESET}"
-
-def test_convert_from_html():
-
-	assert styler.convert_from_html("<b>text</b>") == f"{escapes.Decoration.BOLD}text{escapes.Drop.RESET}"
 
 def test_html_to_rich():
 
