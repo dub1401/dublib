@@ -33,6 +33,7 @@ engine = [
 	"watchfiles",
 ]
 cli = [
+	"beautifulsoup4",
 	"dublib[validators]",
 	"gnureadline>=8.3.3; sys_platform == \"linux\"",
 	"pyreadline3; sys_platform == \"win32\"",
