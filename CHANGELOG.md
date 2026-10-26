@@ -7,7 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 For visual categorization of changes emojis are used in accordance with [gitmoji](https://gitmoji.dev).
 
-## [0.33.0]
+## [0.33.1]
+
+### ✨ Added
+#### validators
+- JSON-unserializable objects now can be dumped with `str()` and also can be redefined.
+
+## [0.33.0] - 2026-10-26
 
 ### ✨ Added
 #### validators

@@ -1,9 +1,11 @@
 # dublib
 
+> [!NOTE]
+
 ![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)
 ![ty](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ty/main/assets/badge/v0.json)
 ![Typed](https://img.shields.io/pypi/types/dublib)
-[![Docs](https://img.shields.io/readthedocs/dublib)](https://dublib.readthedocs.io/ru/latest)
+[![Docs](https://img.shields.io/readthedocs/dublib)](https://dublib.readthedocs.io)
 ![Python version](https://img.shields.io/python/required-version-toml?tomlFilePath=https%3A%2F%2Fraw.githubusercontent.com%2Fdub1401%2Fdublib%2Frefs%2Fheads%2Fmain%2Fpyproject.toml)
 ![PyPI](https://img.shields.io/pypi/v/dublib)
 [![KeepChangelog](https://img.shields.io/badge/changelog-Keep%20a%20Changelog%20v1.1.0-%23E05735)](/CHANGELOG.md)

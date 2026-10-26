@@ -66,6 +66,18 @@ class Digit(BaseValidator[int]):
 		return False
 ```
 
+### JSON serialization
+By default all validators of base types are JSON-serializable. If you made validator for custom object ant it need this functional, you may redefine next method.
+
+```Python
+class CustomClassValidator(BaseValidator[CustomClass]):
+
+	@staticmethod
+	def _serialize(value: CustomClass) -> Any:
+
+		return str(value)
+```
+
 ## pydantic
 Validators can be used with [pydantic](https://github.com/pydantic/PYDANTIC) models as annotated types.
 

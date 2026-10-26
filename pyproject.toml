@@ -4,10 +4,10 @@ build-backend = "uv_build"
 
 [project]
 name = "dublib"
-version = "0.33.0"
-description = "Коллекция полезных модулей от DUB1401."
+version = "0.33.1"
+description = "Collection of useful Python modules."
 authors = [
-	{name = "DUB1401", email = "vlad.milosta@outlook.com"}
+	{name = "dub1401", email = "vlad.milosta@outlook.com"}
 ]
 readme = "README.md"
 license = "Unlicense"
@@ -28,6 +28,13 @@ classifiers = [
 	"Topic :: Software Development :: Libraries :: Python Modules",
 	"Typing :: Typed"
 ]
+
+[project.urls]
+Documentation = "https://dublib.readthedocs.io/"
+"Source Code" = "https://github.com/dub1401/dublib"
+"Bug Tracker" = "https://github.com/dub1401/dublib/issues"
+Changelog = "https://github.com/dub1401/dublib/releases"
+
 [project.optional-dependencies]
 engine = [
 	"pydantic-settings>=2",
@@ -68,9 +75,3 @@ docs = [
 	"shibuya",
 	"Sphinx",
 ]
-
-[project.urls]
-Documentation = "https://dublib.readthedocs.io/"
-"Source Code" = "https://github.com/DUB1401/dublib"
-"Bug Tracker" = "https://github.com/DUB1401/dublib/issues"
-Changelog = "https://github.com/DUB1401/dublib/releases"
