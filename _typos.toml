@@ -1,0 +1,4 @@
+[default]
+extend-ignore-re = [
+    "plain_serializer_function_ser_schema"
+]

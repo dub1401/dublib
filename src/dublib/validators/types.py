@@ -842,15 +842,14 @@ class LanguageCode(BaseValidator[str]):
 		if not isinstance(value, str):
 			return False
 
-		if not all((
-			len(value) != 3,
-			not value.isalpha(),
-			not value.islower(),
+		if all((
+			len(value) == 3,
+			value.isalpha(),
+			value.islower(),
 		)):
-			return False
+			return True
 
-		return True
-
+		return False
 
 class Path(BaseValidator[PathlibPath]):
 	"""Validator: path."""
