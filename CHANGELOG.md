@@ -7,7 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 For visual categorization of changes emojis are used in accordance with [gitmoji](https://gitmoji.dev).
 
-## [0.33.1]
+## [0.33.2]
+
+### 🐛 Fixed
+
+#### cli.messages
+- Unescaped message type.
+#### functions.decorators
+- Missing boud function annotation for `run_before_method()`.
+
+## [0.33.1] - 2026-10-28
 
 ### ✨ Added
 #### validators

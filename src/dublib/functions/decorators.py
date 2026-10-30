@@ -1,6 +1,10 @@
 import functools
+from collections.abc import Callable
+from typing import Any, TypeVar
 
-def run_before_method(method_name: str):
+F = TypeVar("F", bound = Callable[..., Any])
+
+def run_before_method(method_name: str)-> Callable[[F], F]:
 	"""
 	Декоратор: запускает публичный или защищённый метод, не принимающий аргументов, перед выполнением метода экземпляра класса. Запущенный метод имеет доступ к экземпляру.
 
@@ -11,7 +15,7 @@ def run_before_method(method_name: str):
 	if method_name.startswith("__"):
 		raise ValueError("Only public and protected methods supported in @run_before_method decorator.")
 
-	def decorator(function):
+	def decorator(function: F):
 
 		@functools.wraps(function)
 		def wrapper(*args, **kwargs):
