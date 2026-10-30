@@ -1,7 +1,4 @@
 # dublib
-
-> [!NOTE]
-
 ![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)
 ![ty](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ty/main/assets/badge/v0.json)
 ![Typed](https://img.shields.io/pypi/types/dublib)

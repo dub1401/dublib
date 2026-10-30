@@ -1,5 +1,7 @@
 from types import MappingProxyType
 
+from rich.markup import escape
+
 from dublib.cli.text_styler import TextStyler
 
 from .types import MessageType
@@ -46,5 +48,7 @@ def generate_message(text: str, message_type: MessageType | None = None, origin:
 
 	if not color:
 		return message
+
+	message = escape(message)
 
 	return TextStyler().convert(f"[{color}]{message}[/{color}]")
