@@ -13,6 +13,7 @@ For visual categorization of changes emojis are used in accordance with [gitmoji
 
 #### cli.messages
 - Unescaped message type.
+- Debug and info messages colors switched.
 ### cli.text_styler
 - Rich highlight enabled by default.
 #### functions.decorators

@@ -7,8 +7,8 @@ from dublib.cli.text_styler import TextStyler
 from .types import MessageType
 
 __COLORS: MappingProxyType[MessageType | None, str | None] = MappingProxyType({
-	MessageType.Debug: "gray",
-	MessageType.Info: "white",
+	MessageType.Debug: "white",
+	MessageType.Info: None,
 	MessageType.Error: "red",
 	MessageType.Warning: "yellow",
 	MessageType.Critical: "red",
