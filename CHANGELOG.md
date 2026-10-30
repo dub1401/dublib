@@ -13,6 +13,8 @@ For visual categorization of changes emojis are used in accordance with [gitmoji
 
 #### cli.messages
 - Unescaped message type.
+### cli.text_styler
+- Rich highlight enabled by default.
 #### functions.decorators
 - Missing boud function annotation for `run_before_method()`.
 

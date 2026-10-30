@@ -106,6 +106,23 @@ class TextStyler:
 
 		return Style.parse(" ".join(style))
 
+	def __print(self, text: str | Table, style: Style | None = None, highlight: bool = False):
+		"""
+		Print via Rich console.
+
+		Args:
+			text (str | Table): Object to print.
+			style (Style | None): Output style.
+			highlight (bool): Condition: enable highlight.
+		"""
+
+		self.console.print(
+			text,
+			end = "",
+			style = style,
+			highlight = highlight,
+		)
+
 	def __process_node(self, node: PageElement) -> str:
 		"""
 		Process HTML node into Rich format.
@@ -162,7 +179,7 @@ class TextStyler:
 		"""
 
 		with self.console.capture() as capture:
-			self.console.print(text, end = "")
+			self.__print(text)
 
 		return capture.get()
 
@@ -191,7 +208,7 @@ class TextStyler:
 		"""
 
 		with self.console.capture() as capture:
-			self.console.print(table, end = "")
+			self.__print(table)
 
 		return capture.get().rstrip("\n")
 
@@ -247,6 +264,6 @@ class TextStyler:
 		style = self.__parse_style(style)
 
 		with self.console.capture() as capture:
-			self.console.print(text, style = style, end = "")
+			self.__print(text, style)
 
 		return capture.get()
