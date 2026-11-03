@@ -10,24 +10,29 @@ from ..data import to_sequence
 
 def atomic_write(path: PathLike[str] | str, data: bytes):
 	"""
-	Атомарно производит запись файла в бинарном представлении, используя создание временного файла со сбросом кэша записи и операцию `os.replace()`.
+	Atomary wtite file by temporary file and `shutil.move()` using.
 
-	:param path: Путь к записываемому файлу.
-	:type path: PathLike[str] | str
-	:param data: Набор байтов для записи.
-	:type data: bytes
+	Args:
+		path (PathLike[str] | str): Path to file.
+		data (bytes): Binary data.
 	"""
 
-	PathObject = Path(path)
-	TempPath = None
+	path = Path(path)
+	temp_path: Path | None = None
 
-	with tempfile.NamedTemporaryFile("wb", delete = False, dir = PathObject.parent) as TempWriter:
-		TempWriter.write(data)
-		TempWriter.flush()
-		os.fsync(TempWriter.fileno())
-		TempPath = Path(TempWriter.name)
+	try:
+		with tempfile.NamedTemporaryFile("wb", delete = False, dir = path.parent) as temp_writer:
+			temp_path = Path(temp_writer.name)
+			temp_writer.write(data)
+			temp_writer.flush()
+			os.fsync(temp_writer.fileno())
 
-	os.replace(TempPath, path)
+		os.replace(temp_path, path)
+
+	except Exception:
+		if temp_path:
+			temp_path.unlink(missing_ok = True)
+		raise
 
 def get_random_file(directory: PathLike[str] | str) -> Path | None:
 	"""

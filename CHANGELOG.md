@@ -7,14 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 For visual categorization of changes emojis are used in accordance with [gitmoji](https://gitmoji.dev).
 
-## [0.33.2]
+## [0.33.3]
+
+### 🐛 Fixed
+#### functions
+- In some cases `atomic_write()` can save temporary files.
+
+## [0.33.2] - 2026-11-02
 
 ### 🐛 Fixed
 
 #### cli.messages
 - Unescaped message type.
 - Debug and info messages colors switched.
-### cli.text_styler
+#### cli.text_styler
 - Rich highlight enabled by default.
 #### functions.decorators
 - Missing boud function annotation for `run_before_method()`.
