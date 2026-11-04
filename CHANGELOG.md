@@ -14,6 +14,8 @@ For visual categorization of changes emojis are used in accordance with [gitmoji
 - Improve typing for `zerotify()`. Also this method now convert string with only spaces into `None`.
 
 ### 🐛 Fixed
+#### cli.text_styler
+- Table rendered only for 80 characters in width.
 #### functions
 - In some cases `atomic_write()` can save temporary files.
 
