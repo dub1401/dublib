@@ -9,6 +9,10 @@ For visual categorization of changes emojis are used in accordance with [gitmoji
 
 ## [0.33.3]
 
+### 🎨 Changed
+#### functions.data
+- Improve typing for `zerotify()`. Also this method now convert string with only spaces into `None`.
+
 ### 🐛 Fixed
 #### functions
 - In some cases `atomic_write()` can save temporary files.

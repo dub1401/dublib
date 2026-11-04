@@ -66,14 +66,19 @@ def string_to_bool(value: str, literals: Sequence[str] = ("false", "0")) -> bool
 
 	return bool(value)
 
-def zerotify(value: Any) -> Any:
+def zerotify[T: Any](value: T) -> T | None:
 	"""
-	Преобразует значения, логически интерпретируемые в `False`, в тип `None`.
+	Convert value, which can be interpreted as `False`, into `None`.
+	Strings with only space-like characters also converted to `None`.
 
-	:param value: Проверяемое значение.
-	:type value: Any
-	:return: Возвращает `None` при возможности логической интерпретации значения в `False`. Иначе возвращает переданное значение.
-	:rtype: Any
+	Args:
+		value (T): Value.
+
+	Returns:
+		T | None: Value or `None`.
 	"""
+
+	if isinstance(value, str):
+		value = value.strip()
 
 	return None if not value else value
