@@ -1,4 +1,5 @@
 from types import MappingProxyType
+from typing import Literal
 
 from rich.markup import escape
 
@@ -15,7 +16,7 @@ __COLORS: MappingProxyType[MessageType | None, str | None] = MappingProxyType({
 	None: None,
 })
 
-def generate_message(text: str, message_type: MessageType | None = None, origin: str | None = None, colorize: bool = True) -> str:
+def generate_message(text: str, message_type: MessageType | None = None, origin: str | None = None, colorize: Literal["ansi", "rich"] | None = "ansi") -> str:
 	"""
 	Generate styled message.
 
@@ -26,7 +27,16 @@ def generate_message(text: str, message_type: MessageType | None = None, origin:
 	:param origin: Message origin.
 	:type origin: str | None
 	:return: Styled message in format: `[{ORIGIN}:{TYPE}] {MESSAGE}`.
-	:rtype: str
+	:rtype: str.
+
+	Args:
+		text (str): Message text.
+		message_type (MessageType | None): Message type.
+		origin (str | None): Message origin.
+		colorize (Literal["ansi", "rich"] | None): Convert into ANSI-styled text or Rich format if not `None`.
+
+	Returns:
+		str: Description.
 	"""
 
 	origin_part: str = origin or ""
@@ -36,7 +46,7 @@ def generate_message(text: str, message_type: MessageType | None = None, origin:
 	message: str = f"{type_part}{separator}{origin_part}"
 
 	if message:
-		if message_type: message = f"[{message}]"
+		if message_type: message = escape(f"[{message}]")
 		text = f" {text}"
 
 	message += text
@@ -49,6 +59,9 @@ def generate_message(text: str, message_type: MessageType | None = None, origin:
 	if not color:
 		return message
 
-	message = escape(message)
+	rich_message: str = f"[{color}]{message}[/{color}]"
 
-	return TextStyler().convert(f"[{color}]{message}[/{color}]")
+	if colorize == "ansi":
+		return TextStyler().convert(rich_message)
+
+	return rich_message

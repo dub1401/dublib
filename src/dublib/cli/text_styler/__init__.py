@@ -32,6 +32,31 @@ _HTML_TAGS_STYLES: MappingProxyType[str, str] = MappingProxyType({
 class TextStyler:
 	"""Text styler. Provides [Rich](https://github.com/Textualize/rich) markup into ANSI-styled string conversion and HTML-Rich-ANSI conversion."""
 
+	def capture(self, data: str | Table, style: Style | None = None, highlight: bool = False) -> str:
+		"""
+		Print data via Rich console and capture output with automatic terminal sizes determination.
+
+		Args:
+			data (str | Table): Printable data.
+			style (Style | None): Global style for data.
+			highlight (bool): Condition: enable highlight.
+
+		Returns:
+			str: ANSI-styled string.
+		"""
+
+		self.console.width = shutil.get_terminal_size().columns
+
+		with self.console.capture() as capture:
+			self.console.print(
+				data,
+				end = "",
+				style = style,
+				highlight = highlight,
+			)
+
+		return capture.get()
+
 	def convert(self, text: str) -> str:
 		"""
 		Convert text with Rich markup to ANSI-styled text.
@@ -42,7 +67,7 @@ class TextStyler:
 		:rtype: str
 		"""
 
-		return self.__capture(text)
+		return self.capture(text)
 
 	def convert_from_html(self, text: str) -> str:
 		"""
@@ -69,7 +94,7 @@ class TextStyler:
 			str: ANSI-styled text.
 		"""
 
-		return self.__capture(table).rstrip("\n")
+		return self.capture(table).rstrip("\n")
 
 	def html_to_rich(self, text: str) -> str:
 		"""
@@ -122,22 +147,13 @@ class TextStyler:
 
 		style = self.__parse_style(style)
 
-		return self.__capture(text, style)
+		return self.capture(text, style)
 
 	@property
 	def console(self) -> Console:
 		"""Rich console."""
 
 		return _CONSOLE
-
-	def __capture(self, data: str | Table, style: Style | None = None) -> str:
-
-		self.console.width = shutil.get_terminal_size().columns
-
-		with self.console.capture() as capture:
-			self.__print(data, style)
-
-		return capture.get()
 
 	def __extract_rich_styles(self, style: "str | Sequence[str]") -> tuple[str, ...]:
 		"""
@@ -199,23 +215,6 @@ class TextStyler:
 			return Style.parse(style)
 
 		return Style.parse(" ".join(style))
-
-	def __print(self, text: str | Table, style: Style | None = None, highlight: bool = False):
-		"""
-		Print via Rich console.
-
-		Args:
-			text (str | Table): Object to print.
-			style (Style | None): Output style.
-			highlight (bool): Condition: enable highlight.
-		"""
-
-		self.console.print(
-			text,
-			end = "",
-			style = style,
-			highlight = highlight,
-		)
 
 	def __process_node(self, node: PageElement) -> str:
 		"""

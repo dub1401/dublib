@@ -9,11 +9,17 @@ For visual categorization of changes emojis are used in accordance with [gitmoji
 
 ## [0.33.3]
 
+### ✨ Added
+#### cli.messages
+- Messages generator now can build messages in Rich format.
+
 ### 🎨 Changed
 #### functions.data
 - Improve typing for `zerotify()`. Also this method now convert string with only spaces into `None`.
 
 ### 🐛 Fixed
+#### cli.messages
+- All message escaped instead only message type.
 #### cli.text_styler
 - Table rendered only for 80 characters in width.
 #### functions
